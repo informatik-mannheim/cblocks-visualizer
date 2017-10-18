@@ -1,7 +1,7 @@
 import React from 'react';
-import PurpleAppBar from './PurpleAppBar.js';      // AppBar with simple overrides
-import SuccessButton from './SuccessButton.js';    // A button with complex overrides
-import { Button } from 'react-toolbox/lib/button'; // Bundled component import
+import PurpleAppBar from './PurpleAppBar.js';
+import SuccessButton from './SuccessButton.js';
+import { Button } from 'react-toolbox/lib/button';
 
 const App = () => (
   <div>
