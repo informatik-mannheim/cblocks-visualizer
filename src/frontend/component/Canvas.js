@@ -4,7 +4,7 @@ import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import Box from './Box';
 import {URLs, ItemTypes} from '../Constants';
-import * as actions from '../actions/';
+import * as action from '../action/';
 import { DropTarget } from 'react-dnd';
 
 //import { Button } from 'react-toolbox/lib/button';
@@ -153,8 +153,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   //TODO: remove moveABox once not needed anymore
   return {
-    fetchBoxIDs: (url) => dispatch(actions.fetchBoxIDs(url)),
-    moveABox: (id, xPos, yPos) =>  dispatch(actions.moveBox(id, xPos, yPos))
+    fetchBoxIDs: (url) => dispatch(action.fetchBoxIDs(url)),
+    moveABox: (id, xPos, yPos) =>  dispatch(action.moveBox(id, xPos, yPos))
   };
 };
 

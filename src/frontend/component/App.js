@@ -2,6 +2,7 @@ import React from 'react';
 import PurpleAppBar from './PurpleAppBar.js';
 import SuccessButton from './SuccessButton.js';
 import { Button } from 'react-toolbox/lib/button';
+import Canvas from './Canvas';
 
 const App = () => (
   <div>
