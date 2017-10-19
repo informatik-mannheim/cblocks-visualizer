@@ -12,10 +12,6 @@ const App = () => (
     <PurpleAppBar />
     <Canvas/>
     <CustomDragLayer/>
-    <section style={{ padding: 20 }}>
-      <SuccessButton label='Success' primary raised />
-      <Button label='Primary Button' primary />
-    </section>
   </div>
 );
 

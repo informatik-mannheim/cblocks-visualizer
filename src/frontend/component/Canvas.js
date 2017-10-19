@@ -9,7 +9,6 @@ import { DropTarget } from 'react-dnd';
 
 //import { Button } from 'react-toolbox/lib/button';
 
-
 /**
  * Specifies the drop target contract.
  * All methods are optional.
@@ -112,8 +111,6 @@ class Canvas extends Component {
     const dropZoneStyle = {
       top: 200,
       left: 200,
-      color: 'rgba(100,0,0,1)',
-      border: '1px solid red',
       height: 800,
       width: '100%',
       zIndex: 100
@@ -159,7 +156,6 @@ const mapDispatchToProps = (dispatch) => {
     moveABox: (id, xPos, yPos) => dispatch(action.moveBox(id, xPos, yPos))
   };
 };
-
 
 const dropTargetCanvas = DropTarget(ItemTypes.BOX, canvasTarget, collect)(Canvas);
 const connectedCanvas = connect(mapStateToProps, mapDispatchToProps)(dropTargetCanvas);

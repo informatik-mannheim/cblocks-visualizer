@@ -13,9 +13,6 @@ const settings = {
     publicPath: '/',
     path: path.resolve('build')
   },
-  resolve: {
-    extensions: ['.js', '.jsx', '.json', '.css']
-  },
   devtool: 'eval-source-map',
   module: {
     rules: [
@@ -50,6 +47,13 @@ const settings = {
             }
           },
           'postcss-loader' // has separate config, see postcss.config.js nearby
+        ]
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loaders: [
+            'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
+            'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false'
         ]
       }
     ]

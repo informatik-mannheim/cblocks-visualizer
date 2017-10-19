@@ -11,29 +11,29 @@ const layerStyles = {
   left: 0,
   top: 0,
   width: '100%',
-  height: '100%',
+  height: '100%'
 };
 
-function getItemStyles(props) {
+function getItemStyles (props) {
   const { initialOffset, currentOffset } = props;
   if (!initialOffset || !currentOffset) {
     return {
-      display: 'none',
+      display: 'none'
     };
   }
 
-  let { x, y } = currentOffset;
+  const { x, y } = currentOffset;
 
   const transform = `translate(${x}px, ${y}px)`;
   return {
     transform,
-    WebkitTransform: transform,
+    WebkitTransform: transform
   };
 }
 
 class CustomDragLayer extends Component {
 
-  renderItem(type, item) {
+  renderItem (type, item) {
     switch (type) {
       case ItemTypes.BOX:
         return (<BoxDragPreview label={item.label} />);
@@ -42,7 +42,7 @@ class CustomDragLayer extends Component {
     }
   }
 
-  render() {
+  render () {
     const { item, itemType, isDragging } = this.props;
 
     if (!isDragging) {
@@ -64,13 +64,13 @@ CustomDragLayer.propTypes = {
   itemType: PropTypes.string,
   initialOffset: PropTypes.shape({
     x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired
   }),
   currentOffset: PropTypes.shape({
     x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired
   }),
-  isDragging: PropTypes.bool.isRequired,
+  isDragging: PropTypes.bool.isRequired
 };
 
 export default DragLayer(monitor => ({
@@ -78,5 +78,5 @@ export default DragLayer(monitor => ({
   itemType: monitor.getItemType(),
   initialOffset: monitor.getInitialSourceClientOffset(),
   currentOffset: monitor.getSourceClientOffset(),
-  isDragging: monitor.isDragging(),
+  isDragging: monitor.isDragging()
 }))(CustomDragLayer);

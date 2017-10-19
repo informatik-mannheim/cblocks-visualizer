@@ -1,31 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Box from './Box';
+import { Card, CardTitle } from 'react-toolbox/lib/card';
 
 const styles = {
   display: 'inline-block',
-  transform: 'rotate(-7deg)',
-  WebkitTransform: 'rotate(-7deg)',
+  transform: 'rotate(-45deg)',
+  WebkitTransform: 'rotate(-45deg)',
   width: 100,
   height: 100,
   border: '1px solid black',
-  borderRadius: 5,
+  borderRadius: 5
 };
 
 class BoxDragPreview extends Component {
 
-  render() {
+  render () {
     const { label } = this.props;
     return (
-
-      <div style={styles}>
-        {this.props.label}
-      </div>
+      <Card style={{width: '350px'}}>
+        <CardTitle
+          title={this.props.label}
+        />
+      </Card>
     );
   }
 }
 
 BoxDragPreview.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired
 };
 export default BoxDragPreview;
