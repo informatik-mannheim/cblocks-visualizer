@@ -15,14 +15,14 @@ import { DropTarget } from 'react-dnd';
  * All methods are optional.
  */
 const canvasTarget = {
-  canDrop(props, monitor) {
+  canDrop (props, monitor) {
     // You can disallow drop based on props or item
     const item = monitor.getItem();
     return true;
     //return canMakeChessMove(item.fromPosition, props.position);
   },
 
-  hover(props, monitor, component) {
+  hover (props, monitor, component) {
     // This is fired very often and lets you perform side effects
     // in response to the hover. You can't handle enter and leave
     // here—if you need them, put monitor.isOver() into collect() so you
@@ -38,11 +38,11 @@ const canvasTarget = {
     const canDrop = monitor.canDrop();
   },
 
-  drop(props, monitor, component) {
+  drop (props, monitor, component) {
     if (monitor.didDrop()) {
       // If you want, you can check whether some nested
       // target already handled drop
-      console.log("nested target already handled drop. ignored here!");
+      console.log('nested target already handled drop. ignored here!');
       return;
     }
 
@@ -50,8 +50,8 @@ const canvasTarget = {
     const delta = monitor.getDifferenceFromInitialOffset();
     const item = monitor.getItem();
 
-    let left = Math.round(item.xPos + delta.x);
-    let top = Math.round(item.yPos + delta.y);
+    const left = Math.round(item.xPos + delta.x);
+    const top = Math.round(item.yPos + delta.y);
 
     component.props.moveABox(item.id, left, top);
 
@@ -65,11 +65,11 @@ const canvasTarget = {
 /**
  * Specifies which props to inject into your component.
  */
-function collect(connect, monitor) {
+function collect (cnnct, monitor) {
   return {
     // Call this function inside render()
     // to let React DnD handle the drag events:
-    connectDropTarget: connect.dropTarget(),
+    connectDropTarget: cnnct.dropTarget(),
     // You can ask the monitor about the current drag state:
     isOver: monitor.isOver(),
     isOverCurrent: monitor.isOver({ shallow: true }),
@@ -80,8 +80,11 @@ function collect(connect, monitor) {
 
 class Canvas extends Component {
 
+  componentDidMount () {
+    this.props.fetchBoxIDs(URLs.FETCH_BOX_IDS_URL);
+  }
   //TODO: move boxId fetching to App.
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (!this.props.isOver && nextProps.isOver) {
       // You can use this as enter handler
     }
@@ -94,15 +97,10 @@ class Canvas extends Component {
       // You can be more specific and track enter/leave
       // shallowly, not including nested targets
     }
-    console.log("isOver: " + this.props.isOver + ", nextProps.isOver: " + nextProps.isOver + ", isOverCurrent: " + this.props.isOverCurrent + ", nextProps.isOverCurrent: " + nextProps.isOverCurrent);
+    console.log('isOver: ' + this.props.isOver + ', nextProps.isOver: ' + nextProps.isOver + ', isOverCurrent: ' + this.props.isOverCurrent + ', nextProps.isOverCurrent: ' + nextProps.isOverCurrent);
   }
 
-  componentDidMount() {
-    this.props.fetchBoxIDs(URLs.FETCH_BOX_IDS_URL);
-  }
-
-  render() {
-
+  render () {
     const { isOver, canDrop, connectDropTarget } = this.props;
 
     if (this.props.hasErrored) {
@@ -111,19 +109,19 @@ class Canvas extends Component {
     if (this.props.isLoading) {
       return <p>Loading...</p>;
     }
-    var dropZoneStyle = {
+    const dropZoneStyle = {
       top: 200,
       left: 200,
       color: 'rgba(100,0,0,1)',
       border: '1px solid red',
       height: 800,
       width: '100%',
-      zIndex: 100,
+      zIndex: 100
     };
 
     return connectDropTarget(
       <div>
-          <div style={dropZoneStyle}></div>
+          <div style={dropZoneStyle}/>
           {this.props.boxes.map((b) => (
             <Box key={b._id} id={b._id} xPos={b.xPos} yPos={b.yPos} label={b.label} transducers={b.transducers}/>
           ))}
@@ -134,12 +132,16 @@ class Canvas extends Component {
 
 
 Canvas.propTypes = {
-    fetchBoxIDs: PropTypes.func.isRequired,
-    moveABox: PropTypes.func,
-    boxIds: PropTypes.array.isRequired,
-    boxes: PropTypes.array,
-    hasErrored: PropTypes.bool.isRequired,
-    isLoading: PropTypes.bool.isRequired
+  boxIds: PropTypes.array.isRequired,
+  boxes: PropTypes.array,
+  canDrop: PropTypes.bool,
+  connectDropTarget: PropTypes.func,
+  fetchBoxIDs: PropTypes.func.isRequired,
+  hasErrored: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  isOver: PropTypes.bool,
+  isOverCurrent: PropTypes.bool,
+  moveABox: PropTypes.func
 };
 
 Canvas.defaultProps = {
@@ -154,7 +156,7 @@ const mapDispatchToProps = (dispatch) => {
   //TODO: remove moveABox once not needed anymore
   return {
     fetchBoxIDs: (url) => dispatch(action.fetchBoxIDs(url)),
-    moveABox: (id, xPos, yPos) =>  dispatch(action.moveBox(id, xPos, yPos))
+    moveABox: (id, xPos, yPos) => dispatch(action.moveBox(id, xPos, yPos))
   };
 };
 
