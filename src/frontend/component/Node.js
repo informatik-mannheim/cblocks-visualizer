@@ -7,6 +7,7 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 import Transducer from './Transducer';
 import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 import {Button} from 'react-toolbox/lib/button';
+import AddButton from './AddButton.js';
 
 const nodeSource = {
   beginDrag (props) {
@@ -23,9 +24,9 @@ const nodeSource = {
 
     // When dropped on a compatible target, do something
     const item = monitor.getItem();
-    console.log('Dropped on compatible target: ' + item);
+    //console.log('Dropped on compatible target: ' + item);
     const dropResult = monitor.getDropResult();
-    console.log(dropResult);
+    //console.log(dropResult);
   }
 };
 
@@ -54,6 +55,7 @@ function getNodeStyles (props) {
   };
 }
 
+
 class Node extends Component {
 
   componentDidMount () {
@@ -67,8 +69,7 @@ class Node extends Component {
   }
 
   render (){
-    console.log(this.props.transducers);
-
+    //console.log(this.props.transducers);
     return this.props.connectDragSource(
       <div style={getNodeStyles(this.props)}>
         <Card style={{width: '350px'}}>
@@ -77,9 +78,8 @@ class Node extends Component {
             subtitle="cBlocks Node"
           />
           <CardText>'Blabla'</CardText>
-          <CardActions>
-            <Button label="Action 1" />
-            <Button label="Action 2" />
+          <CardActions style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              <AddButton floating primary/>
           </CardActions>
         </Card>
       </div>

@@ -1,6 +1,5 @@
 import React from 'react';
 import CBlocksAppBar from './CBlocksAppBar.js';
-import SuccessButton from './SuccessButton.js';
 import { Button } from 'react-toolbox/lib/button';
 import Canvas from './Canvas';
 import HTML5Backend from 'react-dnd-html5-backend';
