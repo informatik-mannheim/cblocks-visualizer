@@ -1,5 +1,5 @@
 import React from 'react';
-import PurpleAppBar from './PurpleAppBar.js';
+import CBlocksAppBar from './CBlocksAppBar.js';
 import SuccessButton from './SuccessButton.js';
 import { Button } from 'react-toolbox/lib/button';
 import Canvas from './Canvas';
@@ -9,7 +9,7 @@ import CustomDragLayer from './CustomDragLayer';
 
 const App = () => (
   <div>
-    <PurpleAppBar />
+    <CBlocksAppBar />
     <Canvas/>
     <CustomDragLayer/>
   </div>
