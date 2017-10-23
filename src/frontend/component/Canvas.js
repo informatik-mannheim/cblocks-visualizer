@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
-import Box from './Box';
+import Node from './Node';
 import {URLs, ItemTypes} from '../Constants';
 import * as action from '../action/';
 import { DropTarget } from 'react-dnd';
@@ -41,7 +41,7 @@ const canvasTarget = {
     if (monitor.didDrop()) {
       // If you want, you can check whether some nested
       // target already handled drop
-      console.log('nested target already handled drop. ignored here!');
+      //console.log('nested target already handled drop. ignored here!');
       return;
     }
 
@@ -52,7 +52,7 @@ const canvasTarget = {
     const left = Math.round(item.xPos + delta.x);
     const top = Math.round(item.yPos + delta.y);
 
-    component.props.moveABox(item.id, left, top);
+    component.props.moveANode(item.id, left, top);
 
     // You can also do nothing and return a drop result,
     // which will be available as monitor.getDropResult()
@@ -80,9 +80,9 @@ function collect (cnnct, monitor) {
 class Canvas extends Component {
 
   componentDidMount () {
-    this.props.fetchBoxIDs(URLs.FETCH_BOX_IDS_URL);
+    this.props.fetchNodeIDs(URLs.FETCH_NODE_IDS_URL);
   }
-  //TODO: move boxId fetching to App.
+  //TODO: move nodeId fetching to App.
   componentWillReceiveProps (nextProps) {
     if (!this.props.isOver && nextProps.isOver) {
       // You can use this as enter handler
@@ -96,7 +96,7 @@ class Canvas extends Component {
       // You can be more specific and track enter/leave
       // shallowly, not including nested targets
     }
-    console.log('isOver: ' + this.props.isOver + ', nextProps.isOver: ' + nextProps.isOver + ', isOverCurrent: ' + this.props.isOverCurrent + ', nextProps.isOverCurrent: ' + nextProps.isOverCurrent);
+    //console.log('isOver: ' + this.props.isOver + ', nextProps.isOver: ' + nextProps.isOver + ', isOverCurrent: ' + this.props.isOverCurrent + ', nextProps.isOverCurrent: ' + nextProps.isOverCurrent);
   }
 
   render () {
@@ -119,8 +119,8 @@ class Canvas extends Component {
     return connectDropTarget(
       <div>
           <div style={dropZoneStyle}/>
-          {this.props.boxes.map((b) => (
-            <Box key={b._id} id={b._id} xPos={b.xPos} yPos={b.yPos} label={b.label} transducers={b.transducers}/>
+          {this.props.nodes.map((b) => (
+            <Node key={b._id} id={b._id} xPos={b.xPos} yPos={b.yPos} label={b.label} transducers={b.transducers}/>
           ))}
       </div>
     );
@@ -129,34 +129,34 @@ class Canvas extends Component {
 
 
 Canvas.propTypes = {
-  boxIds: PropTypes.array.isRequired,
-  boxes: PropTypes.array,
+  nodeIds: PropTypes.array.isRequired,
+  nodes: PropTypes.array,
   canDrop: PropTypes.bool,
   connectDropTarget: PropTypes.func,
-  fetchBoxIDs: PropTypes.func.isRequired,
+  fetchNodeIDs: PropTypes.func.isRequired,
   hasErrored: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   isOver: PropTypes.bool,
   isOverCurrent: PropTypes.bool,
-  moveABox: PropTypes.func
+  moveANode: PropTypes.func
 };
 
 Canvas.defaultProps = {
-  boxIds: []
+  nodeIds: []
 };
 
 const mapStateToProps = (state) => {
-  return {boxes: state.boxes, boxIds: state.boxIDs, hasErrored: state.fetchBoxIDsHasErrored, isLoading: state.fetchBoxIDsIsLoading};
+  return {nodes: state.nodes, nodeIds: state.nodeIDs, hasErrored: state.fetchNodeIDsHasErrored, isLoading: state.fetchNodeIDsIsLoading};
 };
 
 const mapDispatchToProps = (dispatch) => {
-  //TODO: remove moveABox once not needed anymore
+  //TODO: remove moveANode once not needed anymore
   return {
-    fetchBoxIDs: (url) => dispatch(action.fetchBoxIDs(url)),
-    moveABox: (id, xPos, yPos) => dispatch(action.moveBox(id, xPos, yPos))
+    fetchNodeIDs: (url) => dispatch(action.fetchNodeIDs(url)),
+    moveANode: (id, xPos, yPos) => dispatch(action.moveNode(id, xPos, yPos))
   };
 };
 
-const dropTargetCanvas = DropTarget(ItemTypes.BOX, canvasTarget, collect)(Canvas);
+const dropTargetCanvas = DropTarget(ItemTypes.NODE, canvasTarget, collect)(Canvas);
 const connectedCanvas = connect(mapStateToProps, mapDispatchToProps)(dropTargetCanvas);
 export default connectedCanvas;

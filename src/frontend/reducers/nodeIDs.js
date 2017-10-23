@@ -2,9 +2,9 @@ import {combineReducers} from 'redux';
 import {deepFreeze} from 'deep-freeze';
 import {expect} from 'expect';
 
-export const fetchBoxIDsHasErrored = (state = false, action) => {
+export const fetchNodeIDsHasErrored = (state = false, action) => {
     switch (action.type) {
-        case 'FETCH_BOX_IDS_HAS_ERRORED':
+        case 'FETCH_NODE_IDS_HAS_ERRORED':
             return action.hasErrored;
 
         default:
@@ -12,19 +12,19 @@ export const fetchBoxIDsHasErrored = (state = false, action) => {
     }
 };
 
-export const fetchBoxIDsIsLoading = (state = false, action) => {
+export const fetchNodeIDsIsLoading = (state = false, action) => {
     switch (action.type) {
-        case 'FETCH_BOX_IDS_IS_LOADING':
+        case 'FETCH_NODE_IDS_IS_LOADING':
             return action.isLoading;
         default:
             return state;
     }
 };
 
-export const boxIDs = (state = [], action) => {
+export const nodeIDs = (state = [], action) => {
   switch (action.type) {
-    case 'FETCH_BOX_IDS_SUCCESS':
-      return action.boxIds;
+    case 'FETCH_NODE_IDS_SUCCESS':
+      return action.nodeIds;
     default:
       return state;
   }
@@ -35,10 +35,10 @@ export const boxIDs = (state = [], action) => {
 //////////TESTS////////////
 ///////////////////////////
 /*
-const testAddBox = () => {
+const testAddNode = () => {
   const stateBefore = [];
   const action = {
-    type: 'ADD_BOX',
+    type: 'ADD_NODE',
     id: 'testUID123akls-asdlkj2939949-4u58995',
     label: 'testtest'
   };
@@ -51,9 +51,9 @@ const testAddBox = () => {
 
   deepFreeze(stateBefore);
   deepFreeze(action);
-  expect(boxIDs(stateBefore, action)).toEqual(stateAfter);
+  expect(nodeIDs(stateBefore, action)).toEqual(stateAfter);
 };
 
-testAddBox();
+testAddNode();
 console.log('All tests passed!');
 */

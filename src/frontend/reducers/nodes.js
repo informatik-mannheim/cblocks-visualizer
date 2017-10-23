@@ -1,77 +1,75 @@
 import {combineReducers} from 'redux';
 import {deepFreeze} from 'deep-freeze';
 import {expect} from 'expect';
+import {Actions} from '../Constants';
 
-export function boxes(boxes = [], action) {
-  if (action.type === 'ADD_BOX') {
-    
-    Object.assign(action.box, {xPos: action.xPos}, {yPos: action.yPos});
+export function nodes (nodes = [], action) {
+  if (action.type === Actions.ADD_NODE) {
+    Object.assign(action.node, {xPos: action.xPos}, {yPos: action.yPos});
     return [
-      ...boxes,
-      action.box
+      ...nodes,
+      action.node
     ];
   } else {
-    return boxes.map(box => reduceBox(box, action))
+    return nodes.map(node => reduceNode(node, action))
   }
 }
 
-export function reduceBox(box, action) {
+export function reduceNode (node, action) {
 
-  if (box._id !== action.id) {
-    return box;
+  if (node._id !== action.id) {
+    return node;
   }
 
   switch (action.type) {
-    case 'MOVE_BOX':
-      let movedBox = Object.assign({}, box, {
+    case 'MOVE_NODE':
+      const movedNode = Object.assign({}, node, {
         xPos: action.xPos,
         yPos: action.yPos
         });
-      return movedBox;
-    case 'REMOVE_BOX':
+      return movedNode;
+    case 'REMOVE_NODE':
       //TODO: implement
       return [
         ...state, {
           _id: action.id
         }
       ];
-      break;
     default:
-      return box;
+      return node;
   }
 }
 
-export const fetchBoxHasErrored = (state = false, action) => {
+export const fetchNodeHasErrored = (state = false, action) => {
   switch (action.type) {
-    case 'FETCH_BOX_HAS_ERRORED':
+    case 'FETCH_NODE_HAS_ERRORED':
       return action.hasErrored;
 
     default:
       return state;
   }
-}
+};
 
-export const fetchBoxIsLoading = (state = false, action) => {
+export const fetchNodeIsLoading = (state = false, action) => {
   switch (action.type) {
-    case 'FETCH_BOX_IS_LOADING':
+    case 'FETCH_NODE_IS_LOADING':
       return action.isLoading;
 
     default:
       return state;
   }
-}
+};
 
-export const box = (state = [], action) => {
+export const node = (state = [], action) => {
   switch (action.type) {
-    case 'FETCH_BOX_SUCCESS':
-      return action.box;
-      break;
+    case 'FETCH_NODE_SUCCESS':
+      return action.node;
     default:
       return state;
-  };
-}
+  }
+};
 
-const testMoveBox = () => {
+const testMoveNode = () => {
   const stateBefore = [
     {
       _id: 'testUID123akls-asdlkj2939949-4u58995',
@@ -86,7 +84,7 @@ const testMoveBox = () => {
     }
   ];
   const action = {
-    type: 'MOVE_BOX',
+    type: 'MOVE_NODE',
     id: 'testUID123akls-asdlkj2939949-4u58995',
     xPos: 500,
     yPos: 400
@@ -104,13 +102,12 @@ const testMoveBox = () => {
       yPos: 0
     }
   ];
-
-  var deepFreeze = require('deep-freeze');
+  const deepFreeze = require('deep-freeze');
   deepFreeze(stateBefore);
   deepFreeze(action);
 
-  var expect = require('expect');
-  expect(boxes(stateBefore, action)).toEqual(stateAfter);
+  const expect = require('expect');
+  expect(nodes(stateBefore, action)).toEqual(stateAfter);
 };
 
-testMoveBox();
+testMoveNode();

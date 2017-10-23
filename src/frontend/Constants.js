@@ -1,8 +1,25 @@
-export const URLs = {
-  FETCH_BOX_IDS_URL: 'http://localhost:9999/boxes/ids',
-  FETCH_BOX_URL: 'http://localhost:9999/boxes/'
+const URLs = {
+  FETCH_NODE_IDS_URL: 'http://localhost:9999/boxes/ids',
+  FETCH_NODE_URL: 'http://localhost:9999/boxes/'
 };
 
-export const ItemTypes = {
-  BOX: 'box'
+const ItemTypes = {
+  NODE: 'node'
+};
+
+const Actions = {
+  ADD_NODE: 'ADD_NODE',
+  ADD_SENSOR: 'ADD_SENSOR',
+  FETCH_NODE_IDS_HAS_ERRORED: 'FETCH_NODE_IDS_HAS_ERRORED',
+  FETCH_NODE_IDS_IS_LOADING: 'FETCH_NODE_IDS_IS_LOADING',
+  FETCH_NODE_IDS_SUCCESS: 'FETCH_NODE_IDS_SUCCESS',
+  FETCH_NODE_HAS_ERRORED: 'FETCH_NODE_HAS_ERRORED',
+  FETCH_NODE_IS_LOADING: 'FETCH_NODE_IS_LOADING',
+  FETCH_NODE_SUCCESS: 'FETCH_NODE_SUCCESS'
+};
+
+export {
+  URLs,
+  ItemTypes,
+  Actions
 };

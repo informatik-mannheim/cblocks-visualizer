@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DragLayer } from 'react-dnd';
 import {ItemTypes} from '../Constants';
-import BoxDragPreview from './BoxDragPreview';
+import NodeDragPreview from './NodeDragPreview';
 
 const layerStyles = {
   position: 'fixed',
@@ -35,8 +35,8 @@ class CustomDragLayer extends Component {
 
   renderItem (type, item) {
     switch (type) {
-      case ItemTypes.BOX:
-        return (<BoxDragPreview label={item.label} />);
+      case ItemTypes.NODE:
+        return (<NodeDragPreview label={item.label} />);
       default:
         return null;
     }

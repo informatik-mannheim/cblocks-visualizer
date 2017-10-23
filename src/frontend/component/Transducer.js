@@ -3,25 +3,25 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const styles = {
-  borderTop: '1px solid black',
+  borderTop: '1px solid black'
 };
 
 class Transducer extends Component {
 
-  render() {
+  render () {
     return (
     <div style={styles}>
       {this.props.description}
     </div>
-    )
+  );
   }
 
 }
 
 Transducer.propTypes = {
-  id: PropTypes.string.isRequired,
   description: PropTypes.string,
-  resources: PropTypes.array,
-}
+  id: PropTypes.string.isRequired,
+  resources: PropTypes.array
+};
 
 export default Transducer;

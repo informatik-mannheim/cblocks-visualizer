@@ -12,7 +12,7 @@ const styles = {
   borderRadius: 5
 };
 
-class BoxDragPreview extends Component {
+class NodeDragPreview extends Component {
 
   render () {
     const { label } = this.props;
@@ -26,7 +26,7 @@ class BoxDragPreview extends Component {
   }
 }
 
-BoxDragPreview.propTypes = {
+NodeDragPreview.propTypes = {
   label: PropTypes.string.isRequired
 };
-export default BoxDragPreview;
+export default NodeDragPreview;

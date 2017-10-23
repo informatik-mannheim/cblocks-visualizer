@@ -8,7 +8,7 @@ import Transducer from './Transducer';
 import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 import {Button} from 'react-toolbox/lib/button';
 
-const boxSource = {
+const nodeSource = {
   beginDrag (props) {
     // Return the data describing the dragged item
     //const item = { id: props.id };
@@ -40,7 +40,7 @@ function collect (cnnct, monitor) {
   };
 }
 
-function getBoxStyles (props) {
+function getNodeStyles (props) {
   const { xPos, yPos, isDragging } = props;
   const transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
 
@@ -54,7 +54,7 @@ function getBoxStyles (props) {
   };
 }
 
-class Box extends Component {
+class Node extends Component {
 
   componentDidMount () {
       // Use empty image as a drag preview so browsers don't draw it
@@ -70,7 +70,7 @@ class Box extends Component {
     console.log(this.props.transducers);
 
     return this.props.connectDragSource(
-      <div style={getBoxStyles(this.props)}>
+      <div style={getNodeStyles(this.props)}>
         <Card style={{width: '350px'}}>
           <CardTitle
             title={this.props.label}
@@ -92,7 +92,7 @@ class Box extends Component {
   <Transducer key={t} id={t} description={t} />
 ))}
 */
-Box.propTypes = {
+Node.propTypes = {
   connectDragPreview: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   height: PropTypes.number,
@@ -105,25 +105,25 @@ Box.propTypes = {
   yPos: PropTypes.number.isRequired
 };
 
-Box.defaultProps = {
+Node.defaultProps = {
   width: 400,
   height: 100,
-  label: 'MyBox'
+  label: 'MyNode'
 };
 
 const mapStateToProps = (state, ownProps) => {
-  let thisBoxIndex;
-  for (let i = 0; i < state.boxes.length; i++){
-    if (ownProps.id.localeCompare(state.boxes[i]._id) === 0) {
-      thisBoxIndex = i;
+  let thisNodeIndex;
+  for (let i = 0; i < state.nodes.length; i++){
+    if (ownProps.id.localeCompare(state.nodes[i]._id) === 0) {
+      thisNodeIndex = i;
     }
   }
   return {
-          xPos: state.boxes[thisBoxIndex].xPos,
-          yPos: state.boxes[thisBoxIndex].yPos
+          xPos: state.nodes[thisNodeIndex].xPos,
+          yPos: state.nodes[thisNodeIndex].yPos
         };
 };
 
-const connectedBox = connect(mapStateToProps)(Box);
-const dragSourceBox = DragSource(ItemTypes.BOX, boxSource, collect)(connectedBox);
-export default dragSourceBox;
+const connectedNode = connect(mapStateToProps)(Node);
+const dragSourceNode = DragSource(ItemTypes.NODE, nodeSource, collect)(connectedNode);
+export default dragSourceNode;

@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
 import {deepFreeze} from 'deep-freeze';
 import {expect} from 'expect';
-import {fetchBoxIDsHasErrored, fetchBoxIDsIsLoading, boxIDs} from './boxIDs';
-import {boxes, fetchBoxHasErrored, fetchBoxIsLoading, box} from './boxes';
+import {fetchNodeIDsHasErrored, fetchNodeIDsIsLoading, nodeIDs} from './nodeIDs';
+import {nodes, fetchNodeHasErrored, fetchNodeIsLoading, node} from './nodes';
 
 const sensors = (state = [], action) => {
   switch (action.type) {
@@ -20,11 +20,11 @@ const sensors = (state = [], action) => {
 };
 
 const rootReducer = combineReducers({
-  boxes,
+  nodes,
   sensors,
-  boxIDs,
-  fetchBoxIDsIsLoading,
-  fetchBoxIDsHasErrored
+  nodeIDs,
+  fetchNodeIDsIsLoading,
+  fetchNodeIDsHasErrored
 });
 
 export default rootReducer;
@@ -32,10 +32,10 @@ export default rootReducer;
 ///////////////////////////
 //////////TESTS////////////
 ///////////////////////////
-const testAddBox = () => {
+const testAddNode = () => {
   const stateBefore = [];
   const action = {
-    type: 'ADD_BOX',
+    type: 'ADD_NODE',
     id: 'testUID123akls-asdlkj2939949-4u58995',
     label: 'testtest'
   };
@@ -45,17 +45,12 @@ const testAddBox = () => {
       label: 'testtest'
     }
   ];
-
-  //deepFreeze(stateBefore);
-  //deepFreeze(action);
-
-  //expect(boxes(stateBefore, action)).toEqual(stateAfter);
 };
 
-const testAddBoxEmpty = () => {
+const testAddNodeEmpty = () => {
   const stateBefore = [];
   const action = {
-    type: 'ADD_BOX',
+    type: 'ADD_NODE',
     id: 'testUID123akls-asdlkj2939949-4u58995',
     label: 'testtest'
   };
