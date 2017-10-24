@@ -1,6 +1,6 @@
-# cblocks
+# cBlocks
 
-A prototyping platform developed for the BMBF project ProFi.
+An IoT prototyping platform developed for the BMBF project ProFi.
 
 ### Install & Run
 
