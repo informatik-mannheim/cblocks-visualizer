@@ -22,13 +22,13 @@ export function reduceNode (node, action) {
   }
 
   switch (action.type) {
-    case 'MOVE_NODE':
+    case Constants.Actions.MOVE_NODE:
       const movedNode = Object.assign({}, node, {
         xPos: action.xPos,
         yPos: action.yPos
         });
       return movedNode;
-    case 'REMOVE_NODE':
+    case Constants.Actions.REMOVE_NODE:
       //TODO: implement
       return [
         ...state, {
@@ -42,7 +42,7 @@ export function reduceNode (node, action) {
 
 export const fetchNodeHasErrored = (state = false, action) => {
   switch (action.type) {
-    case 'FETCH_NODE_HAS_ERRORED':
+    case Constants.Actions.FETCH_NODE_HAS_ERRORED:
       return action.hasErrored;
 
     default:
@@ -52,7 +52,7 @@ export const fetchNodeHasErrored = (state = false, action) => {
 
 export const fetchNodeIsLoading = (state = false, action) => {
   switch (action.type) {
-    case 'FETCH_NODE_IS_LOADING':
+    case Constants.Actions.FETCH_NODE_IS_LOADING:
       return action.isLoading;
 
     default:
@@ -62,7 +62,7 @@ export const fetchNodeIsLoading = (state = false, action) => {
 
 export const node = (state = [], action) => {
   switch (action.type) {
-    case 'FETCH_NODE_SUCCESS':
+    case Constants.Actions.FETCH_NODE_SUCCESS:
       return action.node;
     default:
       return state;
