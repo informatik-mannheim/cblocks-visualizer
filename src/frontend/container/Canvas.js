@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import Node from './Node';
-import Constants from '../constants/index.js';
+import Constants from '../constants/';
 import * as action from '../action/';
 import { DropTarget } from 'react-dnd';
 

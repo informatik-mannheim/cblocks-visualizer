@@ -1,4 +1,4 @@
-import Constants from '../constants/index.js';
+import Constants from '../constants/';
 //TODO: make syntax the same everywhere...
 
 export const addNode = (node, xPos = 0, yPos = 0) => ({type: Constants.Actions.ADD_NODE, node, xPos, yPos});

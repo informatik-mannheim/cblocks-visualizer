@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import {deepFreeze} from 'deep-freeze';
 import {expect} from 'expect';
-import Constants from '../constants/index.js';
+import Constants from '../constants/';
 
 export function nodes (nodes = [], action) {
   if (action.type === Constants.Actions.ADD_NODE) {

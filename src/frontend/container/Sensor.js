@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Constants from '../constants/index.js';
+import Constants from '../constants/.js';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
@@ -85,11 +85,6 @@ class Sensor extends Component {
   }
 }
 
-/*
-{this.props.transducers.map((t) => (
-  <Sensor key={t} id={t} description={t} />
-))}
-*/
 Sensor.propTypes = {
   connectDragPreview: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
