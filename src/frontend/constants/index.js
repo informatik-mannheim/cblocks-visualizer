@@ -1,11 +1,11 @@
 import Actions from './Actions';
-import ReactDnDConstants from './ReactDnDConstants';
+import ItemTypes from './ItemTypes';
 import ReactToolboxVariables from './ReactToolboxVariables';
 import URLs from './URLs';
 
-export {
+export default {
   Actions,
-  ReactDnDConstants,
+  ItemTypes,
   ReactToolboxVariables,
   URLs
 };

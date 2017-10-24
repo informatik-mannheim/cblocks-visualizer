@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { ItemTypes } from '../Constants';
+import Constants from '../constants/index.js';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
-import Transducer from './Transducer';
+//import Transducer from './Transducer';
 import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 import {Button} from 'react-toolbox/lib/button';
 import AddButton from '../component/AddButton.js';
@@ -125,5 +125,5 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const connectedNode = connect(mapStateToProps)(Node);
-const dragSourceNode = DragSource(ItemTypes.NODE, nodeSource, collect)(connectedNode);
+const dragSourceNode = DragSource(Constants.ItemTypes.NODE, nodeSource, collect)(connectedNode);
 export default dragSourceNode;

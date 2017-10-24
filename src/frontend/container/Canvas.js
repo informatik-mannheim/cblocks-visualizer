@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import Node from './Node';
-import {URLs, ItemTypes} from '../Constants';
+import Constants from '../constants/index.js';
 import * as action from '../action/';
 import { DropTarget } from 'react-dnd';
 
@@ -80,7 +80,7 @@ function collect (cnnct, monitor) {
 class Canvas extends Component {
 
   componentDidMount () {
-    this.props.fetchNodeIDs(URLs.FETCH_NODE_IDS_URL);
+    this.props.fetchNodeIDs(Constants.URLs.FETCH_NODE_IDS_URL);
   }
   //TODO: move nodeId fetching to App.
   componentWillReceiveProps (nextProps) {
@@ -120,7 +120,9 @@ class Canvas extends Component {
       <div>
           <div style={dropZoneStyle}/>
           {this.props.nodes.map((b) => (
-            <Node key={b._id} id={b._id} xPos={b.xPos} yPos={b.yPos} label={b.label} transducers={b.transducers}/>
+            <div key={b._id}>
+              <Node id={b._id} xPos={b.xPos} yPos={b.yPos} label={b.label} transducers={b.transducers}/>
+            </div>
           ))}
       </div>
     );
@@ -129,8 +131,6 @@ class Canvas extends Component {
 
 
 Canvas.propTypes = {
-  nodeIds: PropTypes.array.isRequired,
-  nodes: PropTypes.array,
   canDrop: PropTypes.bool,
   connectDropTarget: PropTypes.func,
   fetchNodeIDs: PropTypes.func.isRequired,
@@ -138,7 +138,9 @@ Canvas.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   isOver: PropTypes.bool,
   isOverCurrent: PropTypes.bool,
-  moveANode: PropTypes.func
+  moveANode: PropTypes.func,
+  nodeIds: PropTypes.array.isRequired,
+  nodes: PropTypes.array
 };
 
 Canvas.defaultProps = {
@@ -157,6 +159,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const dropTargetCanvas = DropTarget(ItemTypes.NODE, canvasTarget, collect)(Canvas);
+const dropTargetCanvas = DropTarget([Constants.ItemTypes.NODE, Constants.ItemTypes.TRANSDUCER], canvasTarget, collect)(Canvas);
 const connectedCanvas = connect(mapStateToProps, mapDispatchToProps)(dropTargetCanvas);
 export default connectedCanvas;

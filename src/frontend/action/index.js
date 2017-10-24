@@ -1,21 +1,21 @@
-import {URLs, Actions} from '../Constants';
+import Constants from '../constants/index.js';
 //TODO: make syntax the same everywhere...
 
-export const addNode = (node, xPos = 0, yPos = 0) => ({type: Actions.ADD_NODE, node, xPos, yPos});
+export const addNode = (node, xPos = 0, yPos = 0) => ({type: Constants.Actions.ADD_NODE, node, xPos, yPos});
 
 
 export const fetchNodeIDsHasErrored = (bool) =>
-  ({type: Actions.FETCH_NODE_IDS_HAS_ERRORED, hasErrored: bool});
+  ({type: Constants.Actions.FETCH_NODE_IDS_HAS_ERRORED, hasErrored: bool});
 
 export const fetchNodeIDsIsLoading = (bool) => {
-  return {type: Actions.FETCH_NODE_IDS_IS_LOADING, isLoading: bool};
+  return {type: Constants.Actions.FETCH_NODE_IDS_IS_LOADING, isLoading: bool};
 };
 
 export const fetchNodeHasErrored = (bool) =>
-  ({type: Actions.FETCH_NODE_HAS_ERRORED, hasErrored: bool});
+  ({type: Constants.Actions.FETCH_NODE_HAS_ERRORED, hasErrored: bool});
 
 export const fetchNodeIsLoading = (bool) =>
-  ({type: Actions.FETCH_NODE_IS_LOADING, isLoading: bool});
+  ({type: Constants.Actions.FETCH_NODE_IS_LOADING, isLoading: bool});
 
 export const fetchNode = (url) => {
   return (dispatch) => {
@@ -37,7 +37,7 @@ export const fetchNode = (url) => {
 export const fetchNodeIDsSuccess = (nodeIds) => {
   return (dispatch) => {
     for (let i = 0; i < nodeIds.length; i++){
-      dispatch(fetchNode(URLs.FETCH_NODE_URL + nodeIds[i]));
+      dispatch(fetchNode(Constants.URLs.FETCH_NODE_URL + nodeIds[i]));
     }
   };
 };
@@ -59,7 +59,7 @@ export const fetchNodeIDs = (url) => {
 };
 
 export const fetchNodeSuccess = (node) => {
-  return {type: Actions.FETCH_NODE_SUCCESS, node};
+  return {type: Constants.Actions.FETCH_NODE_SUCCESS, node};
 };
 
 export const moveNode = (nodeId, xPos, yPos) => {

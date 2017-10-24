@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { ItemTypes } from '../Constants';
+import Constants from '../constants/index.js';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
-import {Button} from 'react-toolbox/lib/button';
 import AddButton from '../component/AddButton.js';
 
-const nodeSource = {
+const transducerSource = {
   beginDrag (props) {
     // Return the data describing the dragged item
     //const item = { id: props.id };
@@ -40,7 +39,7 @@ function collect (cnnct, monitor) {
   };
 }
 
-function getNodeStyles (props) {
+function getSensorStyles (props) {
   const { xPos, yPos, isDragging } = props;
   const transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
 
@@ -55,7 +54,7 @@ function getNodeStyles (props) {
 }
 
 
-class Node extends Component {
+class Sensor extends Component {
 
   componentDidMount () {
       // Use empty image as a drag preview so browsers don't draw it
@@ -70,11 +69,11 @@ class Node extends Component {
   render (){
     //console.log(this.props.transducers);
     return this.props.connectDragSource(
-      <div style={getNodeStyles(this.props)}>
+      <div style={getSensorStyles(this.props)}>
         <Card style={{width: '350px'}}>
           <CardTitle
             title={this.props.label}
-            subtitle="cBlocks Node"
+            subtitle="cBlocks Sensor"
           />
           <CardText>'Blabla'</CardText>
           <CardActions style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
@@ -88,41 +87,40 @@ class Node extends Component {
 
 /*
 {this.props.transducers.map((t) => (
-  <Transducer key={t} id={t} description={t} />
+  <Sensor key={t} id={t} description={t} />
 ))}
 */
-Node.propTypes = {
+Sensor.propTypes = {
   connectDragPreview: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   height: PropTypes.number,
   id: PropTypes.string.isRequired,
   isDragging: PropTypes.bool.isRequired,
   label: PropTypes.string,
-  transducers: PropTypes.array,
   width: PropTypes.number,
   xPos: PropTypes.number.isRequired,
   yPos: PropTypes.number.isRequired
 };
 
-Node.defaultProps = {
+Sensor.defaultProps = {
   width: 400,
   height: 100,
-  label: 'MyNode'
+  label: 'MySensor'
 };
 
 const mapStateToProps = (state, ownProps) => {
-  let thisNodeIndex;
+  let thisSensorIndex;
   for (let i = 0; i < state.nodes.length; i++){
     if (ownProps.id.localeCompare(state.nodes[i]._id) === 0) {
-      thisNodeIndex = i;
+      thisSensorIndex = i;
     }
   }
   return {
-          xPos: state.nodes[thisNodeIndex].xPos,
-          yPos: state.nodes[thisNodeIndex].yPos
+          xPos: state.nodes[thisSensorIndex].xPos,
+          yPos: state.nodes[thisSensorIndex].yPos
         };
 };
 
-const connectedNode = connect(mapStateToProps)(Node);
-const dragSourceNode = DragSource(ItemTypes.NODE, nodeSource, collect)(connectedNode);
-export default dragSourceNode;
+const connectedSensor = connect(mapStateToProps)(Sensor);
+const dragSourceSensor = DragSource(Constants.ItemTypes.SENSOR, transducerSource, collect)(connectedSensor);
+export default dragSourceSensor;

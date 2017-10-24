@@ -1,4 +1,4 @@
-export const Actions = {
+export default {
   ADD_NODE: 'ADD_NODE',
   ADD_SENSOR: 'ADD_SENSOR',
   FETCH_NODE_IDS_HAS_ERRORED: 'FETCH_NODE_IDS_HAS_ERRORED',

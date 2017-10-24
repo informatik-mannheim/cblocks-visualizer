@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 import {deepFreeze} from 'deep-freeze';
 import {expect} from 'expect';
-import {Actions} from '../Constants';
+import Constants from '../constants/index.js';
 
 export function nodes (nodes = [], action) {
-  if (action.type === Actions.ADD_NODE) {
+  if (action.type === Constants.Actions.ADD_NODE) {
     Object.assign(action.node, {xPos: action.xPos}, {yPos: action.yPos});
     return [
       ...nodes,

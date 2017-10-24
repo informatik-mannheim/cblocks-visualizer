@@ -1,4 +1,4 @@
-export const reactToolboxVariables = {
+export default {
 		'color-primary': '#405c8a',
     'color-accent': '#4CAF50',
 		'color-primary-dark': '#405c8a',
