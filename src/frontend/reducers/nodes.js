@@ -11,7 +11,7 @@ export function nodes (nodes = [], action) {
       action.node
     ];
   } else {
-    return nodes.map(node => reduceNode(node, action))
+    return nodes.map(node => reduceNode(node, action));
   }
 }
 

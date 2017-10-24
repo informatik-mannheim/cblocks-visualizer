@@ -124,6 +124,11 @@ class Canvas extends Component {
               <Node id={b._id} xPos={b.xPos} yPos={b.yPos} label={b.label} transducers={b.transducers}/>
             </div>
           ))}
+          {this.props.sensors.map((b) => (
+            <div key={b._id}>
+              <Node id={b._id} xPos={b.xPos} yPos={b.yPos} label={b.label} transducers={b.transducers}/>
+            </div>
+          ))}
       </div>
     );
   }
@@ -140,7 +145,8 @@ Canvas.propTypes = {
   isOverCurrent: PropTypes.bool,
   moveANode: PropTypes.func,
   nodeIds: PropTypes.array.isRequired,
-  nodes: PropTypes.array
+  nodes: PropTypes.array,
+  sensors: PropTypes.array
 };
 
 Canvas.defaultProps = {
@@ -148,7 +154,7 @@ Canvas.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  return {nodes: state.nodes, nodeIds: state.nodeIDs, hasErrored: state.fetchNodeIDsHasErrored, isLoading: state.fetchNodeIDsIsLoading};
+  return {nodes: state.nodes, nodeIds: state.nodeIDs, sensors: state.sensors, hasErrored: state.fetchNodeIDsHasErrored, isLoading: state.fetchNodeIDsIsLoading};
 };
 
 const mapDispatchToProps = (dispatch) => {
