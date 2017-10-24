@@ -5,9 +5,9 @@ import { ItemTypes } from '../Constants';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import Transducer from './Transducer';
-import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
+import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 import {Button} from 'react-toolbox/lib/button';
-import AddButton from './AddButton.js';
+import AddButton from '../component/AddButton.js';
 
 const nodeSource = {
   beginDrag (props) {
