@@ -30,6 +30,7 @@
     "react-toolbox": "^2.0.0-beta.5",
     "redux": "^3.6.0",
     "redux-devtools-extension": "^2.13.2",
+    "redux-subscriber": "^1.1.0",
     "redux-thunk": "^2.2.0",
     "whatwg-fetch": "^2.0.3"
   },

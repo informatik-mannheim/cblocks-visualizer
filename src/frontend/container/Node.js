@@ -59,11 +59,8 @@ function getNodeStyles (props) {
 class Node extends Component {
 
   componentDidMount () {
-      // Use empty image as a drag preview so browsers don't draw it
-      // and we can draw whatever we want on the custom drag layer instead.
+    //Drag and Drop preview
     this.props.connectDragPreview(getEmptyImage(), {
-      // IE fallback: specify that we'd rather screenshot the node
-      // when it already knows it's being dragged so we can hide it with CSS.
       captureDraggingState: true
     });
   }
@@ -113,14 +110,14 @@ Node.defaultProps = {
 
 const mapStateToProps = (state, ownProps) => {
   let thisNodeIndex;
-  for (let i = 0; i < state.nodes.length; i++){
-    if (ownProps.id.localeCompare(state.nodes[i]._id) === 0) {
+  for (let i = 0; i < state.nodes.count; i++){
+    if (ownProps.id.localeCompare(state.nodes.all_nodes[i]._id) === 0) {
       thisNodeIndex = i;
     }
   }
   return {
-          xPos: state.nodes[thisNodeIndex].xPos,
-          yPos: state.nodes[thisNodeIndex].yPos
+          xPos: state.nodes.all_nodes[thisNodeIndex].xPos,
+          yPos: state.nodes.all_nodes[thisNodeIndex].yPos
         };
 };
 

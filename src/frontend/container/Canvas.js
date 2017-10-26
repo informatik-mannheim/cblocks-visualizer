@@ -7,6 +7,7 @@ import Constants from '../constants/';
 import * as action from '../action/';
 import { DropTarget } from 'react-dnd';
 
+
 //import { Button } from 'react-toolbox/lib/button';
 
 /**
@@ -119,15 +120,8 @@ class Canvas extends Component {
     return connectDropTarget(
       <div>
           <div style={dropZoneStyle}/>
-          {this.props.nodes.map((b) => (
-            <div key={b._id}>
-              <Node id={b._id} xPos={b.xPos} yPos={b.yPos} label={b.label} transducers={b.transducers}/>
-            </div>
-          ))}
-          {this.props.sensors.map((b) => (
-            <div key={b._id}>
-              <Node id={b._id} xPos={b.xPos} yPos={b.yPos} label={b.label} transducers={b.transducers}/>
-            </div>
+          {this.props.nodes.all_nodes.map((node) => (
+              <Node key={node._id} id={node._id} xPos={node.xPos} yPos={node.yPos} label={node.label} sensors={node.sensors}/>
           ))}
       </div>
     );
@@ -145,7 +139,7 @@ Canvas.propTypes = {
   isOverCurrent: PropTypes.bool,
   moveANode: PropTypes.func,
   nodeIds: PropTypes.array.isRequired,
-  nodes: PropTypes.array,
+  nodes: PropTypes.object,
   sensors: PropTypes.array
 };
 
@@ -165,6 +159,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const dropTargetCanvas = DropTarget([Constants.ItemTypes.NODE, Constants.ItemTypes.TRANSDUCER], canvasTarget, collect)(Canvas);
+const dropTargetCanvas = DropTarget([Constants.ItemTypes.NODE, Constants.ItemTypes.SENSOR], canvasTarget, collect)(Canvas);
 const connectedCanvas = connect(mapStateToProps, mapDispatchToProps)(dropTargetCanvas);
 export default connectedCanvas;

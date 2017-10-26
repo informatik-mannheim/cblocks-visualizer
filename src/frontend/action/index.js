@@ -3,7 +3,6 @@ import Constants from '../constants/';
 
 export const addNode = (node, xPos = 0, yPos = 0) => ({type: Constants.Actions.ADD_NODE, node, xPos, yPos});
 
-
 export const fetchNodeIDsHasErrored = (bool) =>
   ({type: Constants.Actions.FETCH_NODE_IDS_HAS_ERRORED, hasErrored: bool});
 

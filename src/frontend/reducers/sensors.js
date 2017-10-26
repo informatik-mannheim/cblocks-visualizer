@@ -11,7 +11,7 @@ export function sensors (sensors = [], action) {
       action.sensor
     ];
   } else {
-    return sensors.map(sensor => reduceSensor(sensor, action))
+    return sensors.map(sensor => reduceSensor(sensor, action));
   }
 }
 

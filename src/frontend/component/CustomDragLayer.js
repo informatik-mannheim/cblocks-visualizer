@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DragLayer } from 'react-dnd';
-import {ItemTypes} from '../Constants';
+import Constants from '../constants/';
 import NodeDragPreview from './NodeDragPreview';
 
 const layerStyles = {
@@ -35,7 +35,7 @@ class CustomDragLayer extends Component {
 
   renderItem (type, item) {
     switch (type) {
-      case ItemTypes.NODE:
+      case Constants.ItemTypes.NODE:
         return (<NodeDragPreview label={item.label} />);
       default:
         return null;

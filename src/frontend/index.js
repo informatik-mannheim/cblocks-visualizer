@@ -2,19 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { overrideComponentTypeChecker } from 'react-toolbox';
-import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import App from './container/App';
-import rootReducer from './reducers';
+import store from './store';
+import { subscribe } from 'redux-subscriber';
 
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 const rootEl = document.getElementById('app');
 
 const render = () => {
+  const unsubscribe = subscribe('', state => {
+    console.log('STATE HAS CHANGED:');
+    console.log(state);
+  });
+
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
@@ -33,7 +33,7 @@ if (process.env.NODE_ENV !== 'production') {
     )
   ));
   if (module.hot) {
-    module.hot.accept('./component/App', render);
+    module.hot.accept('./container/App', render);
   }
 }
 
