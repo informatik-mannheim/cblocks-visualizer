@@ -1,41 +1,39 @@
-import {combineReducers} from 'redux';
-import {deepFreeze} from 'deep-freeze';
-import {expect} from 'expect';
 import Constants from '../constants/';
 
-export function sensors (sensors = [], action) {
-  if (action.type === Constants.Actions.ADD_SENSOR) {
-    Object.assign(action.sensor, {xPos: action.xPos}, {yPos: action.yPos});
-    return [
-      ...sensors,
-      action.sensor
-    ];
-  } else {
-    return sensors.map(sensor => reduceSensor(sensor, action));
+const initialSensorsState = {
+  count: 0,
+  all_sensors: []
+};
+
+export function sensors (state = initialSensorsState, action) {
+  switch (action.type) {
+    case Constants.Actions.ADD_Sensor:
+      const newSensor = Object.assign({}, action.sensor, {xPos: action.xPos}, {yPos: action.yPos});
+      const newAllSensors = state.all_sensors.concat(newSensor);
+      return {
+        count: newAllSensors.length,
+        all_sensors: newAllSensors
+      };
+    case Constants.Actions.MOVE_SENSOR:
+      return {count: state.count, all_sensors: state.all_sensors.map(n => sensor(n, action))};
+    default:
+      return state;
   }
 }
 
-export function reduceSensor (sensor, action) {
-
-  if (sensor._id !== action.id) {
-    return sensor;
+function sensor (state = {}, action){
+  if (state._id !== action.id) {
+    return state;
   }
 
   switch (action.type) {
     case Constants.Actions.MOVE_SENSOR:
-      const movedSensor = Object.assign({}, sensor, {
+      const movedSensor = Object.assign({}, state, {
         xPos: action.xPos,
         yPos: action.yPos
-        });
+      });
       return movedSensor;
-    case Constants.Actions.REMOVE_SENSOR:
-      //TODO: implement
-      return [
-        ...state, {
-          _id: action.id
-        }
-      ];
     default:
-      return sensor;
+      return state;
   }
 }

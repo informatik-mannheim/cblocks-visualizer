@@ -1,40 +1,4 @@
-import {combineReducers} from 'redux';
-import {deepFreeze} from 'deep-freeze';
-import {expect} from 'expect';
 import Constants from '../constants/';
-
-const update = (state, mutations) =>
-  Object.assign({}, state, mutations);
-
-
-/*
-const initialNodesState = {
-  count: 0,
-  all_nodes: []
-};
-
-export function nodes (state = initialNodesState, action) {
-  if (action.type === Constants.Actions.ADD_NODE) {
-    const newNode = Object.assign({}, action.node, {xPos: action.xPos}, {yPos: action.yPos});
-    const newCount = state.count++;
-
-    const newestNode = update(state, {count: state.count++}, {all_nodes: [...(state.all_nodes), newNode]});
-    //TODO: try this...
-
-    return {count: newCount, all_nodes: [
-      ...state.all_nodes,
-      newNode
-    ]};
-  } else {
-    //if (state.all_nodes !== undefined) {
-    console.log(state);
-    return state.all_nodes.map(node => reduceNode(node, action));
-    //}
-    //return state;
-  }
-}
-
-*/
 
 const initialNodesState = {
   count: 0,
@@ -73,36 +37,6 @@ function node (state = {}, action){
       return state;
   }
 }
-/*
-export function reduceNode (node = {}, action) {
-
-  console.log(node);
-  console.log(action);
-
-  if (node._id !== action.id) {
-    return node;
-  }
-
-  switch (action.type) {
-    case Constants.Actions.MOVE_NODE:
-      console.log(node);
-      const movedNode = Object.assign({}, node, {
-        xPos: action.xPos,
-        yPos: action.yPos
-      });
-      return movedNode;
-    case Constants.Actions.REMOVE_NODE:
-      //TODO: implement
-      return [
-        ...state, {
-          _id: action.id
-        }
-      ];
-    default:
-      return node;
-  }
-}
-*/
 /*
 export const fetchNodeHasErrored = (state = false, action) => {
   switch (action.type) {
