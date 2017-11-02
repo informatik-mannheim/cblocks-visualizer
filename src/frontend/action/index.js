@@ -1,14 +1,12 @@
 import Constants from '../constants/';
-//TODO: make syntax the same everywhere...
 
 export const addNode = (node, xPos = 0, yPos = 0) => ({type: Constants.Actions.ADD_NODE, node, xPos, yPos});
 
 export const fetchNodeIDsHasErrored = (bool) =>
   ({type: Constants.Actions.FETCH_NODE_IDS_HAS_ERRORED, hasErrored: bool});
 
-export const fetchNodeIDsIsLoading = (bool) => {
-  return {type: Constants.Actions.FETCH_NODE_IDS_IS_LOADING, isLoading: bool};
-};
+export const fetchNodeIDsIsLoading = (bool) =>
+({type: Constants.Actions.FETCH_NODE_IDS_IS_LOADING, isLoading: bool});
 
 export const fetchNodeHasErrored = (bool) =>
   ({type: Constants.Actions.FETCH_NODE_HAS_ERRORED, hasErrored: bool});
@@ -24,32 +22,34 @@ export const fetchNode = (url) => {
       if (!response.ok) {
         throw Error(response.statusText);
       }
-
       dispatch(fetchNodeIsLoading(false));
       return response;
     }).then((response) => response.json()
-      ).then((node) => dispatch(addNode(node))
+      ).then(
+        (node) => {
+          dispatch(addNode(node));
+          dispatch(fetchSensorsForNode(node));
+        }
         ).catch(() => dispatch(fetchNodeHasErrored(true)));
   };
 };
 
 export const fetchNodeIDsSuccess = (nodeIds) => {
   return (dispatch) => {
-    for (let i = 0; i < nodeIds.length; i++){
-      dispatch(fetchNode(Constants.URLs.FETCH_NODE_URL + nodeIds[i]));
-    }
+    nodeIds.forEach((nodeId) => {
+      dispatch(fetchNode(Constants.URLs.FETCH_NODE_URL + nodeId));
+    });
   };
 };
 
-export const fetchNodeIDs = (url) => {
+export const fetchNodeIDs = () => {
   return (dispatch) => {
     dispatch(fetchNodeIDsIsLoading(true));
-    fetch(url).then((response) => {
+    fetch(Constants.URLs.FETCH_NODE_IDS_URL).then((response) => {
       if (!response.ok) {
         throw Error(response.statusText);
       }
       dispatch(fetchNodeIDsIsLoading(false));
-
       return response;
     }).then((response) => response.json()).then((nodeIds) =>
       dispatch(fetchNodeIDsSuccess(nodeIds))
@@ -62,5 +62,44 @@ export const fetchNodeSuccess = (node) => {
 };
 
 export const moveNode = (nodeId, xPos, yPos) => {
-  return {type: 'MOVE_NODE', id: nodeId, xPos: xPos, yPos: yPos};
+  return {type: Constants.Actions.MOVE_NODE, id: nodeId, xPos: xPos, yPos: yPos};
+};
+
+export const addSensor = (sensor, xPos = 0, yPos = 0) => {
+  console.log('addSensor called');
+  return {type: Constants.Actions.ADD_SENSOR, sensor, xPos, yPos};
+};
+
+export const fetchSensorHasErrored = (bool) =>
+  ({type: Constants.Actions.FETCH_SENSOR_HAS_ERRORED, hasErrored: bool});
+
+export const fetchSensorIsLoading = (bool) =>
+  ({type: Constants.Actions.FETCH_SENSOR_IS_LOADING, isLoading: bool});
+
+export const fetchSensorSuccess = (sensor) =>
+  ({type: Constants.Actions.FETCH_SENSOR_SUCCESS, sensor});
+
+export const fetchSensor = (url) => {
+  console.log('fetchSensor called');
+  return (dispatch) => {
+    dispatch(fetchSensorIsLoading(true));
+    fetch(url).then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      dispatch(fetchSensorIsLoading(false));
+      return response;
+
+    }).then((response) => response.json()
+  ).then((sensor) => dispatch(addSensor(sensor))
+        ).catch(() => dispatch(fetchSensorHasErrored(true)));
+  };
+};
+
+export const fetchSensorsForNode = (node) => {
+  return (dispatch) => {
+    node.sensors.forEach((sensorId) => {
+      dispatch(fetchSensor(Constants.URLs.FETCH_SENSORS_URL + sensorId));
+    });
+  };
 };

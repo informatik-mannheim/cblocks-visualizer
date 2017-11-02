@@ -7,7 +7,7 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 import AddButton from '../component/AddButton.js';
 
-const transducerSource = {
+const sensorSource = {
   beginDrag (props) {
     // Return the data describing the dragged item
     //const item = { id: props.id };
@@ -117,5 +117,5 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const connectedSensor = connect(mapStateToProps)(Sensor);
-const dragSourceSensor = DragSource(Constants.ItemTypes.SENSOR, transducerSource, collect)(connectedSensor);
+const dragSourceSensor = DragSource(Constants.ItemTypes.SENSOR, sensorSource, collect)(connectedSensor);
 export default dragSourceSensor;

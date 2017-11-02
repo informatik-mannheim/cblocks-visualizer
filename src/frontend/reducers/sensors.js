@@ -7,7 +7,7 @@ const initialSensorsState = {
 
 export function sensors (state = initialSensorsState, action) {
   switch (action.type) {
-    case Constants.Actions.ADD_Sensor:
+    case Constants.Actions.ADD_SENSOR:
       const newSensor = Object.assign({}, action.sensor, {xPos: action.xPos}, {yPos: action.yPos});
       const newAllSensors = state.all_sensors.concat(newSensor);
       return {
@@ -15,7 +15,7 @@ export function sensors (state = initialSensorsState, action) {
         all_sensors: newAllSensors
       };
     case Constants.Actions.MOVE_SENSOR:
-      return {count: state.count, all_sensors: state.all_sensors.map(n => sensor(n, action))};
+      return {count: state.count, all_sensors: state.all_sensors.map(currentSensor => sensor(currentSensor, action))};
     default:
       return state;
   }

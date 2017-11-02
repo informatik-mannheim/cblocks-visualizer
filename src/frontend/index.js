@@ -5,17 +5,12 @@ import { overrideComponentTypeChecker } from 'react-toolbox';
 import { Provider } from 'react-redux';
 import App from './container/App';
 import store from './store';
-import { subscribe } from 'redux-subscriber';
+
 
 const rootEl = document.getElementById('app');
 
 const render = () => {
-  const unsubscribe = subscribe('', state => {
-    console.log('STATE HAS CHANGED:');
-    console.log(state);
-  });
-
-  ReactDOM.render(
+    ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
         <App/>

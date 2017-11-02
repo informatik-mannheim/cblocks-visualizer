@@ -15,7 +15,7 @@ export function nodes (state = initialNodesState, action) {
         all_nodes: newAllNodes
       };
     case Constants.Actions.MOVE_NODE:
-      return {count: state.count, all_nodes: state.all_nodes.map(n => node(n, action))};
+      return {count: state.all_nodes.length, all_nodes: state.all_nodes.map(n => node(n, action))};
     default:
       return state;
   }
@@ -66,7 +66,7 @@ export const node = (state = '{}', action) => {
       return state;
   }
 };
-
+*/
 const testMoveNode = () => {
   const stateBefore = {
     count: 2,
@@ -149,5 +149,3 @@ const testAddNode = () => {
 //console.log('TEST: ADD_NODE successful');
 //testMoveNode();
 //console.log('TEST: MOVE_NODE successful');
-
-*/

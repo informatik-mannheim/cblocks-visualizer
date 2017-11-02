@@ -6,6 +6,7 @@ import Node from './Node';
 import Constants from '../constants/';
 import * as action from '../action/';
 import { DropTarget } from 'react-dnd';
+import { subscribe } from 'redux-subscriber';
 
 
 //import { Button } from 'react-toolbox/lib/button';
@@ -81,7 +82,10 @@ function collect (cnnct, monitor) {
 class Canvas extends Component {
 
   componentDidMount () {
-    this.props.fetchNodeIDs(Constants.URLs.FETCH_NODE_IDS_URL);
+    this.props.fetchNodeIDs();
+    const unsubscribe = subscribe('nodes.count', state => {
+      console.log(state.nodes.count);
+    });
   }
   //TODO: move nodeId fetching to App.
   componentWillReceiveProps (nextProps) {
@@ -148,13 +152,13 @@ Canvas.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  return {nodes: state.nodes, nodeIds: state.nodeIDs, sensors: state.sensors, hasErrored: state.fetchNodeIDsHasErrored, isLoading: state.fetchNodeIDsIsLoading};
+  return {nodes: state.nodes, nodeIds: state.nodeIDs, sensors: state.sensors.all_sensors, hasErrored: state.fetchNodeIDsHasErrored, isLoading: state.fetchNodeIDsIsLoading};
 };
 
 const mapDispatchToProps = (dispatch) => {
   //TODO: remove moveANode once not needed anymore
   return {
-    fetchNodeIDs: (url) => dispatch(action.fetchNodeIDs(url)),
+    fetchNodeIDs: () => dispatch(action.fetchNodeIDs()),
     moveANode: (id, xPos, yPos) => dispatch(action.moveNode(id, xPos, yPos))
   };
 };
