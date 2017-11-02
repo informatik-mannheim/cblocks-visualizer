@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Constants from '../constants/.js';
+import Constants from '../constants/';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
-import AddButton from '../component/AddButton.js';
+import * as action from '../action/';
 
 const sensorSource = {
   beginDrag (props) {
@@ -24,7 +24,10 @@ const sensorSource = {
     const item = monitor.getItem();
     //console.log('Dropped on compatible target: ' + item);
     const dropResult = monitor.getDropResult();
-    //console.log(dropResult);
+
+    if (dropResult.dropEffect === 'move' && dropResult.item === component.props.id) {
+      component.props.move(component.props.id, dropResult.xPos, dropResult.yPos);
+    }
   }
 };
 
@@ -75,10 +78,8 @@ class Sensor extends Component {
             title={this.props.label}
             subtitle="cBlocks Sensor"
           />
-          <CardText>'Blabla'</CardText>
-          <CardActions style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-              <AddButton floating primary/>
-          </CardActions>
+          <CardText>'TEXTTEXT'</CardText>
+          <CardActions style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}/>
         </Card>
       </div>
     );
@@ -92,6 +93,7 @@ Sensor.propTypes = {
   id: PropTypes.string.isRequired,
   isDragging: PropTypes.bool.isRequired,
   label: PropTypes.string,
+  move: PropTypes.func.isRequired,
   width: PropTypes.number,
   xPos: PropTypes.number.isRequired,
   yPos: PropTypes.number.isRequired
@@ -105,17 +107,24 @@ Sensor.defaultProps = {
 
 const mapStateToProps = (state, ownProps) => {
   let thisSensorIndex;
-  for (let i = 0; i < state.nodes.length; i++){
-    if (ownProps.id.localeCompare(state.nodes[i]._id) === 0) {
+  for (let i = 0; i < state.sensors.count; i++){
+    if (ownProps.id.localeCompare(state.sensors.all_sensors[i]._id) === 0) {
       thisSensorIndex = i;
     }
   }
   return {
-          xPos: state.nodes[thisSensorIndex].xPos,
-          yPos: state.nodes[thisSensorIndex].yPos
+          xPos: state.nodes.all_nodes[thisSensorIndex].xPos,
+          yPos: state.nodes.all_nodes[thisSensorIndex].yPos
         };
 };
 
-const connectedSensor = connect(mapStateToProps)(Sensor);
-const dragSourceSensor = DragSource(Constants.ItemTypes.SENSOR, sensorSource, collect)(connectedSensor);
-export default dragSourceSensor;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    move: (id, xPos, yPos) => dispatch(action.moveSensor(id, xPos, yPos))
+  };
+};
+
+
+const dragSourceSensor = DragSource(Constants.ItemTypes.SENSOR, sensorSource, collect)(Sensor);
+const connectedSensor = connect(mapStateToProps, mapDispatchToProps)(dragSourceSensor);
+export default connectedSensor;

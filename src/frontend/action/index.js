@@ -65,6 +65,10 @@ export const moveNode = (nodeId, xPos, yPos) => {
   return {type: Constants.Actions.MOVE_NODE, id: nodeId, xPos: xPos, yPos: yPos};
 };
 
+export const moveSensor = (sensorId, xPos, yPos) => {
+  return {type: Constants.Actions.MOVE_SENSOR, id: sensorId, xPos: xPos, yPos: yPos};
+};
+
 export const addSensor = (sensor, xPos = 0, yPos = 0) => {
   console.log('addSensor called');
   return {type: Constants.Actions.ADD_SENSOR, sensor, xPos, yPos};

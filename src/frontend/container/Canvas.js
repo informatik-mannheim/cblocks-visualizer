@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import Node from './Node';
+import Sensor from './Sensor';
 import Constants from '../constants/';
 import * as action from '../action/';
 import { DropTarget } from 'react-dnd';
@@ -43,7 +44,7 @@ const canvasTarget = {
     if (monitor.didDrop()) {
       // If you want, you can check whether some nested
       // target already handled drop
-      //console.log('nested target already handled drop. ignored here!');
+      console.log('nested target already handled drop. ignored here!');
       return;
     }
 
@@ -54,12 +55,10 @@ const canvasTarget = {
     const left = Math.round(item.xPos + delta.x);
     const top = Math.round(item.yPos + delta.y);
 
-    component.props.moveANode(item.id, left, top);
-
     // You can also do nothing and return a drop result,
     // which will be available as monitor.getDropResult()
     // in the drag source's endDrag() method
-    return { moved: true };
+    return {item: item.id, xPos: left, yPos: top};
   }
 };
 
@@ -123,10 +122,14 @@ class Canvas extends Component {
 
     return connectDropTarget(
       <div>
-          <div style={dropZoneStyle}/>
+        <div style={dropZoneStyle}>
           {this.props.nodes.all_nodes.map((node) => (
               <Node key={node._id} id={node._id} xPos={node.xPos} yPos={node.yPos} label={node.label} sensors={node.sensors}/>
           ))}
+          {this.props.sensors.all_sensors.map((sensor) => (
+              <Sensor key={sensor._id} id={sensor._id} xPos={sensor.xPos} yPos={sensor.yPos} label={sensor.label} />
+          ))}
+        </div>
       </div>
     );
   }
@@ -141,10 +144,9 @@ Canvas.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   isOver: PropTypes.bool,
   isOverCurrent: PropTypes.bool,
-  moveANode: PropTypes.func,
   nodeIds: PropTypes.array.isRequired,
   nodes: PropTypes.object,
-  sensors: PropTypes.array
+  sensors: PropTypes.object
 };
 
 Canvas.defaultProps = {
@@ -152,14 +154,12 @@ Canvas.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  return {nodes: state.nodes, nodeIds: state.nodeIDs, sensors: state.sensors.all_sensors, hasErrored: state.fetchNodeIDsHasErrored, isLoading: state.fetchNodeIDsIsLoading};
+  return {nodes: state.nodes, nodeIds: state.nodeIDs, sensors: state.sensors, hasErrored: state.fetchNodeIDsHasErrored, isLoading: state.fetchNodeIDsIsLoading};
 };
 
 const mapDispatchToProps = (dispatch) => {
-  //TODO: remove moveANode once not needed anymore
   return {
-    fetchNodeIDs: () => dispatch(action.fetchNodeIDs()),
-    moveANode: (id, xPos, yPos) => dispatch(action.moveNode(id, xPos, yPos))
+    fetchNodeIDs: () => dispatch(action.fetchNodeIDs())
   };
 };
 

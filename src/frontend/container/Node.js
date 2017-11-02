@@ -4,10 +4,9 @@ import PropTypes from 'prop-types';
 import Constants from '../constants/';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
-//import Transducer from './Transducer';
 import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
-import {Button} from 'react-toolbox/lib/button';
 import AddButton from '../component/AddButton.js';
+import * as action from '../action/';
 
 const nodeSource = {
   beginDrag (props) {
@@ -26,7 +25,10 @@ const nodeSource = {
     const item = monitor.getItem();
     //console.log('Dropped on compatible target: ' + item);
     const dropResult = monitor.getDropResult();
-    //console.log(dropResult);
+
+    if (dropResult.dropEffect === 'move' && dropResult.item === component.props.id) {
+      component.props.move(component.props.id, dropResult.xPos, dropResult.yPos);
+    }
   }
 };
 
@@ -84,11 +86,6 @@ class Node extends Component {
   }
 }
 
-/*
-{this.props.transducers.map((t) => (
-  <Transducer key={t} id={t} description={t} />
-))}
-*/
 Node.propTypes = {
   connectDragPreview: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
@@ -96,6 +93,7 @@ Node.propTypes = {
   id: PropTypes.string.isRequired,
   isDragging: PropTypes.bool.isRequired,
   label: PropTypes.string,
+  move: PropTypes.func.isRequired,
   transducers: PropTypes.array,
   width: PropTypes.number,
   xPos: PropTypes.number.isRequired,
@@ -121,6 +119,13 @@ const mapStateToProps = (state, ownProps) => {
         };
 };
 
-const connectedNode = connect(mapStateToProps)(Node);
-const dragSourceNode = DragSource(Constants.ItemTypes.NODE, nodeSource, collect)(connectedNode);
-export default dragSourceNode;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    move: (id, xPos, yPos) => dispatch(action.moveNode(id, xPos, yPos))
+  };
+};
+
+
+const dragSourceNode = DragSource(Constants.ItemTypes.NODE, nodeSource, collect)(Node);
+const connectedNode = connect(mapStateToProps, mapDispatchToProps)(dragSourceNode);
+export default connectedNode;
