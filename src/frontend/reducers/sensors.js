@@ -8,6 +8,7 @@ const initialSensorsState = {
 export function sensors (state = initialSensorsState, action) {
   switch (action.type) {
     case Constants.Actions.ADD_SENSOR:
+      console.log(state);
       const newSensor = Object.assign({}, action.sensor, {xPos: action.xPos}, {yPos: action.yPos});
       const newAllSensors = state.all_sensors.concat(newSensor);
       return {

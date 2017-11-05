@@ -70,7 +70,6 @@ export const moveSensor = (sensorId, xPos, yPos) => {
 };
 
 export const addSensor = (sensor, xPos = 0, yPos = 0) => {
-  console.log('addSensor called');
   return {type: Constants.Actions.ADD_SENSOR, sensor, xPos, yPos};
 };
 
@@ -84,7 +83,6 @@ export const fetchSensorSuccess = (sensor) =>
   ({type: Constants.Actions.FETCH_SENSOR_SUCCESS, sensor});
 
 export const fetchSensor = (url) => {
-  console.log('fetchSensor called');
   return (dispatch) => {
     dispatch(fetchSensorIsLoading(true));
     fetch(url).then((response) => {

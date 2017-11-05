@@ -83,7 +83,6 @@ class Canvas extends Component {
   componentDidMount () {
     this.props.fetchNodeIDs();
     const unsubscribe = subscribe('nodes.count', state => {
-      console.log(state.nodes.count);
     });
   }
   //TODO: move nodeId fetching to App.
@@ -126,10 +125,10 @@ class Canvas extends Component {
           {this.props.nodes.all_nodes.map((node) => (
               <Node key={node._id} id={node._id} xPos={node.xPos} yPos={node.yPos} label={node.label} sensors={node.sensors}/>
           ))}
-          {this.props.sensors.all_sensors.map((sensor) => (
-              <Sensor key={sensor._id} id={sensor._id} xPos={sensor.xPos} yPos={sensor.yPos} label={sensor.label} />
-          ))}
         </div>
+        {this.props.sensors.all_sensors.map((sensor) => (
+            <Sensor key={sensor._id} id={sensor._id} xPos={sensor.xPos} yPos={sensor.yPos} label={sensor.label} />
+        ))}
       </div>
     );
   }
@@ -163,6 +162,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const dropTargetCanvas = DropTarget([Constants.ItemTypes.NODE, Constants.ItemTypes.SENSOR], canvasTarget, collect)(Canvas);
+const dropTargetCanvas = DropTarget([Constants.ItemTypes.SENSOR, Constants.ItemTypes.NODE], canvasTarget, collect)(Canvas);
 const connectedCanvas = connect(mapStateToProps, mapDispatchToProps)(dropTargetCanvas);
 export default connectedCanvas;
