@@ -38,8 +38,46 @@ const testAddSensor = () => {
   expect(sensors(stateBefore, action)).toEqual(stateAfter);
 };
 
+const testMoveSensor = () => {
+  const stateBefore = {
+    count: 1,
+    all_sensors: [
+      {
+        _id: '59510e6f8eed6e32225a752d',
+        label: 'Stuhl',
+        sensors: [
+          '5937b05823d3e908cc271eab'
+        ],
+        xPos: 0,
+        yPos: 0
+      }
+    ]
+  };
+  const action = actions.moveSensor('59510e6f8eed6e32225a752d', 500, 500);
+  const stateAfter = {
+    count: 1,
+    all_sensors: [
+      {
+        _id: '59510e6f8eed6e32225a752d',
+        label: 'Stuhl',
+        sensors: [
+          '5937b05823d3e908cc271eab'
+        ],
+        xPos: 500,
+        yPos: 500
+      }
+    ]
+  };
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(sensors(stateBefore, action)).toEqual(stateAfter);
+};
+
 const sensorsTests = () => {
   testAddSensor();
+  testMoveSensor();
   return true;
 };
 

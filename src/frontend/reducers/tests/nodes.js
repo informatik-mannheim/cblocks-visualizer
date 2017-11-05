@@ -34,8 +34,46 @@ const testAddNode = () => {
   expect(nodes(stateBefore, action)).toEqual(stateAfter);
 };
 
+const testMoveNode = () => {
+  const stateBefore = {
+    count: 1,
+    all_nodes: [
+      {
+        _id: '59510e6f8eed6e32225a752d',
+        label: 'Stuhl',
+        sensors: [
+          '5937b05823d3e908cc271eab'
+        ],
+        xPos: 0,
+        yPos: 0
+      }
+    ]
+  };
+  const action = actions.moveNode('59510e6f8eed6e32225a752d', 500, 500);
+  const stateAfter = {
+    count: 1,
+    all_nodes: [
+      {
+        _id: '59510e6f8eed6e32225a752d',
+        label: 'Stuhl',
+        sensors: [
+          '5937b05823d3e908cc271eab'
+        ],
+        xPos: 500,
+        yPos: 500
+      }
+    ]
+  };
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(nodes(stateBefore, action)).toEqual(stateAfter);
+};
+
 const nodesTests = () => {
   testAddNode();
+  testMoveNode();
   return true;
 };
 
