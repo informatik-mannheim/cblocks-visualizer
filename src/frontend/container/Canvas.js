@@ -125,10 +125,10 @@ class Canvas extends Component {
           {this.props.nodes.all_nodes.map((node) => (
               <Node key={node._id} id={node._id} xPos={node.xPos} yPos={node.yPos} label={node.label} sensors={node.sensors}/>
           ))}
-        </div>
-        {this.props.sensors.all_sensors.map((sensor) => (
+          {this.props.sensors.all_sensors.map((sensor) => (
             <Sensor key={sensor._id} id={sensor._id} xPos={sensor.xPos} yPos={sensor.yPos} label={sensor.label} />
-        ))}
+          ))}
+        </div>
       </div>
     );
   }

@@ -113,8 +113,8 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
   return {
-          xPos: state.nodes.all_nodes[thisSensorIndex].xPos,
-          yPos: state.nodes.all_nodes[thisSensorIndex].yPos
+          xPos: state.sensors.all_sensors[thisSensorIndex].xPos,
+          yPos: state.sensors.all_sensors[thisSensorIndex].yPos
         };
 };
 
