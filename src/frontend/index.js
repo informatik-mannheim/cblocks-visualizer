@@ -5,6 +5,7 @@ import { overrideComponentTypeChecker } from 'react-toolbox';
 import { Provider } from 'react-redux';
 import App from './container/App';
 import store from './store';
+import { mockServer } from './websocket';
 
 
 const rootEl = document.getElementById('app');
