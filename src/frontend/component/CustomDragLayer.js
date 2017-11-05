@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { DragLayer } from 'react-dnd';
 import Constants from '../constants/';
 import NodeDragPreview from './NodeDragPreview';
+import SensorDragPreview from './SensorDragPreview';
 
 const layerStyles = {
   position: 'fixed',
@@ -37,6 +38,8 @@ class CustomDragLayer extends Component {
     switch (type) {
       case Constants.ItemTypes.NODE:
         return (<NodeDragPreview label={item.label} />);
+      case Constants.ItemTypes.SENSOR:
+        return (<SensorDragPreview label={item.label} />);
       default:
         return null;
     }
