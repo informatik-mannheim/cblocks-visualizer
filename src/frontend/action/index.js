@@ -62,11 +62,11 @@ export const fetchNodeSuccess = (node) => {
 };
 
 export const moveNode = (nodeId, xPos, yPos) => {
-  return {type: Constants.Actions.MOVE_NODE, id: nodeId, xPos: xPos, yPos: yPos};
+  return {type: Constants.Actions.MOVE_NODE, _id: nodeId, xPos: xPos, yPos: yPos};
 };
 
 export const moveSensor = (sensorId, xPos, yPos) => {
-  return {type: Constants.Actions.MOVE_SENSOR, id: sensorId, xPos: xPos, yPos: yPos};
+  return {type: Constants.Actions.MOVE_SENSOR, _id: sensorId, xPos: xPos, yPos: yPos};
 };
 
 export const addSensor = (sensor, xPos = 0, yPos = 0) => {

@@ -58,7 +58,7 @@ const canvasTarget = {
     // You can also do nothing and return a drop result,
     // which will be available as monitor.getDropResult()
     // in the drag source's endDrag() method
-    return {item: item.id, xPos: left, yPos: top};
+    return {item: item._id, xPos: left, yPos: top};
   }
 };
 
@@ -81,7 +81,7 @@ function collect (cnnct, monitor) {
 class Canvas extends Component {
 
   componentDidMount () {
-    this.props.fetchNodeIDs();
+    //this.props.fetchNodeIDs();
     const unsubscribe = subscribe('nodes.count', state => {
     });
   }
@@ -123,10 +123,10 @@ class Canvas extends Component {
       <div>
         <div style={dropZoneStyle}>
           {this.props.nodes.all_nodes.map((node) => (
-              <Node key={node._id} id={node._id} xPos={node.xPos} yPos={node.yPos} label={node.label} sensors={node.sensors}/>
+              <Node key={node._id} _id={node._id} xPos={node.xPos} yPos={node.yPos} label={node.label} sensors={node.sensors}/>
           ))}
           {this.props.sensors.all_sensors.map((sensor) => (
-            <Sensor key={sensor._id} id={sensor._id} xPos={sensor.xPos} yPos={sensor.yPos} label={sensor.label} />
+            <Sensor key={sensor._id} _id={sensor._id} xPos={sensor.xPos} yPos={sensor.yPos} label={sensor.label} />
           ))}
         </div>
       </div>

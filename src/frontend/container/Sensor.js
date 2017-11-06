@@ -10,9 +10,9 @@ import * as action from '../action/';
 const sensorSource = {
   beginDrag (props) {
     // Return the data describing the dragged item
-    //const item = { id: props.id };
-    const {id, xPos, yPos, label} = props;
-    return {id, xPos, yPos, label};
+    //const item = { _id: props._id };
+    const {_id, xPos, yPos, label} = props;
+    return {_id, xPos, yPos, label};
   },
 
   endDrag (props, monitor, component) {
@@ -25,8 +25,8 @@ const sensorSource = {
     //console.log('Dropped on compatible target: ' + item);
     const dropResult = monitor.getDropResult();
 
-    if (dropResult.dropEffect === 'move' && dropResult.item === component.props.id) {
-      component.props.move(component.props.id, dropResult.xPos, dropResult.yPos);
+    if (dropResult.dropEffect === 'move' && dropResult.item === component.props._id) {
+      component.props.move(component.props._id, dropResult.xPos, dropResult.yPos);
     }
   }
 };
@@ -90,7 +90,7 @@ Sensor.propTypes = {
   connectDragPreview: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   height: PropTypes.number,
-  id: PropTypes.string.isRequired,
+  _id: PropTypes.string.isRequired,
   isDragging: PropTypes.bool.isRequired,
   label: PropTypes.string,
   move: PropTypes.func.isRequired,
@@ -108,7 +108,7 @@ Sensor.defaultProps = {
 const mapStateToProps = (state, ownProps) => {
   let thisSensorIndex;
   for (let i = 0; i < state.sensors.count; i++){
-    if (ownProps.id.localeCompare(state.sensors.all_sensors[i]._id) === 0) {
+    if (ownProps._id.localeCompare(state.sensors.all_sensors[i]._id) === 0) {
       thisSensorIndex = i;
     }
   }
@@ -120,7 +120,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    move: (id, xPos, yPos) => dispatch(action.moveSensor(id, xPos, yPos))
+    move: (_id, xPos, yPos) => dispatch(action.moveSensor(_id, xPos, yPos))
   };
 };
 

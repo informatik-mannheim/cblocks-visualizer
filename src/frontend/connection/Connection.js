@@ -1,4 +1,3 @@
-import {WebSocket} from 'mock-socket';
 import {ServerEventDispatcher} from './ServerEventDispatcher';
 import Constants from '../constants/';
 import store from '../store';
@@ -13,24 +12,36 @@ socket.bind('some_event', function(data){
 // broadcast events to all connected users
 socket.send( 'some_event', {name: 'ismael', message : 'Hello world'} );
 */
+let socket;
+const serverEvents = Constants.ServerEvents;
 
-export const connectToServer = (url) => {
-  const socket = ServerEventDispatcher(url);
-  const serverEvents = Constants.ServerEvents;
+const getNodeStatus = (nodeId) => {
+  socket.send('get_node_status', nodeId);
+};
 
-  socket.bind(serverEvents.NODE_ADDED, (node) => {
+const getSensorStatus = (sensorId) => {
+  socket.send('get_sensor_status', sensorId);
+};
+
+const bindEvents = () => {
+  socket.bind(serverEvents.NODE_ADDED, (nodeId) => {
+    getNodeStatus(nodeId);
+  });
+  socket.bind(serverEvents.NODE_STATUS, (node) => {
     store.dispatch(action.addNode(node));
+  });
+  socket.bind(serverEvents.SENSOR_ADDED, (sensorId) => {
+    getSensorStatus(sensorId);
+  });
+  socket.bind(serverEvents.SENSOR_STATUS, (sensor) => {
+    console.log(sensor);
+    store.dispatch(action.addSensor(sensor));
   });
 };
 
+export const connectToServer = (url) => {
+  socket = ServerEventDispatcher(url);
+  bindEvents();
 
-export function Chat () {
-  const chatSocket = new WebSocket('ws://localhost:8888');
-  this.messages = [];
-
-  chatSocket.onmessage = (event) => {
-    console.log(event.data);
-    this.messages.push(event.data);
-  };
-}
-//const chatApp = new Chat();
+  socket.send('init', null);
+};

@@ -11,7 +11,7 @@ const initialNodesState = {
 const testAddNode = () => {
   const stateBefore = initialNodesState;
   const action = actions.addNode({
-    id: 'testUID123akls-asdlkj2939949-4u58995',
+    _id: 'testUID123akls-asdlkj2939949-4u58995',
     label: 'testtest',
     xPos: 0,
     yPos: 0
@@ -20,7 +20,7 @@ const testAddNode = () => {
     count: 1,
     all_nodes: [
       {
-        id: 'testUID123akls-asdlkj2939949-4u58995',
+        _id: 'testUID123akls-asdlkj2939949-4u58995',
         label: 'testtest',
         xPos: 0,
         yPos: 0
@@ -71,9 +71,39 @@ const testMoveNode = () => {
   expect(nodes(stateBefore, action)).toEqual(stateAfter);
 };
 
+const testAddDuplicateNode = () => {
+  const stateBefore = {
+    count: 1,
+    all_nodes: [
+      {
+        _id: '59510e6f8eed6e32225a752d',
+        label: 'Stuhl',
+        sensors: [
+          '5937b05823d3e908cc271eab'
+        ],
+        xPos: 0,
+        yPos: 0
+      }
+    ]
+  };
+  const action = actions.addNode({
+    _id: '59510e6f8eed6e32225a752d',
+    label: 'testtest',
+    xPos: 0,
+    yPos: 0
+  });
+  const stateAfter = stateBefore;
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(nodes(stateBefore, action)).toEqual(stateAfter);
+};
+
 const nodesTests = () => {
   testAddNode();
   testMoveNode();
+  testAddDuplicateNode();
   return true;
 };
 

@@ -9,6 +9,13 @@ export function sensors (state = initialSensorsState, action) {
   switch (action.type) {
     case Constants.Actions.ADD_SENSOR:
       const newSensor = Object.assign({}, action.sensor, {xPos: action.xPos}, {yPos: action.yPos});
+
+      for (let i = 0; i < state.all_sensors.length; i++) {
+        if (state.all_sensors[i]._id === newSensor._id) {
+          return state;
+        }
+      }
+
       const newAllSensors = state.all_sensors.concat(newSensor);
       return {
         count: newAllSensors.length,
@@ -22,7 +29,7 @@ export function sensors (state = initialSensorsState, action) {
 }
 
 function sensor (state = {}, action){
-  if (state._id !== action.id) {
+  if (state._id !== action._id) {
     return state;
   }
 
