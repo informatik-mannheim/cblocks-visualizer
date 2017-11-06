@@ -5,8 +5,9 @@ import { overrideComponentTypeChecker } from 'react-toolbox';
 import { Provider } from 'react-redux';
 import App from './container/App';
 import store from './store';
-import { mockServer } from './websocket';
-
+import { mockServer } from './mockServer';
+import { connectToServer } from './connection/Connection';
+import Constants from './constants/'
 
 const rootEl = document.getElementById('app');
 
@@ -33,4 +34,5 @@ if (process.env.NODE_ENV !== 'production') {
   }
 }
 
+connectToServer(Constants.URLs.SERVER_SOCKET);
 render();
