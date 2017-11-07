@@ -105,12 +105,6 @@ class Canvas extends Component {
   render () {
     const { isOver, canDrop, connectDropTarget } = this.props;
 
-    if (this.props.hasErrored) {
-      return <p>Error loading items from API</p>;
-    }
-    if (this.props.isLoading) {
-      return <p>Loading...</p>;
-    }
     const dropZoneStyle = {
       top: 200,
       left: 200,
@@ -138,9 +132,6 @@ class Canvas extends Component {
 Canvas.propTypes = {
   canDrop: PropTypes.bool,
   connectDropTarget: PropTypes.func,
-  fetchNodeIDs: PropTypes.func.isRequired,
-  hasErrored: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
   isOver: PropTypes.bool,
   isOverCurrent: PropTypes.bool,
   nodeIds: PropTypes.array.isRequired,

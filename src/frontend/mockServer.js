@@ -88,19 +88,3 @@ mockServer.on('message', event => {
     return;
   }
 });
-
-/*
-_id: '59510e6f8eed6e32225aasdf'
-label: 'Window',
-sensors: [
-  '5937b0582ldor908cc271eab'
-]
-
-
-{
-      _id: '59510e6f8eed6eodje6hsdf',
-      label: 'Coffeemaker',
-      sensors: [
-      ]
-    }
-*/

@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "babel-preset-react-native-stage-0": "^1.0.1",
+    "classnames": "^2.2.5",
     "deep-freeze": "0.0.1",
     "expect": "^1.20.2",
     "prop-types": "^15.5.10",
