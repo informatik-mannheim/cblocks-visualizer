@@ -6,6 +6,7 @@ import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 import SensorStatus from './SensorStatus';
+import {HorizontalDividerLine} from '../component/HorizontalDividerLine';
 import * as action from '../action/';
 
 const sensorSource = {
@@ -80,6 +81,7 @@ class Sensor extends Component {
             subtitle="cBlocks Sensor"
           />
           <CardText>'TEXTTEXT'</CardText>
+          <HorizontalDividerLine/>
           <SensorStatus />
         </Card>
       </div>

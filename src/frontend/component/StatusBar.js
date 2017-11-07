@@ -34,8 +34,10 @@ class StatusBar extends React.Component {
     const {color, percentage, animation, height, className, children, ...rest} = this.props;
     const style = {
       backgroundColor: color,
-      width: '90%',
+      width: '100%',
       marginBottom: '20px',
+      marginLeft: '10px',
+      marginRight: '10px',
       marginTop: '5px',
       //width: percentage + '%',
       //transition: `width ${animation}ms`,
