@@ -37,6 +37,9 @@ const bindEvents = () => {
     console.log(sensor);
     store.dispatch(action.addSensor(sensor));
   });
+  socket.bind(serverEvents.SENSOR_UPDATED, (sensor, value) => {
+    store.dispatch(action.updateSensorValue(sensor, value));
+  });
 };
 
 export const connectToServer = (url) => {

@@ -23,6 +23,8 @@ export function sensors (state = initialSensorsState, action) {
       };
     case Constants.Actions.MOVE_SENSOR:
       return {count: state.count, all_sensors: state.all_sensors.map(currentSensor => sensor(currentSensor, action))};
+    case Constants.Actions.UPDATE_SENSOR_VALUE:
+      return {count: state.count, all_sensors: state.all_sensors.map(currentSensor => sensor(currentSensor, action))};
     default:
       return state;
   }
@@ -40,6 +42,12 @@ function sensor (state = {}, action){
         yPos: action.yPos
       });
       return movedSensor;
+
+    case Constants.Actions.UPDATE_SENSOR_VALUE:
+      const updatedSensor = Object.assign({}, state, {
+        value: action.value
+      });
+      return updatedSensor;
     default:
       return state;
   }

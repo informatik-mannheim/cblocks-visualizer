@@ -105,3 +105,7 @@ export const fetchSensorsForNode = (node) => {
     });
   };
 };
+
+export const updateSensorValue = (sensorId, value) => {
+  return {type: Constants.Actions.UPDATE_SENSOR_VALUE, _id: sensorId, value: value};
+};

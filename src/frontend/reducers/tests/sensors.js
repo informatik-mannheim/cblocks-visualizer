@@ -15,7 +15,8 @@ const testAddSensor = () => {
     label: 'Pressure Sensor',
     resources: [
       'bla'
-    ]
+    ],
+    value: 500
   });
   const stateAfter = {
     count: 1,
@@ -27,7 +28,8 @@ const testAddSensor = () => {
           'bla'
         ],
         xPos: 0,
-        yPos: 0
+        yPos: 0,
+        value: 500
       }
     ]
   };
@@ -45,11 +47,9 @@ const testMoveSensor = () => {
       {
         _id: '59510e6f8eed6e32225a752d',
         label: 'Stuhl',
-        sensors: [
-          '5937b05823d3e908cc271eab'
-        ],
         xPos: 0,
-        yPos: 0
+        yPos: 0,
+        value: 500
       }
     ]
   };
@@ -60,11 +60,48 @@ const testMoveSensor = () => {
       {
         _id: '59510e6f8eed6e32225a752d',
         label: 'Stuhl',
-        sensors: [
-          '5937b05823d3e908cc271eab'
-        ],
         xPos: 500,
-        yPos: 500
+        yPos: 500,
+        value: 500
+      }
+    ]
+  };
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(sensors(stateBefore, action)).toEqual(stateAfter);
+};
+
+const testUpdateSensorValue = () => {
+  const stateBefore = {
+    count: 1,
+    all_sensors: [
+      {
+        _id: 'sensor',
+        label: 'Pressure Sensor',
+        resources: [
+          'bla'
+        ],
+        xPos: 0,
+        yPos: 0,
+        value: 0
+      }
+    ]
+  };
+  const action = actions.updateSensorValue('sensor', 700);
+  const stateAfter = {
+    count: 1,
+    all_sensors: [
+      {
+        _id: 'sensor',
+        label: 'Pressure Sensor',
+        resources: [
+          'bla'
+        ],
+        xPos: 0,
+        yPos: 0,
+        value: 700
       }
     ]
   };
@@ -78,6 +115,7 @@ const testMoveSensor = () => {
 const sensorsTests = () => {
   testAddSensor();
   testMoveSensor();
+  testUpdateSensorValue();
   return true;
 };
 
