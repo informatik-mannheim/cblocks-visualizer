@@ -16,7 +16,7 @@ $CBlocksBlock = {
   Set-Location $args[0]
   npm start
 }
-Get-Job
+
 Get-Job|Stop-Job
 Get-Job|Remove-Job
 
@@ -27,5 +27,3 @@ $j3 = Start-Job $CBlocksBlock -Name "cBlocksUIJob" -ArgumentList $cblocks_dir
 Get-Job
 Wait-Job -Id $j1._id,$j2._id,$j3._id
 Receive-Job -Id $j1._id,$j2._id,$j3._id
-
-Get-Job|Remove-Job

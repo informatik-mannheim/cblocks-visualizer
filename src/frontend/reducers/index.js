@@ -6,11 +6,8 @@ import tests from './tests/';
 
 
 const rootReducer = combineReducers({
-  nodeIDs,
   nodes,
-  sensors,
-  fetchNodeIDsIsLoading,
-  fetchNodeIDsHasErrored
+  sensors
 });
 
 tests();
