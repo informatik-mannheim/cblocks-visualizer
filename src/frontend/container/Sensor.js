@@ -72,7 +72,6 @@ class Sensor extends Component {
   }
 
   render (){
-    //console.log(this.props.transducers);
     return this.props.connectDragSource(
       <div style={getSensorStyles(this.props)}>
         <Card style={{width: '350px'}}>
@@ -80,7 +79,7 @@ class Sensor extends Component {
             title={this.props.label}
             subtitle="cBlocks Sensor"
           />
-          <CardText>'TEXTTEXT'</CardText>
+          {/*<CardText>'TEXTTEXT'</CardText>*/}
           <HorizontalDividerLine/>
           <SensorStatus currentValue = {this.props.value}/>
         </Card>

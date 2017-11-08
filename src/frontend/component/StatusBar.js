@@ -39,8 +39,6 @@ class StatusBar extends React.Component {
       marginLeft: '10px',
       marginRight: '10px',
       marginTop: '5px',
-      //width: percentage + '%',
-      //transition: `width ${animation}ms`,
       height: height
     };
 

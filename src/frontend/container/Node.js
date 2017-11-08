@@ -76,7 +76,7 @@ class Node extends Component {
             title={this.props.label}
             subtitle="cBlocks Node"
           />
-          <CardText>'Blabla'</CardText>
+          {/*<CardText>'Blabla'</CardText>*/}
           <CardActions style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
               <AddButton floating primary/>
           </CardActions>
