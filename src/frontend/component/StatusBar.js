@@ -21,7 +21,7 @@ class StatusBar extends React.Component {
 
   static defaultProps = {
     percentage: 0,
-    color: '#0BD318',
+    color: '#4CAF50',
     animation: 200,
     height: 30
   }
@@ -35,7 +35,7 @@ class StatusBar extends React.Component {
     const style = {
       backgroundColor: color,
       width: '100%',
-      marginBottom: '20px',
+      marginBottom: '5px',
       marginLeft: '10px',
       marginRight: '10px',
       marginTop: '5px',
