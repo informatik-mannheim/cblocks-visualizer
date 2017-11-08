@@ -82,7 +82,7 @@ class Sensor extends Component {
           />
           <CardText>'TEXTTEXT'</CardText>
           <HorizontalDividerLine/>
-          <SensorStatus />
+          <SensorStatus currentValue = {this.props.value}/>
         </Card>
       </div>
     );
@@ -97,6 +97,7 @@ Sensor.propTypes = {
   isDragging: PropTypes.bool.isRequired,
   label: PropTypes.string,
   move: PropTypes.func.isRequired,
+  value: PropTypes.number,
   width: PropTypes.number,
   xPos: PropTypes.number.isRequired,
   yPos: PropTypes.number.isRequired
@@ -116,6 +117,7 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
   return {
+          value: state.sensors.all_sensors[thisSensorIndex].value,
           xPos: state.sensors.all_sensors[thisSensorIndex].xPos,
           yPos: state.sensors.all_sensors[thisSensorIndex].yPos
         };

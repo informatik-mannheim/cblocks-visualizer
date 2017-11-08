@@ -2,10 +2,9 @@ import { Server } from 'mock-socket';
 import Constants from './constants';
 export const mockServer = new Server('ws://localhost:8888');
 
-function randomIntFromInterval(min,max)
-{
-    return Math.floor(Math.random()*(max-min+1)+min);
-}
+const randomIntFromInterval = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+};
 
 mockServer.on('connection', server => {
 
@@ -45,10 +44,10 @@ mockServer.on('message', event => {
           event: Constants.ServerEvents.SENSOR_UPDATED,
           data: {
             _id: '5937b05823d3e908cc271eab',
-            currentValue: randomIntFromInterval(300, 600)
+            value: randomIntFromInterval(500, 600)
           }
         });
-      }, 5000);
+      }, 100);
       break;
     case 'get_node':
       console.log(eventJSON.data);

@@ -27,10 +27,11 @@ export const fetchNode = (url) => {
     }).then((response) => response.json()
       ).then(
         (node) => {
+          console.log('asdasd');
           dispatch(addNode(node));
           dispatch(fetchSensorsForNode(node));
         }
-        ).catch(() => dispatch(fetchNodeHasErrored(true)));
+     ).catch(() => dispatch(fetchNodeHasErrored(true)));
   };
 };
 
@@ -106,6 +107,6 @@ export const fetchSensorsForNode = (node) => {
   };
 };
 
-export const updateSensorValue = (sensorId, value) => {
-  return {type: Constants.Actions.UPDATE_SENSOR_VALUE, _id: sensorId, value: value};
+export const updateSensorValue = (_id, value) => {
+  return {type: Constants.Actions.UPDATE_SENSOR_VALUE, _id, value};
 };

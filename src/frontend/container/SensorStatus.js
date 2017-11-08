@@ -7,6 +7,7 @@ class SensorStatus extends React.Component {
   render () {
     const percentage = Math.round(this.props.currentValue / this.props.maxValue * 100);
     console.log(this.props);
+    console.log(percentage);
     return (
       <div>
         <div style={{textAlign:'center', fontSize:25}}>{this.props.currentValue}</div>

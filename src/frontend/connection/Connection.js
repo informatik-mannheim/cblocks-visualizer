@@ -34,11 +34,10 @@ const bindEvents = () => {
     getSensorStatus(sensorId);
   });
   socket.bind(serverEvents.SENSOR_STATUS, (sensor) => {
-    console.log(sensor);
     store.dispatch(action.addSensor(sensor));
   });
-  socket.bind(serverEvents.SENSOR_UPDATED, (sensor, value) => {
-    store.dispatch(action.updateSensorValue(sensor, value));
+  socket.bind(serverEvents.SENSOR_UPDATED, (message) => {
+    store.dispatch(action.updateSensorValue(message._id, message.value));
   });
 };
 
