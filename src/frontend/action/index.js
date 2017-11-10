@@ -2,15 +2,7 @@ import Constants from '../constants/';
 
 export const addNode = (node, xPos = 0, yPos = 0) => ({type: Constants.Actions.ADD_NODE, node, xPos, yPos});
 
-/*
-export function someAction () {
-  return (dispatch, getState) => {
-    const {nodes} = getState().otherReducer;
-
-    dispatch(anotherAction(items));
-  };
-}
-*/
+export const addHtmlIdMapping = (_id, htmlId) => ({type: Constants.Actions.ADD_HTMLIDMAPPING, _id, htmlId});
 
 export const addConnectionForSensor = (sensorId, sensorHtmlId) => {
   return (dispatch, getState) => {
