@@ -85,24 +85,23 @@ class Canvas extends Component {
   constructor () {
     super();
     enableUniqueIds(this);
-    const canvasId = null;
+    let canvasId;
   }
 
   componentDidMount () {
-    const unsubscribe = subscribe('connection', state => {
-      jsPlumb.ready(function (){
 
-        if (this.canvasId !== null) {
-          jsPlumb.setContainer(this.canvasId);
-        }
+    jsPlumb.ready(function (){
+      jsPlumb.setContainer(this.canvasId);
+    });
 
-        state.connection.forEach((con) => {
-          jsPlumb.connect({
-            source: con.from,
-            target: con.to
-          });
+    const unsubscribe = subscribe('connections', state => {
+
+      state.connections.forEach((con) => {
+        jsPlumb.connect({
+          source: con.nodeHtmlId,
+          target: con.sensorHtmlId
         });
-          });
+      });
     });
   }
   //TODO: move nodeId fetching to App.
@@ -132,10 +131,10 @@ class Canvas extends Component {
       width: '100%',
       zIndex: 100
     };
-    canvasId = this.nextUniqueId();
+    this.canvasId = this.nextUniqueId();
 
     return connectDropTarget(
-      <div id={canvasId} style={dropZoneStyle}>
+      <div id={this.canvasId} style={dropZoneStyle}>
         {this.props.nodes.all_nodes.map((node) => (
             <Node key={node._id} _id={node._id} xPos={node.xPos}
               yPos={node.yPos} label={node.label} sensors={node.sensors}/>
@@ -148,7 +147,6 @@ class Canvas extends Component {
     );
   }
 }
-
 
 Canvas.propTypes = {
   canDrop: PropTypes.bool,

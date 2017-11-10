@@ -64,11 +64,13 @@ class Node extends Component {
   constructor () {
         super();
         enableUniqueIds(this);
+        let htmlId;
   }
 
 
   componentDidMount () {
     //Drag and Drop preview
+    this.props.mapIdToHtmlId(this.props._id, this.htmlId);
     this.props.connectDragPreview(getEmptyImage(), {
       captureDraggingState: true
     });
@@ -76,8 +78,9 @@ class Node extends Component {
 
   render (){
     //console.log(this.props.transducers);
+    this.htmlId = this.nextUniqueId();
     return this.props.connectDragSource(
-      <div id={this.nextUniqueId()} style={getNodeStyles(this.props)}>
+      <div id={this.htmlId} style={getNodeStyles(this.props)}>
         <Card style={{width: '350px'}}>
           <CardTitle title={this.props.label} subtitle="cBlocks Node"/>
           {/*<CardText>'Blabla'</CardText>*/}
@@ -91,12 +94,13 @@ class Node extends Component {
 }
 
 Node.propTypes = {
+  _id: PropTypes.string.isRequired,
   connectDragPreview: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   height: PropTypes.number,
-  _id: PropTypes.string.isRequired,
   isDragging: PropTypes.bool.isRequired,
   label: PropTypes.string,
+  mapIdToHtmlId: PropTypes.func.isRequired,
   move: PropTypes.func.isRequired,
   transducers: PropTypes.array,
   width: PropTypes.number,
@@ -125,7 +129,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    move: (_id, xPos, yPos) => dispatch(action.moveNode(_id, xPos, yPos))
+    move: (_id, xPos, yPos) => dispatch(action.moveNode(_id, xPos, yPos)),
+    mapIdToHtmlId: (_id, htmlId) => dispatch(action.addHtmlIdMapping(_id, htmlId))
   };
 };
 

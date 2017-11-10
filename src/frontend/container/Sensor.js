@@ -65,9 +65,10 @@ class Sensor extends Component {
   constructor () {
     super();
     enableUniqueIds(this);
-    const htmlId = null;
+    let htmlId;
   }
   componentDidMount () {
+    this.props.mapIdToHtmlId(this.props._id, this.htmlId);
     this.props.addConnectionForSensor(this.props._id, this.htmlId);
       // Use empty image as a drag preview so browsers don't draw it
       // and we can draw whatever we want on the custom drag layer instead.
@@ -105,6 +106,7 @@ Sensor.propTypes = {
   height: PropTypes.number,
   isDragging: PropTypes.bool.isRequired,
   label: PropTypes.string,
+  mapIdToHtmlId: PropTypes.func.isRequired,
   move: PropTypes.func.isRequired,
   value: PropTypes.number,
   width: PropTypes.number,
@@ -135,7 +137,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     move: (_id, xPos, yPos) => dispatch(action.moveSensor(_id, xPos, yPos)),
-    addConnectionForSensor: (id, to) => dispatch(action.addConnectionForSensor(id, to))
+    addConnectionForSensor: (_id) => dispatch(action.addConnectionForSensor(_id)),
+    mapIdToHtmlId: (_id, htmlId) => dispatch(action.addHtmlIdMapping(_id, htmlId))
   };
 };
 

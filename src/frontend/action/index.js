@@ -4,18 +4,28 @@ export const addNode = (node, xPos = 0, yPos = 0) => ({type: Constants.Actions.A
 
 export const addHtmlIdMapping = (_id, htmlId) => ({type: Constants.Actions.ADD_HTMLIDMAPPING, _id, htmlId});
 
-export const addConnectionForSensor = (sensorId, sensorHtmlId) => {
+
+export const addConnection = (nodeHtmlId, sensorHtmlId) => ({type: Constants.Actions.ADD_CONNECTION, nodeHtmlId, sensorHtmlId});
+
+export const addConnectionForSensor = (sensorId) => {
   return (dispatch, getState) => {
-    const nodes = getState().nodes;
-    nodes.all_nodes.forEach((node) => {
+    const state = getState();
+    state.nodes.all_nodes.forEach((node) => {
       if (node.sensors.indexOf(sensorId) !== -1) {
-        console.log(`sensor ${sensorId} is in node ${node._id}`);
+        let nodeHtmlId, sensorHtmlId;
+        for (let i = 0; i < state.htmlIds.length; i++) {
+          if (state.htmlIds[i]._id === node._id) {
+            nodeHtmlId = state.htmlIds[i].htmlId;
+          }
+          if (state.htmlIds[i]._id === sensorId) {
+            sensorHtmlId = state.htmlIds[i].htmlId;
+          }
+        }
+        dispatch(addConnection(nodeHtmlId, sensorHtmlId));
       }
     });
   };
 };
-
-export const addConnection = (sensorId, nodeHtmlId, sensorHtmlId) => ({type: Constants.Actions.ADD_CONNECTION, sensorId, nodeHtmlId, sensorHtmlId});
 
 export const fetchNodeIDsHasErrored = (bool) =>
   ({type: Constants.Actions.FETCH_NODE_IDS_HAS_ERRORED, hasErrored: bool});
