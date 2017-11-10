@@ -8,6 +8,8 @@ import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 import SensorStatus from './SensorStatus';
 import {HorizontalDividerLine} from '../component/HorizontalDividerLine';
 import * as action from '../action/';
+import { enableUniqueIds } from 'react-html-id';
+import { jsPlumb } from 'jsPlumb';
 
 const sensorSource = {
   beginDrag (props) {
@@ -60,8 +62,13 @@ function getSensorStyles (props) {
 
 
 class Sensor extends Component {
-
+  constructor () {
+    super();
+    enableUniqueIds(this);
+    const htmlId = null;
+  }
   componentDidMount () {
+    this.props.addConnectionForSensor(this.props._id, this.htmlId);
       // Use empty image as a drag preview so browsers don't draw it
       // and we can draw whatever we want on the custom drag layer instead.
     this.props.connectDragPreview(getEmptyImage(), {
@@ -72,8 +79,10 @@ class Sensor extends Component {
   }
 
   render (){
+    this.htmlId = this.nextUniqueId();
+
     return this.props.connectDragSource(
-      <div style={getSensorStyles(this.props)}>
+      <div id={this.htmlId} style={getSensorStyles(this.props)}>
         <Card style={{width: '350px'}}>
           <CardTitle
             title={this.props.label}
@@ -89,10 +98,11 @@ class Sensor extends Component {
 }
 
 Sensor.propTypes = {
+  _id: PropTypes.string.isRequired,
+  addConnectionForSensor: PropTypes.func.isRequired,
   connectDragPreview: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   height: PropTypes.number,
-  _id: PropTypes.string.isRequired,
   isDragging: PropTypes.bool.isRequired,
   label: PropTypes.string,
   move: PropTypes.func.isRequired,
@@ -124,7 +134,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    move: (_id, xPos, yPos) => dispatch(action.moveSensor(_id, xPos, yPos))
+    move: (_id, xPos, yPos) => dispatch(action.moveSensor(_id, xPos, yPos)),
+    addConnectionForSensor: (id, to) => dispatch(action.addConnectionForSensor(id, to))
   };
 };
 

@@ -2,11 +2,34 @@ import Constants from '../constants/';
 
 export const addNode = (node, xPos = 0, yPos = 0) => ({type: Constants.Actions.ADD_NODE, node, xPos, yPos});
 
+/*
+export function someAction () {
+  return (dispatch, getState) => {
+    const {nodes} = getState().otherReducer;
+
+    dispatch(anotherAction(items));
+  };
+}
+*/
+
+export const addConnectionForSensor = (sensorId, sensorHtmlId) => {
+  return (dispatch, getState) => {
+    const nodes = getState().nodes;
+    nodes.all_nodes.forEach((node) => {
+      if (node.sensors.indexOf(sensorId) !== -1) {
+        console.log(`sensor ${sensorId} is in node ${node._id}`);
+      }
+    });
+  };
+};
+
+export const addConnection = (sensorId, nodeHtmlId, sensorHtmlId) => ({type: Constants.Actions.ADD_CONNECTION, sensorId, nodeHtmlId, sensorHtmlId});
+
 export const fetchNodeIDsHasErrored = (bool) =>
   ({type: Constants.Actions.FETCH_NODE_IDS_HAS_ERRORED, hasErrored: bool});
 
 export const fetchNodeIDsIsLoading = (bool) =>
-({type: Constants.Actions.FETCH_NODE_IDS_IS_LOADING, isLoading: bool});
+  ({type: Constants.Actions.FETCH_NODE_IDS_IS_LOADING, isLoading: bool});
 
 export const fetchNodeHasErrored = (bool) =>
   ({type: Constants.Actions.FETCH_NODE_HAS_ERRORED, hasErrored: bool});

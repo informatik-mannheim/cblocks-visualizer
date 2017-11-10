@@ -23,6 +23,12 @@ const getSensorStatus = (sensorId) => {
   socket.send('get_sensor_status', sensorId);
 };
 
+const defineMappingContinuous = (mappingName, sensorId, resourceId, states) => {
+  /*
+    states: [{stateName, [fromValue, toValue]}, {stateName, [fromValue, toValue]}]
+  */
+};
+
 const bindEvents = () => {
   socket.bind(serverEvents.NODE_ADDED, (nodeId) => {
     getNodeStatus(nodeId);

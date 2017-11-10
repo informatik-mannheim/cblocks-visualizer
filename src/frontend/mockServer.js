@@ -36,14 +36,14 @@ mockServer.on('message', event => {
       mockServer.send({
         event: Constants.ServerEvents.SENSOR_ADDED,
         data: {
-          _id: '5937b05823d3e908cc271eab'
+          _id: 'pressure_sensor_id'
         }
       });
       setInterval(function () {
         mockServer.send({
           event: Constants.ServerEvents.SENSOR_UPDATED,
           data: {
-            _id: '5937b05823d3e908cc271eab',
+            _id: 'pressure_sensor_id',
             value: randomIntFromInterval(500, 600)
           }
         });
@@ -59,9 +59,9 @@ mockServer.on('message', event => {
       if (eventJSON.data._id === 'node1_id') {
         nodeStatus = {
           _id: 'node1_id',
-          label: 'Window',
+          label: 'Chair',
           sensors: [
-            '5937b0582ldor908cc271eab'
+            'pressure_sensor_id'
           ]
         };
       } else if (eventJSON.data._id === 'node2_id') {
@@ -84,9 +84,9 @@ mockServer.on('message', event => {
     case 'get_sensor_status':
       console.log(eventJSON.data);
       let sensorStatus = null;
-      if (eventJSON.data._id === '5937b05823d3e908cc271eab') {
+      if (eventJSON.data._id === 'pressure_sensor_id') {
         sensorStatus = {
-          _id: '5937b05823d3e908cc271eab',
+          _id: 'pressure_sensor_id',
           label: 'Pressure Sensor',
           resources: ['bla'],
           value: 0

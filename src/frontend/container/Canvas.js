@@ -8,6 +8,8 @@ import Constants from '../constants/';
 import * as action from '../action/';
 import { DropTarget } from 'react-dnd';
 import { subscribe } from 'redux-subscriber';
+import { jsPlumb } from 'jsPlumb';
+import { enableUniqueIds } from 'react-html-id';
 
 
 //import { Button } from 'react-toolbox/lib/button';
@@ -80,9 +82,27 @@ function collect (cnnct, monitor) {
 
 class Canvas extends Component {
 
+  constructor () {
+    super();
+    enableUniqueIds(this);
+    const canvasId = null;
+  }
+
   componentDidMount () {
-    //this.props.fetchNodeIDs();
-    const unsubscribe = subscribe('nodes.count', state => {
+    const unsubscribe = subscribe('connection', state => {
+      jsPlumb.ready(function (){
+
+        if (this.canvasId !== null) {
+          jsPlumb.setContainer(this.canvasId);
+        }
+
+        state.connection.forEach((con) => {
+          jsPlumb.connect({
+            source: con.from,
+            target: con.to
+          });
+        });
+          });
     });
   }
   //TODO: move nodeId fetching to App.
@@ -112,17 +132,18 @@ class Canvas extends Component {
       width: '100%',
       zIndex: 100
     };
+    canvasId = this.nextUniqueId();
 
     return connectDropTarget(
-      <div>
-        <div style={dropZoneStyle}>
-          {this.props.nodes.all_nodes.map((node) => (
-              <Node key={node._id} _id={node._id} xPos={node.xPos} yPos={node.yPos} label={node.label} sensors={node.sensors}/>
-          ))}
-          {this.props.sensors.all_sensors.map((sensor) => (
-            <Sensor key={sensor._id} _id={sensor._id} xPos={sensor.xPos} yPos={sensor.yPos} label={sensor.label} />
-          ))}
-        </div>
+      <div id={canvasId} style={dropZoneStyle}>
+        {this.props.nodes.all_nodes.map((node) => (
+            <Node key={node._id} _id={node._id} xPos={node.xPos}
+              yPos={node.yPos} label={node.label} sensors={node.sensors}/>
+        ))}
+        {this.props.sensors.all_sensors.map((sensor) => (
+            <Sensor key={sensor._id} _id={sensor._id} xPos={sensor.xPos}
+              yPos={sensor.yPos} label={sensor.label} />
+        ))}
       </div>
     );
   }

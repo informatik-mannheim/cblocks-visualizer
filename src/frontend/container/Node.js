@@ -7,6 +7,7 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 import AddButton from '../component/AddButton.js';
 import * as action from '../action/';
+import { enableUniqueIds } from 'react-html-id';
 
 const nodeSource = {
   beginDrag (props) {
@@ -60,6 +61,12 @@ function getNodeStyles (props) {
 
 class Node extends Component {
 
+  constructor () {
+        super();
+        enableUniqueIds(this);
+  }
+
+
   componentDidMount () {
     //Drag and Drop preview
     this.props.connectDragPreview(getEmptyImage(), {
@@ -70,15 +77,12 @@ class Node extends Component {
   render (){
     //console.log(this.props.transducers);
     return this.props.connectDragSource(
-      <div style={getNodeStyles(this.props)}>
+      <div id={this.nextUniqueId()} style={getNodeStyles(this.props)}>
         <Card style={{width: '350px'}}>
-          <CardTitle
-            title={this.props.label}
-            subtitle="cBlocks Node"
-          />
+          <CardTitle title={this.props.label} subtitle="cBlocks Node"/>
           {/*<CardText>'Blabla'</CardText>*/}
           <CardActions style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-              <AddButton floating primary/>
+            <AddButton floating primary/>
           </CardActions>
         </Card>
       </div>
