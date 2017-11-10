@@ -37,10 +37,22 @@ const testAddDuplicateConnection = ()=> {
   expect(connections(stateBefore, action)).toEqual(stateAfter);
 };
 
+const testRemoveConnection = () => {
+  const stateBefore = [{ nodeHtmlId: 'IDOfNode', sensorHtmlId: 'IDOfSensor'}, { nodeHtmlId: 'IDOfNode2', sensorHtmlId: 'IDOfSensor2'}];
+  const action = actions.removeConnection({ nodeHtmlId: 'IDOfNode', sensorHtmlId: 'IDOfSensor'});
+  const stateAfter = [{ nodeHtmlId: 'IDOfNode2', sensorHtmlId: 'IDOfSensor2'}];
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(connections(stateBefore, action)).toEqual(stateAfter);
+};
+
 const connectionsTests = () => {
   testAddConnection();
   testAddAnotherConnection();
   testAddDuplicateConnection();
+  testRemoveConnection();
   return true;
 };
 

@@ -79,6 +79,14 @@ function collect (cnnct, monitor) {
     itemType: monitor.getItemType()
   };
 }
+const renderConnections = (state) => {
+  state.connections.forEach((con) => {
+    jsPlumb.connect({
+      source: con.nodeHtmlId,
+      target: con.sensorHtmlId
+    });
+  });
+};
 
 class Canvas extends Component {
 
@@ -86,6 +94,7 @@ class Canvas extends Component {
     super();
     enableUniqueIds(this);
     let canvasId;
+    let state;
   }
 
   componentDidMount () {
@@ -94,14 +103,9 @@ class Canvas extends Component {
       jsPlumb.setContainer(this.canvasId);
     });
 
-    const unsubscribe = subscribe('connections', state => {
-
-      state.connections.forEach((con) => {
-        jsPlumb.connect({
-          source: con.nodeHtmlId,
-          target: con.sensorHtmlId
-        });
-      });
+    const unsubscribeFromConnections = subscribe('connections', state => {
+      this.state = state;
+      renderConnections(state);
     });
   }
   //TODO: move nodeId fetching to App.
@@ -128,8 +132,7 @@ class Canvas extends Component {
       top: 200,
       left: 200,
       height: 800,
-      width: '100%',
-      zIndex: 100
+      width: '100%'
     };
     this.canvasId = this.nextUniqueId();
 

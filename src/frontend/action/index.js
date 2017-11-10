@@ -27,6 +27,8 @@ export const addConnectionForSensor = (sensorId) => {
   };
 };
 
+export const removeConnection = (connection) => ({type: Constants.Actions.REMOVE_CONNECTION, connection});
+
 export const fetchNodeIDsHasErrored = (bool) =>
   ({type: Constants.Actions.FETCH_NODE_IDS_HAS_ERRORED, hasErrored: bool});
 
