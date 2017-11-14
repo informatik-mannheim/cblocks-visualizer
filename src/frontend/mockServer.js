@@ -47,7 +47,7 @@ mockServer.on('message', event => {
             value: randomIntFromInterval(500, 600)
           }
         });
-      }, 100);
+      }, 2000);
       break;
     case 'get_node':
       console.log(eventJSON.data);

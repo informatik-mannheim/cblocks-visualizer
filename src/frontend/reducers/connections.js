@@ -6,8 +6,8 @@ export function connections (state = initialConnectionsState, action) {
   switch (action.type) {
     case Constants.Actions.ADD_CONNECTION:
       const newConnection = {
-        nodeHtmlId: action.nodeHtmlId,
-        sensorHtmlId: action.sensorHtmlId
+        sensorHtmlId: action.sensorHtmlId,
+        nodeHtmlId: action.nodeHtmlId
       };
 
       //check for duplicates

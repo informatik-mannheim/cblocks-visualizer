@@ -34,6 +34,8 @@ function node (state = {}, action){
     return state;
   }
 
+  console.log(state);
+  console.log(action);
   switch (action.type) {
     case Constants.Actions.MOVE_NODE:
       const movedNode = Object.assign({}, state, {

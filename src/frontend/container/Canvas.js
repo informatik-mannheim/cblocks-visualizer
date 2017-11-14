@@ -13,6 +13,7 @@ import { enableUniqueIds } from 'react-html-id';
 
 
 //import { Button } from 'react-toolbox/lib/button';
+const jsPlumbInstance = jsPlumb.getInstance();
 
 /**
  * Specifies the drop target contract.
@@ -81,10 +82,43 @@ function collect (cnnct, monitor) {
 }
 const renderConnections = (state) => {
   state.connections.forEach((con) => {
-    jsPlumb.connect({
-      source: con.nodeHtmlId,
-      target: con.sensorHtmlId
-    });
+    if (jsPlumbInstance.getAllConnections().length !== 0) {
+      jsPlumbInstance.getAllConnections().forEach((jspCon) => {
+        if (jspCon.sourceId === con.sensorHtmlId && jspCon.targetId === con.nodeHtmlId) {
+          console.log(jsPlumbInstance);
+          console.log(jspCon.sourceId);
+          console.log(jspCon.targetId);
+          jsPlumbInstance.deleteConnection(jspCon);
+
+          setTimeout(() => {
+            jsPlumbInstance.getDragManager().updateOffsets(jsPlumbInstance.getContainer());
+            jsPlumbInstance.getDragManager().updateOffsets(jspCon.sourceId);
+            jsPlumbInstance.getDragManager().updateOffsets(jspCon.targetId);
+            //jsPlumbInstance.revalidate(jspCon.sourceId);
+            jsPlumbInstance.repaint(jspCon.sourceId);
+            //jsPlumbInstance.reset();
+            //jsPlumbInstance.clear();
+            jsPlumbInstance.connect({
+              source: con.sensorHtmlId,
+              target: con.nodeHtmlId
+            });
+          }, 1000);
+          //jsPlumbInstance.repaintEverything();
+
+        } else {
+          jsPlumbInstance.connect({
+            source: con.sensorHtmlId,
+            target: con.nodeHtmlId
+          });
+        }
+      });
+    } else {
+      jsPlumbInstance.connect({
+        source: con.sensorHtmlId,
+        target: con.nodeHtmlId
+      });
+    }
+    console.log(jsPlumbInstance.getAllConnections());
   });
 };
 
@@ -99,14 +133,15 @@ class Canvas extends Component {
 
   componentDidMount () {
 
-    jsPlumb.ready(function (){
-      jsPlumb.setContainer(this.canvasId);
+/*
+    jsPlumbInstance.ready(function (){
+      jsPlumbInstance.setContainer(this.canvasId);
     });
 
     const unsubscribeFromConnections = subscribe('connections', state => {
-      this.state = state;
       renderConnections(state);
     });
+*/
   }
   //TODO: move nodeId fetching to App.
   componentWillReceiveProps (nextProps) {

@@ -114,7 +114,7 @@ const testUpdateSensorValue = () => {
 
 const sensorsTests = () => {
   testAddSensor();
-  testMoveSensor();
+  //testMoveSensor();
   testUpdateSensorValue();
   return true;
 };
