@@ -143,7 +143,6 @@ class Canvas extends Component {
     });
 */
   }
-  //TODO: move nodeId fetching to App.
   componentWillReceiveProps (nextProps) {
     if (!this.props.isOver && nextProps.isOver) {
       // You can use this as enter handler

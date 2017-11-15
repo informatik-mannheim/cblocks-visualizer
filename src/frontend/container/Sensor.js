@@ -29,7 +29,10 @@ const sensorSource = {
     //console.log('Dropped on compatible target: ' + item);
     const dropResult = monitor.getDropResult();
 
+    console.log('endDrag Sensor');
+    console.log(dropResult);
     if (dropResult.dropEffect === 'move' && dropResult.item === component.props._id) {
+      console.log('true');
       component.props.move(component.props._id, dropResult.xPos, dropResult.yPos);
     }
   }

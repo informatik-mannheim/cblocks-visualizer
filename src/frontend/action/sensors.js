@@ -5,6 +5,8 @@ export const updateSensorValue = (_id, value) => {
 };
 
 export const moveSensor = (sensorId, xPos, yPos) => {
+  return {type: Constants.Actions.MOVE_SENSOR, _id: sensorId, xPos: xPos, yPos: yPos};
+  /* TODO: reuse or delete this connection stuff
   return (dispatch, getState) => {
     const htmlIds = getState().htmlIds;
     let sensorHtmlId;
@@ -20,8 +22,13 @@ export const moveSensor = (sensorId, xPos, yPos) => {
       }
     });
   };
+  */
 };
 
 export const addSensor = (sensor, xPos = 0, yPos = 0) => {
   return {type: Constants.Actions.ADD_SENSOR, sensor, xPos, yPos};
+};
+
+export const removeSensor = (sensorId) => {
+  //TODO: implement and test
 };
