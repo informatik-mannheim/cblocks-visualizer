@@ -1,36 +1,12 @@
 import Constants from '../constants/';
 
-export const addNode = (node, xPos = 0, yPos = 0) => ({type: Constants.Actions.ADD_NODE, node, xPos, yPos});
+export * from './nodes';
+export * from './sensors';
+export * from './connections';
 
 export const addHtmlIdMapping = (_id, htmlId) => ({type: Constants.Actions.ADD_HTMLIDMAPPING, _id, htmlId});
 
-
-export const addConnection = (sensorHtmlId, nodeHtmlId) => ({type: Constants.Actions.ADD_CONNECTION, sensorHtmlId, nodeHtmlId});
-
-export const addConnectionForSensor = (sensorId) => {
-  return (dispatch, getState) => {
-    const state = getState();
-    state.nodes.all_nodes.forEach((node) => {
-      const nodeIndex = node.sensors.indexOf(sensorId);
-      if (nodeIndex !== -1) {
-        let nodeHtmlId, sensorHtmlId;
-        const nodeId = nodeIndex;
-        for (let i = 0; i < state.htmlIds.length; i++) {
-          if (state.htmlIds[i]._id === node._id) {
-            nodeHtmlId = state.htmlIds[i].htmlId;
-          }
-          if (state.htmlIds[i]._id === sensorId) {
-            sensorHtmlId = state.htmlIds[i].htmlId;
-          }
-        }
-        dispatch(addConnection(sensorHtmlId, nodeHtmlId));
-      }
-    });
-  };
-};
-
-export const removeConnection = (connection) => ({type: Constants.Actions.REMOVE_CONNECTION, connection});
-
+/*
 export const fetchNodeIDsHasErrored = (bool) =>
   ({type: Constants.Actions.FETCH_NODE_IDS_HAS_ERRORED, hasErrored: bool});
 
@@ -91,14 +67,6 @@ export const fetchNodeSuccess = (node) => {
   return {type: Constants.Actions.FETCH_NODE_SUCCESS, node};
 };
 
-export const refreshConnection = (connection) => {
-  console.log(connection);
-  return (dispatch) => {
-    dispatch(removeConnection(connection));
-    dispatch(addConnection(connection.sensorHtmlId, connection.nodeHtmlId));
-  };
-};
-
 export const move = (componentType, componentId, xPos, yPos) => {
   let actionType;
   switch (componentType) {
@@ -112,41 +80,6 @@ export const move = (componentType, componentId, xPos, yPos) => {
   }
   console.log('move');
   return {type: actionType, _id: componentId, xPos: xPos, yPos: yPos};
-};
-
-export const moveNode = (nodeId, xPos, yPos) => {
-  return (dispatch, getState) => {
-    const nodes = getState().nodes;
-    //type: Constants.Actions.MOVE_SENSOR, _id: sensorId, xPos: xPos, yPos: yPos};
-    //console.log(move('node', nodeId, xPos, yPos))
-    return dispatch(move('node', nodeId, xPos, yPos));
-  };
-};
-
-export const moveSensor = (sensorId, xPos, yPos) => {
-  return (dispatch, getState) => {
-    const htmlIds = getState().htmlIds;
-    let sensorHtmlId;
-    getState().htmlIds.forEach((mapping) => {
-      if (mapping._id === sensorId) {
-        sensorHtmlId = mapping.htmlId;
-      }
-    });
-    let thisConnection;
-    getState().connections.forEach((conn) => {
-      if (conn.sensorHtmlId === sensorHtmlId) {
-        thisConnection = conn;
-      }
-    });
-    //type: Constants.Actions.MOVE_SENSOR, _id: sensorId, xPos: xPos, yPos: yPos};
-    dispatch(move('sensor', sensorId, xPos, yPos));
-    dispatch(refreshConnection(thisConnection));
-  };
-};
-
-
-export const addSensor = (sensor, xPos = 0, yPos = 0) => {
-  return {type: Constants.Actions.ADD_SENSOR, sensor, xPos, yPos};
 };
 
 export const fetchSensorHasErrored = (bool) =>
@@ -181,7 +114,4 @@ export const fetchSensorsForNode = (node) => {
     });
   };
 };
-
-export const updateSensorValue = (_id, value) => {
-  return {type: Constants.Actions.UPDATE_SENSOR_VALUE, _id, value};
-};
+*/
