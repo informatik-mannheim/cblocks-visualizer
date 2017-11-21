@@ -85,4 +85,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # Start-up Script
-start-env.ps1
+start_env.ps1
