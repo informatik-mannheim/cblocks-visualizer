@@ -24,7 +24,6 @@ export const moveSensor = (sensorId, xPos, yPos) => {
   };
   */
 };
-
 export const addSensor = (sensor, xPos = 0, yPos = 0) => {
   return {type: Constants.Actions.ADD_SENSOR, sensor, xPos, yPos};
 };

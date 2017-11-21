@@ -10,7 +10,7 @@ import { DropTarget } from 'react-dnd';
 import { subscribe } from 'redux-subscriber';
 import { jsPlumb } from 'jsPlumb';
 import { enableUniqueIds } from 'react-html-id';
-
+import MappingCreationDialog from './MappingCreationDialog';
 
 //import { Button } from 'react-toolbox/lib/button';
 const jsPlumbInstance = jsPlumb.getInstance();
@@ -180,6 +180,7 @@ class Canvas extends Component {
             <Sensor key={sensor._id} _id={sensor._id} xPos={sensor.xPos}
               yPos={sensor.yPos} label={sensor.label} />
         ))}
+        <MappingCreationDialog />
       </div>
     );
   }

@@ -102,7 +102,7 @@ const testAddDuplicateNode = () => {
 
 const nodesTests = () => {
   testAddNode();
-  //testMoveNode();
+  testMoveNode();
   testAddDuplicateNode();
   return true;
 };

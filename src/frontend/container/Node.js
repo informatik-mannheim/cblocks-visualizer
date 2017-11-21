@@ -85,7 +85,7 @@ class Node extends Component {
           <CardTitle title={this.props.label} subtitle="cBlocks Node"/>
           {/*<CardText>'Blabla'</CardText>*/}
           <CardActions style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <AddButton floating primary/>
+            <AddButton floating primary onClick={() => this.props.addMapping(this.props._id)}/>
           </CardActions>
         </Card>
       </div>
@@ -95,6 +95,7 @@ class Node extends Component {
 
 Node.propTypes = {
   _id: PropTypes.string.isRequired,
+  addMapping: PropTypes.func.isRequired,
   connectDragPreview: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   height: PropTypes.number,
@@ -130,7 +131,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     move: (_id, xPos, yPos) => dispatch(action.moveNode(_id, xPos, yPos)),
-    mapIdToHtmlId: (_id, htmlId) => dispatch(action.addHtmlIdMapping(_id, htmlId))
+    mapIdToHtmlId: (_id, htmlId) => dispatch(action.addHtmlIdMapping(_id, htmlId)),
+    addMapping: (node) => dispatch(action.openMappingDialog(node))
   };
 };
 
