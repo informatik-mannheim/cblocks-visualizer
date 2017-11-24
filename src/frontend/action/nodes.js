@@ -10,7 +10,9 @@ export const moveN = (nodeId, xPos, yPos) => {
 export const moveNode = (nodeId, xPos, yPos) => {
   return (dispatch) => {
     dispatch(moveN(nodeId, xPos, yPos));
-    dispatch(refreshConnection({sensorId: 'pressure_sensor_id', nodeId: 'node1_id'}));
+    setTimeout(function () {
+      dispatch(refreshConnection({sensorId: 'pressure_sensor_id', nodeId: 'node1_id'}));
+    }, 10);
   };
 };
 
