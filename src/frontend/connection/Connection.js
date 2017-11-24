@@ -2,16 +2,7 @@ import {ServerEventDispatcher} from './ServerEventDispatcher';
 import Constants from '../constants/';
 import store from '../store';
 import * as action from '../action/';
-/*
-Simplified WebSocket events dispatcher (no channels, no users)
-var socket = new FancyWebSocket();
-// bind to server events
-socket.bind('some_event', function(data){
-  alert(data.name + ' says: ' + data.message)
-});
-// broadcast events to all connected users
-socket.send( 'some_event', {name: 'ismael', message : 'Hello world'} );
-*/
+
 let socket;
 const serverEvents = Constants.ServerEvents;
 
@@ -29,15 +20,21 @@ const defineMappingContinuous = (mappingName, sensorId, resourceId, states) => {
   */
 };
 
+let nodeYPos = 100, sensorYPos = 100;
+const nodeXPos = 50, sensorXPos = 500;
+
 const bindEvents = () => {
   socket.bind(serverEvents.NODE_ADDED, (nodeId) => {
     getNodeStatus(nodeId);
   });
+
   socket.bind(serverEvents.NODE_STATUS, (node) => {
-    store.dispatch(action.addNode(node));
+    store.dispatch(action.addNode(node, nodeXPos, nodeYPos));
+    nodeYPos = nodeYPos + 200;
   });
   socket.bind(serverEvents.SENSOR_ADDED, (sensorId) => {
-    getSensorStatus(sensorId);
+    getSensorStatus(sensorId, sensorXPos, sensorYPos);
+    sensorYPos = sensorYPos + 250;
   });
   socket.bind(serverEvents.SENSOR_STATUS, (sensor) => {
     store.dispatch(action.addSensor(sensor));

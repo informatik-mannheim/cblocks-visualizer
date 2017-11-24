@@ -5,7 +5,7 @@ export const ServerEventDispatcher = (url) => {
 
   const callbacks = {};
 
-  const dispatch = function (event_name, message){
+  const dispatch = (event_name, message) => {
     const chain = callbacks[event_name];
     if (typeof chain === 'undefined') return; // no callbacks for this event
     for (let i = 0; i < chain.length; i++){
@@ -13,25 +13,25 @@ export const ServerEventDispatcher = (url) => {
     }
   };
 
-  this.bind = function (event_name, callback){
+  this.bind = (event_name, callback) => {
     callbacks[event_name] = callbacks[event_name] || [];
     callbacks[event_name].push(callback);
     return this;// chainable
   };
 
-  this.send = function (event_name, event_data){
+  this.send = (event_name, event_data) => {
     const payload = JSON.stringify({event: event_name, data: event_data});
     conn.send(payload); // <= send JSON data to socket server
     return this;
   };
 
   // dispatch to the right handlers
-  conn.onmessage = function (evt){
+  conn.onmessage = (evt) => {
     dispatch(evt.data.event, evt.data.data);
   };
 
-  conn.onclose = function () {dispatch('close', null);};
-  conn.onopen = function () {dispatch('open', null);};
+  conn.onclose = () => {dispatch('close', null);};
+  conn.onopen = () => {dispatch('open', null);};
 
   return this;
 };

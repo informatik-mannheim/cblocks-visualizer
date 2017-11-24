@@ -4,6 +4,7 @@ import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import Node from './Node';
 import Sensor from './Sensor';
+import Connection from '../component/Connection';
 import Constants from '../constants/';
 import * as action from '../action/';
 import { DropTarget } from 'react-dnd';
@@ -80,47 +81,6 @@ function collect (cnnct, monitor) {
     itemType: monitor.getItemType()
   };
 }
-const renderConnections = (state) => {
-  state.connections.forEach((con) => {
-    if (jsPlumbInstance.getAllConnections().length !== 0) {
-      jsPlumbInstance.getAllConnections().forEach((jspCon) => {
-        if (jspCon.sourceId === con.sensorHtmlId && jspCon.targetId === con.nodeHtmlId) {
-          console.log(jsPlumbInstance);
-          console.log(jspCon.sourceId);
-          console.log(jspCon.targetId);
-          jsPlumbInstance.deleteConnection(jspCon);
-
-          setTimeout(() => {
-            jsPlumbInstance.getDragManager().updateOffsets(jsPlumbInstance.getContainer());
-            jsPlumbInstance.getDragManager().updateOffsets(jspCon.sourceId);
-            jsPlumbInstance.getDragManager().updateOffsets(jspCon.targetId);
-            //jsPlumbInstance.revalidate(jspCon.sourceId);
-            jsPlumbInstance.repaint(jspCon.sourceId);
-            //jsPlumbInstance.reset();
-            //jsPlumbInstance.clear();
-            jsPlumbInstance.connect({
-              source: con.sensorHtmlId,
-              target: con.nodeHtmlId
-            });
-          }, 1000);
-          //jsPlumbInstance.repaintEverything();
-
-        } else {
-          jsPlumbInstance.connect({
-            source: con.sensorHtmlId,
-            target: con.nodeHtmlId
-          });
-        }
-      });
-    } else {
-      jsPlumbInstance.connect({
-        source: con.sensorHtmlId,
-        target: con.nodeHtmlId
-      });
-    }
-    console.log(jsPlumbInstance.getAllConnections());
-  });
-};
 
 class Canvas extends Component {
 
@@ -132,16 +92,15 @@ class Canvas extends Component {
   }
 
   componentDidMount () {
-
 /*
     jsPlumbInstance.ready(function (){
       jsPlumbInstance.setContainer(this.canvasId);
     });
-
-    const unsubscribeFromConnections = subscribe('connections', state => {
-      renderConnections(state);
-    });
 */
+    const unsubscribeFromMoveNode = subscribe('connections', state => {
+      //renderConnections(state);
+    });
+
   }
   componentWillReceiveProps (nextProps) {
     if (!this.props.isOver && nextProps.isOver) {
@@ -174,11 +133,16 @@ class Canvas extends Component {
       <div id={this.canvasId} style={dropZoneStyle}>
         {this.props.nodes.all_nodes.map((node) => (
             <Node key={node._id} _id={node._id} xPos={node.xPos}
-              yPos={node.yPos} label={node.label} sensors={node.sensors}/>
+              yPos={node.yPos} label={node.label} sensors={node.sensors} ref={node._id}/>
         ))}
         {this.props.sensors.all_sensors.map((sensor) => (
-            <Sensor key={sensor._id} _id={sensor._id} xPos={sensor.xPos}
-              yPos={sensor.yPos} label={sensor.label} />
+          <div key={sensor._id + '_div'}>
+            <Sensor _id={sensor._id} xPos={sensor.xPos}
+              yPos={sensor.yPos} label={sensor.label} ref={sensor._id}/>
+          </div>
+        ))}
+        {this.props.connections.map((connection) => (
+          <Connection key={connection.sensorId} refs={this.refs} sensorId={connection.sensorId}/>
         ))}
         <MappingCreationDialog />
       </div>
@@ -189,6 +153,7 @@ class Canvas extends Component {
 Canvas.propTypes = {
   canDrop: PropTypes.bool,
   connectDropTarget: PropTypes.func,
+  connections: PropTypes.array,
   isOver: PropTypes.bool,
   isOverCurrent: PropTypes.bool,
   nodeIds: PropTypes.array.isRequired,
@@ -201,7 +166,14 @@ Canvas.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  return {nodes: state.nodes, nodeIds: state.nodeIDs, sensors: state.sensors, hasErrored: state.fetchNodeIDsHasErrored, isLoading: state.fetchNodeIDsIsLoading};
+  return {
+    connections: state.connections,
+    nodes: state.nodes,
+    nodeIds: state.nodeIDs,
+    sensors: state.sensors,
+    hasErrored: state.fetchNodeIDsHasErrored,
+    isLoading: state.fetchNodeIDsIsLoading
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -5,10 +5,11 @@ class StatusBar extends React.Component {
 
   static propTypes = {
     percentage: ((props, propName) => {
-      if (typeof props[propName] !== 'number')
+      if (typeof props[propName] !== 'number') {
         return Progress.throwError('Invalid Props: "percentage" should ∈ ℝ ');
+      }
       if (props[propName] < 0 || props[propName] > 100) {
-        return Progress.throwError('Invalid Props: "percentage" should be between 0 and 100' );
+        return Progress.throwError('Invalid Props: "percentage" should be between 0 and 100');
       }
     }),
     color: PropTypes.string,
@@ -43,7 +44,7 @@ class StatusBar extends React.Component {
     };
 
     return (
-      <div style={{display: 'flex', justifyContent: 'center'}} className={className || "sensor-statusbar-container"} {...rest}>
+      <div style={{display: 'flex', justifyContent: 'center'}} className={className || 'sensor-statusbar-container'} {...rest}>
         <div className="sensor-statusbar" style={style}>{children}
           <div style={{borderRight: 'thick solid #000000', height: '100%', width: percentage + '%', transition: `width ${animation}ms`}}/>
         </div>

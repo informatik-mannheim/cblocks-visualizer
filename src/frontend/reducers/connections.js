@@ -6,13 +6,13 @@ export function connections (state = initialConnectionsState, action) {
   switch (action.type) {
     case Constants.Actions.ADD_CONNECTION:
       const newConnection = {
-        sensorHtmlId: action.sensorHtmlId,
-        nodeHtmlId: action.nodeHtmlId
+        sensorId: action.sensorId,
+        nodeId: action.nodeId
       };
 
       //check for duplicates
       for (let i = 0; i < state.length; i++) {
-        if (state[i].sensorHtmlId === newConnection.sensorHtmlId) {
+        if (state[i].sensorId === newConnection.sensorId) {
           return state;
         }
       }
@@ -23,7 +23,7 @@ export function connections (state = initialConnectionsState, action) {
     return state;
 
     case Constants.Actions.REMOVE_CONNECTION:
-    const index = state.findIndex(i => i.sensorHtmlId === action.connection.sensorHtmlId);
+    const index = state.findIndex(i => i.sensorId === action.connection.sensorId);
     return [
       ...state.slice(0, index),
       ...state.slice(index + 1)

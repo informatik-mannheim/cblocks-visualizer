@@ -27,8 +27,8 @@ const testAddSensor = () => {
         resources: [
           'bla'
         ],
-        xPos: 0,
-        yPos: 0,
+        xPos: 500,
+        yPos: 100,
         value: 500
       }
     ]
@@ -53,7 +53,7 @@ const testMoveSensor = () => {
       }
     ]
   };
-  const action = actions.moveSensor('59510e6f8eed6e32225a752d', 500, 500);
+  const action = actions.move('59510e6f8eed6e32225a752d', 500, 500);
   const stateAfter = {
     count: 1,
     all_sensors: [

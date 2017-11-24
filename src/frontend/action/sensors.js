@@ -1,30 +1,22 @@
 import Constants from '../constants';
+import { refreshConnection } from './connections';
 
 export const updateSensorValue = (_id, value) => {
   return {type: Constants.Actions.UPDATE_SENSOR_VALUE, _id, value};
 };
 
-export const moveSensor = (sensorId, xPos, yPos) => {
+export const move = (sensorId, xPos, yPos) => {
   return {type: Constants.Actions.MOVE_SENSOR, _id: sensorId, xPos: xPos, yPos: yPos};
-  /* TODO: reuse or delete this connection stuff
-  return (dispatch, getState) => {
-    const htmlIds = getState().htmlIds;
-    let sensorHtmlId;
-    getState().htmlIds.forEach((mapping) => {
-      if (mapping._id === sensorId) {
-        sensorHtmlId = mapping.htmlId;
-      }
-    });
-    let thisConnection;
-    getState().connections.forEach((conn) => {
-      if (conn.sensorHtmlId === sensorHtmlId) {
-        thisConnection = conn;
-      }
-    });
-  };
-  */
 };
-export const addSensor = (sensor, xPos = 0, yPos = 0) => {
+
+export const moveSensor = (sensorId, xPos, yPos) => {
+  return (dispatch) => {
+    dispatch(move(sensorId, xPos, yPos));
+    dispatch(refreshConnection({sensorId: 'pressure_sensor_id', nodeId: 'node1_id'}));
+  };
+};
+
+export const addSensor = (sensor, xPos = 500, yPos = 100) => {
   return {type: Constants.Actions.ADD_SENSOR, sensor, xPos, yPos};
 };
 

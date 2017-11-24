@@ -1,5 +1,5 @@
 $mongo_dir = 'C:\Program Files\MongoDB\Server\3.4\bin'
-$registry_dir = '~\Documents\GitHub\registry'
+$registry_dir = '~\Documents\GitHub\cblocks-registry'
 $cblocks_dir = '~\Documents\GitHub\cblocks'
 
 $MongoBlock = {

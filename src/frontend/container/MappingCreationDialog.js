@@ -72,7 +72,7 @@ MappingCreationDialog.defaultProps = {
   active: false
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     active: state.mappingDialog.active,
     dialogState: state.mappingDialog,

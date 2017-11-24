@@ -7,8 +7,8 @@ const initialConnectionsState = [];
 
 const testAddConnection = () => {
   const stateBefore = initialConnectionsState;
-  const action = actions.addConnection('HTMLIdSensor', 'HTMLIdNode');
-  const stateAfter = [{sensorHtmlId: 'HTMLIdSensor', nodeHtmlId: 'HTMLIdNode'}];
+  const action = actions.addConnection('IdSensor', 'IdNode');
+  const stateAfter = [{sensorId: 'IdSensor', nodeId: 'IdNode'}];
 
   deepFreeze(stateBefore);
   deepFreeze(action);
@@ -17,10 +17,10 @@ const testAddConnection = () => {
 };
 
 const testAddAnotherConnection = ()=> {
-  const stateBefore = [{sensorHtmlId: 'HTMLIdSensor', nodeHtmlId: 'HTMLIdNode'}];
-  const action = actions.addConnection('HTMLIdSensor2', 'HTMLIdNode2');
-  const stateAfter = [{sensorHtmlId: 'HTMLIdSensor', nodeHtmlId: 'HTMLIdNode'},
-    {sensorHtmlId: 'HTMLIdSensor2', nodeHtmlId: 'HTMLIdNode2'}];
+  const stateBefore = [{sensorId: 'IdSensor', nodeId: 'IdNode'}];
+  const action = actions.addConnection('IdSensor2', 'IdNode2');
+  const stateAfter = [{sensorId: 'IdSensor', nodeId: 'IdNode'},
+    {sensorId: 'IdSensor2', nodeId: 'IdNode2'}];
 
   deepFreeze(stateBefore);
   deepFreeze(action);
@@ -28,9 +28,9 @@ const testAddAnotherConnection = ()=> {
   expect(connections(stateBefore, action)).toEqual(stateAfter);
 };
 const testAddDuplicateConnection = ()=> {
-  const stateBefore = [{sensorHtmlId: 'HTMLIdSensor', nodeHtmlId: 'HTMLIdNode'}];
-  const action = actions.addConnection('HTMLIdSensor', 'HTMLIdNode');
-  const stateAfter = [{sensorHtmlId: 'HTMLIdSensor', nodeHtmlId: 'HTMLIdNode'}];
+  const stateBefore = [{sensorId: 'IdSensor', nodeId: 'IdNode'}];
+  const action = actions.addConnection('IdSensor', 'IdNode');
+  const stateAfter = [{sensorId: 'IdSensor', nodeId: 'IdNode'}];
 
   deepFreeze(stateBefore);
   deepFreeze(action);
@@ -39,11 +39,11 @@ const testAddDuplicateConnection = ()=> {
 };
 
 const testRemoveConnection = () => {
-  const stateBefore = [{sensorHtmlId: 'HTMLIdSensor', nodeHtmlId: 'HTMLIdNode'},
-    {sensorHtmlId: 'HTMLIdSensor2', nodeHtmlId: 'HTMLIdNode2'}];
+  const stateBefore = [{sensorId: 'IdSensor', nodeId: 'IdNode'},
+    {sensorId: 'IdSensor2', nodeId: 'IdNode2'}];
   const action = actions.removeConnection(
-    {sensorHtmlId: 'HTMLIdSensor', nodeHtmlId: 'HTMLIdNode'});
-  const stateAfter = [{sensorHtmlId: 'HTMLIdSensor2', nodeHtmlId: 'HTMLIdNode2'}];
+    {sensorId: 'IdSensor', nodeId: 'IdNode'});
+  const stateAfter = [{sensorId: 'IdSensor2', nodeId: 'IdNode2'}];
 
   deepFreeze(stateBefore);
   deepFreeze(action);

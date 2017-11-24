@@ -29,6 +29,7 @@ const nodeSource = {
 
     if (dropResult.dropEffect === 'move' && dropResult.item === component.props._id) {
       component.props.move(component.props._id, dropResult.xPos, dropResult.yPos);
+      //component.props.refreshConnection();
     }
   }
 };
@@ -131,6 +132,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     move: (_id, xPos, yPos) => dispatch(action.moveNode(_id, xPos, yPos)),
+    refreshConnection: () => dispatch(action.refreshConnection({sensorId: 'pressure_sensor_id', nodeId: 'node1_id'})),
     mapIdToHtmlId: (_id, htmlId) => dispatch(action.addHtmlIdMapping(_id, htmlId)),
     addMapping: (node) => dispatch(action.openMappingDialog(node))
   };

@@ -22,8 +22,8 @@ const testAddNode = () => {
       {
         _id: 'testUID123akls-asdlkj2939949-4u58995',
         label: 'testtest',
-        xPos: 0,
-        yPos: 0
+        xPos: 50,
+        yPos: 100
       }
     ]
   };
@@ -49,7 +49,7 @@ const testMoveNode = () => {
       }
     ]
   };
-  const action = actions.moveNode('59510e6f8eed6e32225a752d', 500, 500);
+  const action = actions.moveN('59510e6f8eed6e32225a752d', 500, 500);
   const stateAfter = {
     count: 1,
     all_nodes: [
