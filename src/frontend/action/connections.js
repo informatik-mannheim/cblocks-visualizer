@@ -22,3 +22,12 @@ export const refreshConnection = (connection) => {
     dispatch(addConnection(connection.sensorId, connection.nodeId));
   };
 };
+
+export const refreshConnections = (connections) => {
+  return (dispatch) => {
+    connections.forEach((connection) => {
+      dispatch(removeConnection(connection));
+      dispatch(addConnection(connection.sensorId, connection.nodeId));
+    });
+  };
+};

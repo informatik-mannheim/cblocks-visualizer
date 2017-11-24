@@ -1,5 +1,5 @@
 import Constants from '../constants';
-import { refreshConnection } from './connections';
+import { refreshConnections } from './connections';
 
 export const addNode = (node, xPos = 50, yPos = 100) => ({type: Constants.Actions.ADD_NODE, node, xPos, yPos});
 
@@ -8,11 +8,21 @@ export const moveN = (nodeId, xPos, yPos) => {
 };
 
 export const moveNode = (nodeId, xPos, yPos) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch(moveN(nodeId, xPos, yPos));
-    setTimeout(function () {
-      dispatch(refreshConnection({sensorId: 'pressure_sensor_id', nodeId: 'node1_id'}));
-    }, 10);
+
+    const nodeConnections = [];
+    getState().connections.forEach((con) => {
+      if (con.nodeId === nodeId) {
+          nodeConnections.push(con);
+      }
+    });
+
+    if (nodeConnections.length > 0) {
+      setTimeout(function () {
+        dispatch(refreshConnections(nodeConnections));
+      }, 10);
+    }
   };
 };
 

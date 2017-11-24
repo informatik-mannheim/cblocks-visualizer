@@ -10,11 +10,22 @@ export const move = (sensorId, xPos, yPos) => {
 };
 
 export const moveSensor = (sensorId, xPos, yPos) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch(move(sensorId, xPos, yPos));
-    setTimeout(function () {
-      dispatch(refreshConnection({sensorId: 'pressure_sensor_id', nodeId: 'node1_id'}));
-    }, 10);
+
+    let thisConnection;
+
+    getState().connections.forEach((con) => {
+      if (con.sensorId === sensorId) {
+          thisConnection = con;
+      }
+    });
+
+    if (typeof thisConnection !== 'undefined') {
+      setTimeout(function () {
+          dispatch(refreshConnection(thisConnection));
+      }, 10);
+    }
   };
 };
 
