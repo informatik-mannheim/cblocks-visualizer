@@ -112,10 +112,36 @@ const testUpdateSensorValue = () => {
   expect(sensors(stateBefore, action)).toEqual(stateAfter);
 };
 
+const testRemoveSensor = () => {
+  const stateBefore = {
+    count: 1,
+    all_sensors: [
+      {
+        _id: 'sensor',
+        label: 'Pressure Sensor',
+        resources: [
+          'bla'
+        ],
+        xPos: 0,
+        yPos: 0,
+        value: 0
+      }
+    ]
+  };
+  const action = actions.removeSensor('sensor');
+  const stateAfter = initialSensorsState;
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(sensors(stateBefore, action)).toEqual(stateAfter);
+};
+
 const sensorsTests = () => {
   testAddSensor();
   testMoveSensor();
   testUpdateSensorValue();
+  testRemoveSensor();
   return true;
 };
 

@@ -17,9 +17,6 @@ const getStyles = (node, sensor) => {
   const off1 = getOffset(node);
   const off2 = getOffset(sensor);
 
-  console.log(off1);
-  console.log(off2);
-
   const x1 = off1.left + off1.width;
   const y1 = off1.top + (off1.height / 2);
 
@@ -60,7 +57,7 @@ const getSensor = (props) => {
 
 const getNode = (props) => {
   for (const key of Object.keys(props.refs)) {
-    if (key === 'node1_id') {
+    if (key === props.nodeId) {
       return ReactDOM.findDOMNode(props.refs[key]);
     }
   }
@@ -74,7 +71,6 @@ class Connection extends React.Component {
     this.sensor = getSensor(props);
     this.node = getNode(props);
     this.connectionStyles = getStyles(this.node, this.sensor);
-    console.log(this.connectionStyles);
   }
 
   render () {
@@ -85,6 +81,7 @@ class Connection extends React.Component {
 }
 
 Connection.propTypes = {
+  nodeId: PropTypes.string,
   refs: PropTypes.object,
   sensorId: PropTypes.string
 };

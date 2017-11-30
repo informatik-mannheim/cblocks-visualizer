@@ -39,7 +39,7 @@ class CustomDragLayer extends Component {
       case Constants.ItemTypes.NODE:
         return (<NodeDragPreview label={item.label} />);
       case Constants.ItemTypes.SENSOR:
-        return (<SensorDragPreview label={item.label} />);
+        return (<SensorDragPreview description={item.description} />);
       default:
         return null;
     }

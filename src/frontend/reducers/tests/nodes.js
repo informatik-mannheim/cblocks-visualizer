@@ -22,6 +22,7 @@ const testAddNode = () => {
       {
         _id: 'testUID123akls-asdlkj2939949-4u58995',
         label: 'testtest',
+        sensors: [],
         xPos: 50,
         yPos: 100
       }
@@ -100,10 +101,35 @@ const testAddDuplicateNode = () => {
   expect(nodes(stateBefore, action)).toEqual(stateAfter);
 };
 
+const testRemoveNode = () => {
+  const stateBefore = {
+    count: 1,
+    all_nodes: [
+      {
+        _id: '59510e6f8eed6e32225a752d',
+        label: 'Stuhl',
+        sensors: [
+          '5937b05823d3e908cc271eab'
+        ],
+        xPos: 0,
+        yPos: 0
+      }
+    ]
+  };
+  const action = actions.removeNode('59510e6f8eed6e32225a752d');
+  const stateAfter = initialNodesState;
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(nodes(stateBefore, action)).toEqual(stateAfter);
+};
+
 const nodesTests = () => {
   testAddNode();
   testMoveNode();
   testAddDuplicateNode();
+  testRemoveNode();
   return true;
 };
 

@@ -5,9 +5,8 @@ import { overrideComponentTypeChecker } from 'react-toolbox';
 import { Provider } from 'react-redux';
 import App from './container/App';
 import store from './store';
-import { mockServer } from './mockServer';
-import { connectToServer } from './connection/Connection';
-import Constants from './constants/'
+import { bindMQTTEvents } from './connection/MQTTEventHandler';
+import Constants from './constants/';
 
 const rootEl = document.getElementById('app');
 
@@ -33,6 +32,5 @@ if (process.env.NODE_ENV !== 'production') {
     module.hot.accept('./container/App', render);
   }
 }
-
-connectToServer(Constants.URLs.SERVER_SOCKET);
+bindMQTTEvents(Constants.URLs.MQTT_URL);
 render();

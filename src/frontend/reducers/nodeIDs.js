@@ -29,31 +29,3 @@ export const nodeIDs = (state = [], action) => {
       return state;
   }
 };
-
-
-///////////////////////////
-//////////TESTS////////////
-///////////////////////////
-/*
-const testAddNode = () => {
-  const stateBefore = [];
-  const action = {
-    type: 'ADD_NODE',
-    _id: 'testUID123akls-asdlkj2939949-4u58995',
-    label: 'testtest'
-  };
-  const stateAfter = [
-    {
-      _id: 'testUID123akls-asdlkj2939949-4u58995',
-      label: 'testtest'
-    }
-  ];
-
-  deepFreeze(stateBefore);
-  deepFreeze(action);
-  expect(nodeIDs(stateBefore, action)).toEqual(stateAfter);
-};
-
-testAddNode();
-console.log('All tests passed!');
-*/

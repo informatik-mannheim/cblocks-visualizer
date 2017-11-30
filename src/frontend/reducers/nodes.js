@@ -8,11 +8,12 @@ const initialNodesState = {
 export function nodes (state = initialNodesState, action) {
   switch (action.type) {
     case Constants.Actions.ADD_NODE:
-      const newNode = Object.assign({}, action.node, {xPos: action.xPos}, {yPos: action.yPos});
+      const newNode = Object.assign({}, action.node, {xPos: action.xPos}, {yPos: action.yPos}, {sensors: []});
 
       //check for duplicates
       for (let i = 0; i < state.all_nodes.length; i++) {
         if (state.all_nodes[i]._id === newNode._id) {
+          console.log('duplicate node added');
           return state;
         }
       }
@@ -22,7 +23,27 @@ export function nodes (state = initialNodesState, action) {
         count: newAllNodes.length,
         all_nodes: newAllNodes
       };
+    case Constants.Actions.REMOVE_NODE:
+    if (state.count !== 0) {
+      let nodeToRemove;
+      let nodeIndex;
+
+      for (nodeIndex = 0; nodeIndex < state.all_nodes.length; nodeIndex++) {
+        if (state.all_nodes[nodeIndex]._id === action._id) {
+          nodeToRemove = state.all_nodes[nodeIndex];
+        }
+      }
+      nodeIndex--;
+      const updatedNodes = [
+        ...state.all_nodes.slice(0, nodeIndex),
+        ...state.all_nodes.slice(nodeIndex + 1)
+      ];
+      return {count: updatedNodes.length, all_nodes: updatedNodes};
+    }
+    break;
     case Constants.Actions.MOVE_NODE:
+      return {count: state.all_nodes.length, all_nodes: state.all_nodes.map(n => node(n, action))};
+    case Constants.Actions.ADD_SENSOR_TO_NODE:
       return {count: state.all_nodes.length, all_nodes: state.all_nodes.map(n => node(n, action))};
     default:
       return state;
@@ -41,37 +62,16 @@ function node (state = {}, action){
         yPos: action.yPos
       });
       return movedNode;
+    case Constants.Actions.ADD_SENSOR_TO_NODE:
+    const sensors = state.sensors;
+    if ((sensors.indexOf(action.sensorId) === -1)) {
+      sensors.push(action.sensorId);
+
+      const modifiedNode = Object.assign({}, state, {sensors: sensors});
+      return modifiedNode;
+    }
+    break;
     default:
       return state;
   }
 }
-/*
-export const fetchNodeHasErrored = (state = false, action) => {
-  switch (action.type) {
-    case Constants.Actions.FETCH_NODE_HAS_ERRORED:
-      return action.hasErrored;
-
-    default:
-      return state;
-  }
-};
-
-export const fetchNodeIsLoading = (state = false, action) => {
-  switch (action.type) {
-    case Constants.Actions.FETCH_NODE_IS_LOADING:
-      return action.isLoading;
-
-    default:
-      return state;
-  }
-};
-
-export const node = (state = '{}', action) => {
-  switch (action.type) {
-    case Constants.Actions.FETCH_NODE_SUCCESS:
-      return action.node;
-    default:
-      return state;
-  }
-};
-*/

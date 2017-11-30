@@ -15,11 +15,11 @@ const styles = {
 class SensorDragPreview extends Component {
 
   render () {
-    const { label } = this.props;
+    const { description } = this.props;
     return (
       <Card style={{width: '350px'}}>
         <CardTitle
-          title={this.props.label}
+          title={this.props.description}
         />
       </Card>
     );
@@ -27,6 +27,6 @@ class SensorDragPreview extends Component {
 }
 
 SensorDragPreview.propTypes = {
-  label: PropTypes.string.isRequired
+  description: PropTypes.string.isRequired
 };
 export default SensorDragPreview;

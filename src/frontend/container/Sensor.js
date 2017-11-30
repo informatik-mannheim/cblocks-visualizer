@@ -15,8 +15,8 @@ const sensorSource = {
   beginDrag (props) {
     // Return the data describing the dragged item
     //const item = { _id: props._id };
-    const {_id, xPos, yPos, label} = props;
-    return {_id, xPos, yPos, label};
+    const {_id, xPos, yPos, description} = props;
+    return {_id, xPos, yPos, description};
   },
 
   endDrag (props, monitor, component) {
@@ -87,7 +87,7 @@ class Sensor extends Component {
       <div id={this.htmlId} style={getSensorStyles(this.props)}>
         <Card style={{width: '350px'}}>
           <CardTitle
-            title={this.props.label}
+            title={this.props.description}
             subtitle="cBlocks Sensor"
           />
           {/*<CardText>'TEXTTEXT'</CardText>*/}
@@ -106,7 +106,7 @@ Sensor.propTypes = {
   connectDragSource: PropTypes.func.isRequired,
   height: PropTypes.number,
   isDragging: PropTypes.bool.isRequired,
-  label: PropTypes.string,
+  description: PropTypes.string,
   mapIdToHtmlId: PropTypes.func.isRequired,
   move: PropTypes.func.isRequired,
   value: PropTypes.number,
@@ -118,7 +118,7 @@ Sensor.propTypes = {
 Sensor.defaultProps = {
   width: 400,
   height: 100,
-  label: 'MySensor'
+  description: 'MySensor'
 };
 
 const mapStateToProps = (state, ownProps) => {

@@ -138,11 +138,11 @@ class Canvas extends Component {
         {this.props.sensors.all_sensors.map((sensor) => (
           <div key={sensor._id + '_div'}>
             <Sensor _id={sensor._id} xPos={sensor.xPos}
-              yPos={sensor.yPos} label={sensor.label} ref={sensor._id}/>
+              yPos={sensor.yPos} description={sensor.description} ref={sensor._id}/>
           </div>
         ))}
         {this.props.connections.map((connection) => (
-          <Connection key={connection.sensorId} refs={this.refs} sensorId={connection.sensorId}/>
+          <Connection key={connection.sensorId} refs={this.refs} sensorId={connection.sensorId} nodeId={connection.nodeId}/>
         ))}
         <MappingCreationDialog />
       </div>
