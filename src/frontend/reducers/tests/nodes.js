@@ -125,6 +125,65 @@ const testRemoveNode = () => {
   expect(nodes(stateBefore, action)).toEqual(stateAfter);
 };
 
+const testRemoveNode2 = () => {
+  const stateBefore = {
+    count: 2,
+    all_nodes: [
+      {
+        _id: '59510e6f8eed6e32225a752d',
+        label: 'Stuhl',
+        sensors: [
+          '5937b05823d3e908cc271eab'
+        ],
+        xPos: 0,
+        yPos: 0
+      },
+      {
+        _id: 'asdasdasd',
+        label: 'ffffuuuuu',
+        sensors: [
+          '5937b05823d3e908cc271eab',
+          'sdasddddddddddddddddd'
+        ],
+        xPos: 100,
+        yPos: 0
+      }
+    ]
+  };
+  const action = actions.removeNode('59510e6f8eed6e32225a752d');
+  const stateAfter = {
+    count: 1,
+    all_nodes: [
+      {
+        _id: 'asdasdasd',
+        label: 'ffffuuuuu',
+        sensors: [
+          '5937b05823d3e908cc271eab',
+          'sdasddddddddddddddddd'
+        ],
+        xPos: 100,
+        yPos: 0
+      }
+    ]
+  };
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(nodes(stateBefore, action)).toEqual(stateAfter);
+};
+
+const testRemoveNodeEmpty = () => {
+  const stateBefore = initialNodesState;
+  const action = actions.removeNode('59510e6f8eed6e32225a752d');
+  const stateAfter = initialNodesState;
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(nodes(stateBefore, action)).toEqual(stateAfter);
+};
+
 const nodesTests = () => {
   testAddNode();
   testMoveNode();

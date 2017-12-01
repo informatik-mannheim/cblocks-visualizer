@@ -65,7 +65,7 @@ export function sensors (state = initialSensorsState, action) {
         ];
         return {count: updatedSensors.length, all_sensors: updatedSensors};
       }
-      break;
+      return state;
     default:
       return state;
   }

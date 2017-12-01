@@ -26,9 +26,7 @@ export const bindMQTTEvents = (url) => {
     //nodeYPos = nodeYPos + 200;
   });
   client.bind(mqttEvents.NODE_REMOVED, (nodeId) => {
-    console.log('Node went offline: ' + nodeId);
-    //store.dispatch(action.addNode(node, nodeXPos, nodeYPos));
-    //nodeYPos = nodeYPos + 200;
+    store.dispatch(action.removeNode(nodeId));
   });
   client.bind(mqttEvents.SENSOR_ADDED, (params) => {
     //getSensorStatus(sensorId, sensorXPos, sensorYPos);
@@ -36,7 +34,7 @@ export const bindMQTTEvents = (url) => {
     sensorYPos = sensorYPos + 250;
   });
   client.bind(mqttEvents.SENSOR_REMOVED, (sensorId) => {
-    //getSensorStatus(sensorId, sensorXPos, sensorYPos);
+    store.dispatch(action.removeSensor(sensorId));
     sensorYPos = sensorYPos + 250;
   });
   client.bind(mqttEvents.SENSOR_STATUS, (sensor) => {

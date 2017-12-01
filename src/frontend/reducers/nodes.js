@@ -40,7 +40,7 @@ export function nodes (state = initialNodesState, action) {
       ];
       return {count: updatedNodes.length, all_nodes: updatedNodes};
     }
-    break;
+    return state;
     case Constants.Actions.MOVE_NODE:
       return {count: state.all_nodes.length, all_nodes: state.all_nodes.map(n => node(n, action))};
     case Constants.Actions.ADD_SENSOR_TO_NODE:

@@ -16,6 +16,18 @@ export const addConnectionForSensor = (sensorId) => {
 
 export const removeConnection = (connection) => ({type: Constants.Actions.REMOVE_CONNECTION, connection});
 
+export const removeConnectionFromSensor = (sensorId) => {
+  return (dispatch, getState) => {
+    const connections = getState().connections;
+
+    connections.forEach((con) => {
+      if (con.sensorId === sensorId) {
+        dispatch(removeConnection({sensorId: sensorId, nodeId: con.nodeId}));
+      }
+    });
+  };
+};
+
 export const refreshConnection = (connection) => {
   return (dispatch) => {
     dispatch(removeConnection(connection));
