@@ -40,6 +40,52 @@ const testAddSensor = () => {
   expect(sensors(stateBefore, action)).toEqual(stateAfter);
 };
 
+const testAddDuplicateSensor = () => {
+  const stateBefore = {
+    count: 1,
+    all_sensors: [
+      {
+        _id: '5937b05823d3e908cc271eab',
+        label: 'Pressure Sensor',
+        resources: [
+          'bla'
+        ],
+        xPos: 500,
+        yPos: 100,
+        value: 500
+      }
+    ]
+  };
+  const action = actions.addSensor({
+    _id: '5937b05823d3e908cc271eab',
+    label: 'Pressure Sensor',
+    resources: [
+      'bla'
+    ],
+    value: 500
+  });
+  const stateAfter = {
+    count: 1,
+    all_sensors: [
+      {
+        _id: '5937b05823d3e908cc271eab',
+        label: 'Pressure Sensor',
+        resources: [
+          'bla'
+        ],
+        xPos: 500,
+        yPos: 100,
+        value: 500
+      }
+    ]
+  };
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(sensors(stateBefore, action)).toEqual(stateAfter);
+};
+
 const testMoveSensor = () => {
   const stateBefore = {
     count: 1,
@@ -112,6 +158,65 @@ const testUpdateSensorValue = () => {
   expect(sensors(stateBefore, action)).toEqual(stateAfter);
 };
 
+const testUpdateSensorValue2 = () => {
+  const stateBefore = {
+    count: 2,
+    all_sensors: [
+      {
+        _id: 'sensor',
+        label: 'Pressure Sensor',
+        resources: [
+          'bla'
+        ],
+        xPos: 0,
+        yPos: 0,
+        value: 0
+      },
+      {
+        _id: 'sensor2',
+        label: 'Other Sensor',
+        resources: [
+          'blub'
+        ],
+        xPos: 100,
+        yPos: 190,
+        value: 900
+      }
+    ]
+  };
+  const action = actions.updateSensorValue('sensor', 700);
+  const stateAfter = {
+    count: 2,
+    all_sensors: [
+      {
+        _id: 'sensor',
+        label: 'Pressure Sensor',
+        resources: [
+          'bla'
+        ],
+        xPos: 0,
+        yPos: 0,
+        value: 700
+      },
+      {
+        _id: 'sensor2',
+        label: 'Other Sensor',
+        resources: [
+          'blub'
+        ],
+        xPos: 100,
+        yPos: 190,
+        value: 900
+      }
+    ]
+  };
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(sensors(stateBefore, action)).toEqual(stateAfter);
+};
+
 const testRemoveSensor = () => {
   const stateBefore = {
     count: 1,
@@ -139,8 +244,10 @@ const testRemoveSensor = () => {
 
 const sensorsTests = () => {
   testAddSensor();
+  testAddDuplicateSensor();
   testMoveSensor();
   testUpdateSensorValue();
+  testUpdateSensorValue2();
   testRemoveSensor();
   return true;
 };
