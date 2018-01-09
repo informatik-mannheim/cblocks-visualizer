@@ -1,6 +1,7 @@
 import { WebSocket } from 'mock-socket';
 
 export const ServerEventDispatcher = (url) => {
+  console.log('ServerEventDispatcher');
   const conn = new WebSocket(url);
 
   const callbacks = {};

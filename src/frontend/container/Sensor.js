@@ -4,12 +4,11 @@ import PropTypes from 'prop-types';
 import Constants from '../constants/';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
-import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
+import { Card, CardTitle} from 'react-toolbox/lib/card';
 import SensorStatus from './SensorStatus';
 import {HorizontalDividerLine} from '../component/HorizontalDividerLine';
 import * as action from '../action/';
 import { enableUniqueIds } from 'react-html-id';
-import { jsPlumb } from 'jsPlumb';
 
 const sensorSource = {
   beginDrag (props) {
@@ -104,9 +103,9 @@ Sensor.propTypes = {
   addConnectionForSensor: PropTypes.func.isRequired,
   connectDragPreview: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
+  description: PropTypes.string,
   height: PropTypes.number,
   isDragging: PropTypes.bool.isRequired,
-  description: PropTypes.string,
   mapIdToHtmlId: PropTypes.func.isRequired,
   move: PropTypes.func.isRequired,
   value: PropTypes.number,

@@ -23,7 +23,7 @@ class MappingCreationDialog extends Component {
     this.setState({...this.state, [name]: value});
     console.log(this.state);
   };
-
+  //TODO: implement save
   actions = [
     { label: 'Cancel', onClick: this.props.cancel },
     { label: 'Save', onClick: this.props.cancel }
@@ -31,13 +31,16 @@ class MappingCreationDialog extends Component {
 
   render () {
     const nodeDropdownSource = [], sensorDropdownSource = [];
-    this.props.nodes.forEach((node) => {
-      nodeDropdownSource.push({value: node._id, label: node.label});
-    });
-    this.props.sensors.forEach((sensor) => {
-      sensorDropdownSource.push({value: sensor._id, label: sensor.label});
-    });
-
+      this.props.nodes.forEach((node) => {
+        if (typeof node !== 'undefined') {
+          nodeDropdownSource.push({value: node._id, label: node.label});
+        }
+      });
+      this.props.sensors.forEach((sensor) => {
+        if (typeof sensor !== 'undefined') {
+          sensorDropdownSource.push({value: sensor._id, label: sensor.label});
+        }
+      });
     return (
       <div>
         <Dialog
