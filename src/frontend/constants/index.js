@@ -4,10 +4,13 @@ import ReactToolboxVariables from './ReactToolboxVariables';
 import MQTTEvents from './MQTTEvents';
 import URLs from './URLs';
 
+const MQTT_MOCKING_ENABLED = true;
+
 export default {
   Actions,
   ItemTypes,
   ReactToolboxVariables,
   MQTTEvents,
-  URLs
+  URLs,
+  MQTT_MOCKING_ENABLED
 };
