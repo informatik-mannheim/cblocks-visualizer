@@ -134,7 +134,7 @@ const mapDispatchToProps = (dispatch) => {
     move: (_id, xPos, yPos) => dispatch(action.moveNode(_id, xPos, yPos)),
     refreshConnection: () => dispatch(action.refreshConnection({sensorId: 'pressure_sensor_id', nodeId: 'node1_id'})),
     mapIdToHtmlId: (_id, htmlId) => dispatch(action.addHtmlIdMapping(_id, htmlId)),
-    addMapping: (node) => dispatch(action.openMappingDialog(node))
+    addMapping: (nodeId) => dispatch(action.openMappingDialog(nodeId))
   };
 };
 

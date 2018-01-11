@@ -22,11 +22,12 @@ export function mappingDialog (state = initialMappingDialog, action) {
     case Constants.Actions.OPEN_MAPPING_DIALOG:
       const openedDialog = Object.assign({}, state, {active: true, nodeId: action.nodeId});
       return openedDialog;
+    case Constants.Actions.CLEAR_MAPPING_DIALOG:
+        return Object.assign({}, initialMappingDialog, {active: state.active});
     case Constants.Actions.CLOSE_MAPPING_DIALOG:
       return Object.assign({}, state, {active: false});
     case Constants.Actions.UPDATE_MAPPING_DIALOG:
       return action.dialog;
-
     default:
       return state;
   }

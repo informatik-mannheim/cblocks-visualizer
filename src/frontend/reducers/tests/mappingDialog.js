@@ -66,8 +66,30 @@ const testUpdateDialog = () => {
   expect(mappingDialog(stateBefore, action)).toEqual(stateAfter);
 };
 
+const testClearDialog = () => {
+  const stateBefore = {
+    active: true,
+    nodeId: 'asd',
+    sensorId: 'fgh',
+    name: 'testest'
+  };
+  const action = actions.clearMappingDialog();
+  const stateAfter = {
+    active: true,
+    nodeId: '',
+    sensorId: '',
+    name: ''
+  };
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(mappingDialog(stateBefore, action)).toEqual(stateAfter);
+};
+
 const mappingDialogTests = () => {
   testOpenDialog();
+  testClearDialog();
   testCloseDialog();
   testUpdateDialog();
   return true;

@@ -10,6 +10,7 @@ class MappingCreationDialog extends Component {
 
   constructor (props) {
     super(props);
+    console.log(props);
     this.state = {
       active: true,
       name: '',
@@ -62,6 +63,7 @@ class MappingCreationDialog extends Component {
 MappingCreationDialog.propTypes = {
   active: PropTypes.bool.isRequired,
   cancel: PropTypes.func.isRequired,
+  clearDialog: PropTypes.func.isRequired,
   dialogState: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired,
   nodes: PropTypes.array.isRequired,
@@ -87,7 +89,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     cancel: () => dispatch(action.closeMappingDialog()),
-    save: () => dispatch(action.closeMappingDialog()),
+    save: () => dispatch(action.clearMappingDialog()),
+    clearDialog: () => dispatch(action.clearMappingDialog()),
     updateDialog: (mcd) => {
       const newState = Object.assign({}, mcd.props.dialogState, {nodeId: mcd.refs.nodeDropdown.props.value, sensorId: mcd.refs.sensorDropdown.props.value});
       console.log(newState);
