@@ -28,28 +28,6 @@ export function sensors (state = initialSensorsState, action) {
     case Constants.Actions.MOVE_SENSOR:
       return {count: state.count, all_sensors: state.all_sensors.map(currentSensor => sensor(currentSensor, action))};
     case Constants.Actions.UPDATE_SENSOR_VALUE:
-      // if (state.count !== 0) {
-      //   let sensorToUpdate;
-      //   let sensorIndex;
-      //
-      //   for (sensorIndex = 0; sensorIndex < state.all_sensors.length; sensorIndex++) {
-      //     if (state.all_sensors[sensorIndex]._id === action._id) {
-      //       sensorToUpdate = state.all_sensors[sensorIndex];
-      //     }
-      //   }
-      //   console.log(sensorToUpdate);
-      //   sensorIndex--;
-      //   const updatedSensor = Object.assign({}, sensorToUpdate, {value: action.value});
-      //   const updatedSensors = [
-      //     ...state.all_sensors.slice(0, sensorIndex),
-      //     updatedSensor,
-      //     ...state.all_sensors.slice(sensorIndex + 1)
-      //   ];
-      //   return {count: updatedSensors.length, all_sensors: updatedSensors};
-      // } else {
-      //   return state;
-      // }
-
       return {count: state.all_sensors.length, all_sensors: state.all_sensors.map(currentSensor => sensor(currentSensor, action))};
     case Constants.Actions.REMOVE_SENSOR:
       if (state.count !== 0) {

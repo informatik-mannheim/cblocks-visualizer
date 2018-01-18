@@ -13,7 +13,6 @@ export function nodes (state = initialNodesState, action) {
       //check for duplicates
       for (let i = 0; i < state.all_nodes.length; i++) {
         if (state.all_nodes[i]._id === newNode._id) {
-          console.log('duplicate node added');
           return state;
         }
       }
