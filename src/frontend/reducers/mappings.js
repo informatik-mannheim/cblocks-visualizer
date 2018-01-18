@@ -1,37 +1,47 @@
 import Constants from '../constants/';
 
 const initialMappingsState = {
-  mappings: []
+  count: 0,
+  all_mappings: []
 };
-/*
-{
-  _id: 'mapping1',
-  name: 'Kilogram Mapping',
-  sensorId: 'pressure_sensor',
-  ressourceId: '2',
-}
-*/
 
 export function mappings (state = initialMappingsState, action) {
   switch (action.type) {
     case Constants.Actions.ADD_MAPPING:
-      console.log(action.mapping);
-      const newMapping = Object.assign({}, action.mapping, {sensorId: action.sensorId});
+      const newMapping = Object.assign({}, action.mapping);
 
       //check for duplicates
-      for (let i = 0; i < state.all_nodes.length; i++) {
-        if (state.all_nodes[i]._id === newNode._id) {
+      for (let i = 0; i < state.all_mappings.length; i++) {
+        if (state.all_mappings[i]._id === newMapping._id) {
           return state;
         }
       }
 
-      const newAllNodes = state.all_nodes.concat(newNode);
+      const newAllMappings = state.all_mappings.concat(newMapping);
       return {
-        count: newAllNodes.length,
-        all_nodes: newAllNodes
+        count: newAllMappings.length,
+        all_mappings: newAllMappings
       };
-    case Constants.Actions.ZZZZZZZZZ:
-      return {count: state.all_nodes.length, all_nodes: state.all_nodes.map(n => node(n, action))};
+    case Constants.Actions.REMOVE_MAPPING:
+      if (state.count !== 0) {
+        let mappingToRemove;
+        let mappingIndex;
+
+        for (mappingIndex = 0; mappingIndex < state.all_mappings.length; mappingIndex++) {
+          if (state.all_mappings[mappingIndex]._id === action.mappingId) {
+            mappingToRemove = state.all_mappings[mappingIndex];
+          }
+        }
+        mappingIndex--;
+        const updatedMappings = [
+          ...state.all_mappings.slice(0, mappingIndex),
+          ...state.all_mappings.slice(mappingIndex + 1)
+        ];
+        return {count: updatedMappings.length, all_mappings: updatedMappings};
+      }
+      return state;
+    case Constants.Actions.BLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA_MAPPING:
+      return {count: state.all_mappings.length, all_mappings: state.all_mappings.map(n => mapping(n, action))};
     default:
       return state;
   }
@@ -46,11 +56,11 @@ function mapping (state = {}, action){
   console.log(action);
   switch (action.type) {
     case Constants.Actions.ZZZZZZZZZ:
-      const movedNode = Object.assign({}, state, {
+      const movedmapping = Object.assign({}, state, {
         xPos: action.xPos,
         yPos: action.yPos
       });
-      return movedNode;
+      return movedmapping;
     default:
       return state;
   }
