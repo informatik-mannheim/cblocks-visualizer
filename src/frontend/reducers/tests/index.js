@@ -1,5 +1,3 @@
-import nodeIdsTests from './nodeIDs';
-import nodesTests from './nodes';
 import sensorsTests from './sensors';
 import connectionsTests from './connections';
 import htmlIdsTests from './htmlIds';
@@ -7,9 +5,7 @@ import mappingDialogTests from './mappingDialog';
 import mappingTests from './mappings';
 
 const tests = () => {
-  let successful = nodeIdsTests();
-  successful = nodesTests();
-  successful = sensorsTests();
+  let successful = sensorsTests();
   successful = connectionsTests();
   successful = htmlIdsTests();
   successful = mappingDialogTests();

@@ -5,12 +5,12 @@ export const addConnection = (sensorId, nodeId) => ({type: Constants.Actions.ADD
 export const addConnectionForSensor = (sensorId) => {
   return (dispatch, getState) => {
     const state = getState();
-    state.nodes.all_nodes.forEach((node) => {
-      const nodeIndex = node.sensors.indexOf(sensorId);
-      if (nodeIndex !== -1) {
-        dispatch(addConnection(sensorId, node._id));
-      }
-    });
+    // state.nodes.all_nodes.forEach((node) => {
+    //   const nodeIndex = node.sensors.indexOf(sensorId);
+    //   if (nodeIndex !== -1) {
+    //     dispatch(addConnection(sensorId, node._id));
+    //   }
+    // });
   };
 };
 

@@ -31,14 +31,6 @@ class MappingCreationDialog extends Component {
     this.props.updateDialog(this, {mappingType: value});
   }
 
-  getNodeName = () => {
-    this.props.nodes.map((node) => {
-      if (node._id === this.props.dialogState.nodeId) {
-        return node._id;
-      }
-    });
-  }
-
   getMappingTypeDropdownSource = () => {
     const arr = [];
     Object.entries(Constants.MappingTypes).forEach((entry) => {
@@ -51,27 +43,11 @@ class MappingCreationDialog extends Component {
     return arr;
   }
 
-  getNodeDropdownSource = (props) => {
-    const nodeDropdownSource = [];
-    props.nodes.forEach((node) => {
-      if (typeof node !== 'undefined') {
-        nodeDropdownSource.push({value: node._id, label: node.label});
-      }
-    });
-    return nodeDropdownSource;
-  }
-
   getSensorDropdownSource = (props) => {
     const sensorDropdownSource = [];
     props.sensors.forEach((sensor) => {
-      if (typeof sensor !== 'undefined') {
-        props.nodes.map((node) => {
-          if (node._id === props.dialogState.nodeId) {
-            if (node.sensors.includes(sensor._id)) {
-              sensorDropdownSource.push({value: sensor._id, label: sensor.label});
-            }
-          }
-        });
+      if (sensor !== undefined) {
+        sensorDropdownSource.push({value: sensor._id, label: sensor.label});
       }
     });
     return sensorDropdownSource;
@@ -110,7 +86,6 @@ class MappingCreationDialog extends Component {
           title={'Mapping'}
         >
           <Input type='text' ref='nameInput' label='Name' name='name' value={this.props.label} onChange={this.handleChangeName}/>
-          <div>Node: <Dropdown ref='nodeDropdown' disabled={true} source={this.getNodeDropdownSource(this.props)} value={this.props.nodeId} onChange={this.handleChange.bind(this, 'nodeId')}/></div>
           <div>Sensor: <Dropdown ref='sensorDropdown' source={this.getSensorDropdownSource(this.props)} value={this.props.sensorId} onChange={this.handleChangeSensorDropdown}/></div>
           <div>Mapping Type: <Dropdown ref='typeDropdown' source={this.getMappingTypeDropdownSource()} value={this.props.mappingType} onChange={this.handleChangeMappingTypeDropdown}/></div>
         </Dialog>
@@ -126,8 +101,6 @@ MappingCreationDialog.propTypes = {
   dialogState: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired,
   mappingType: PropTypes.string,
-  nodeId: PropTypes.string.isRequired,
-  nodes: PropTypes.array.isRequired,
   save: PropTypes.func.isRequired,
   sensorId: PropTypes.string.isRequired,
   sensors: PropTypes.array.isRequired,
@@ -143,11 +116,9 @@ const mapStateToProps = (state) => {
   return {
     active: state.mappingDialog.active,
     dialogState: state.mappingDialog,
-    nodeId: state.mappingDialog.nodeId,
     sensorId: state.mappingDialog.sensorId,
     mappingType: state.mappingDialog.mappingType,
     label: state.mappingDialog.name,
-    nodes: state.nodes.all_nodes,
     sensors: state.sensors.all_sensors
   };
 };

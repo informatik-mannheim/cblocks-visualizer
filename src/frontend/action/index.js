@@ -1,6 +1,5 @@
 import Constants from '../constants/';
 
-export * from './nodes';
 export * from './sensors';
 export * from './connections';
 export * from './mappingDialog';

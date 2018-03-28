@@ -1,20 +1,14 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
-import Node from './Node';
 import Sensor from './Sensor';
 import Connection from '../component/Connection';
 import Constants from '../constants/';
-import * as action from '../action/';
 import { DropTarget } from 'react-dnd';
 import { subscribe } from 'redux-subscriber';
-import { jsPlumb } from 'jsPlumb';
 import { enableUniqueIds } from 'react-html-id';
 import MappingCreationDialog from './MappingCreationDialog';
-
-//import { Button } from 'react-toolbox/lib/button';
-const jsPlumbInstance = jsPlumb.getInstance();
 
 /**
  * Specifies the drop target contract.
@@ -115,7 +109,6 @@ class Canvas extends Component {
       // You can be more specific and track enter/leave
       // shallowly, not including nested targets
     }
-    //console.log('isOver: ' + this.props.isOver + ', nextProps.isOver: ' + nextProps.isOver + ', isOverCurrent: ' + this.props.isOverCurrent + ', nextProps.isOverCurrent: ' + nextProps.isOverCurrent);
   }
 
   render () {
@@ -131,18 +124,11 @@ class Canvas extends Component {
 
     return connectDropTarget(
       <div id={this.canvasId} style={dropZoneStyle}>
-        {this.props.nodes.all_nodes.map((node) => (
-            <Node key={node._id} _id={node._id} xPos={node.xPos}
-              yPos={node.yPos} label={node.label} sensors={node.sensors} ref={node._id}/>
-        ))}
         {this.props.sensors.all_sensors.map((sensor) => (
           <div key={sensor._id + '_div'}>
             <Sensor _id={sensor._id} xPos={sensor.xPos}
               yPos={sensor.yPos} description={sensor.label} ref={sensor._id}/>
           </div>
-        ))}
-        {this.props.connections.map((connection) => (
-          <Connection key={connection.sensorId} refs={this.refs} sensorId={connection.sensorId} nodeId={connection.nodeId}/>
         ))}
         <MappingCreationDialog />
       </div>
@@ -156,32 +142,24 @@ Canvas.propTypes = {
   connections: PropTypes.array,
   isOver: PropTypes.bool,
   isOverCurrent: PropTypes.bool,
-  nodeIds: PropTypes.array.isRequired,
-  nodes: PropTypes.object,
   sensors: PropTypes.object
 };
 
 Canvas.defaultProps = {
-  nodeIds: []
 };
 
 const mapStateToProps = (state) => {
   return {
     connections: state.connections,
-    nodes: state.nodes,
-    nodeIds: state.nodeIDs,
-    sensors: state.sensors,
-    hasErrored: state.fetchNodeIDsHasErrored,
-    isLoading: state.fetchNodeIDsIsLoading
+    sensors: state.sensors
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchNodeIDs: () => dispatch(action.fetchNodeIDs())
   };
 };
 
-const dropTargetCanvas = DropTarget([Constants.ItemTypes.SENSOR, Constants.ItemTypes.NODE], canvasTarget, collect)(Canvas);
+const dropTargetCanvas = DropTarget([Constants.ItemTypes.SENSOR], canvasTarget, collect)(Canvas);
 const connectedCanvas = connect(mapStateToProps, mapDispatchToProps)(dropTargetCanvas);
 export default connectedCanvas;

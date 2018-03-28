@@ -43,11 +43,8 @@ export const fetchSensorHasErrored = (bool) =>
 export const fetchSensorIsLoading = (bool) =>
   ({type: Constants.Actions.FETCH_SENSOR_IS_LOADING, isLoading: bool});
 
-export const addSensorToNode = (nodeId, sensorId) => ({type: Constants.Actions.ADD_SENSOR_TO_NODE, _id: nodeId, sensorId: sensorId});
-
-export const fetchSensor = (url, nodeId, sensorId) => {
-  return (dispatch, getState) => {
-    if (getState().nodes.count !== 0) {
+export const fetchSensor = (url, sensorId) => {
+  return (dispatch) => {
       dispatch(fetchSensorIsLoading(true));
 
       fetch(url + sensorId).then((response) => {
@@ -59,7 +56,6 @@ export const fetchSensor = (url, nodeId, sensorId) => {
       }).then((response) => response.json()
         ).then(
           (sens) => {
-            dispatch(addSensorToNode(nodeId, sensorId));
             dispatch(addSensor(sens));
           }
        ).catch((e) => {
@@ -67,6 +63,5 @@ export const fetchSensor = (url, nodeId, sensorId) => {
          dispatch(fetchSensorHasErrored(true));
        }
      );
-    }
   };
 };

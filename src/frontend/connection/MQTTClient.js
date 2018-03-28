@@ -30,7 +30,7 @@ const MQTTClient = (url) => {
   });
 
   client.on('message', function (topic, message) {
-    let nodeId, sensorId;
+    let sensorId;
 
     if (message !== null && typeof message !== 'undefined') {
       switch (true) {
@@ -43,24 +43,12 @@ const MQTTClient = (url) => {
           }
           break;
         /*
-        node status change
-        */
-        case (/nodes\/[^\/]*\/status/).test(topic):
-          nodeId = (/nodes\/(.*)\/status/).exec(topic)[1];
-          if (JSON.parse(message).status === 'online') {
-            dispatch(mqttEvents.NODE_ADDED, nodeId);
-          } else if (JSON.parse(message).status === 'offline') {
-            dispatch(mqttEvents.NODE_REMOVED, nodeId);
-          }
-          break;
-        /*
         sensor status change
         */
         case (/sensors\/[^\/]*\/status/).test(topic):
           sensorId = (/sensors\/(.*)\/status/).exec(topic)[1];
-          nodeId = JSON.parse(message).node_id;
           if (JSON.parse(message).status === 'plugged') {
-            dispatch(mqttEvents.SENSOR_ADDED, {sensorId: sensorId, nodeId: nodeId});
+            dispatch(mqttEvents.SENSOR_ADDED, {sensorId: sensorId});
           } else if (JSON.parse(message).status === 'unplugged') {
             dispatch(mqttEvents.SENSOR_REMOVED, sensorId);
           }
