@@ -1,3 +1,3 @@
 export default {
-  RANGE: 'RANGE'
+  RANGE: 'Range'
 };

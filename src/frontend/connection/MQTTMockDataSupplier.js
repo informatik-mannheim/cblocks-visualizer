@@ -4,14 +4,6 @@ const MQTTMockDataSupplier = (url) => {
   const client = connect(url);
   const callbacks = {};
 
-  const dispatch = (event_name, message) => {
-    const chain = callbacks[event_name];
-    if (typeof chain === 'undefined') return;
-    for (let i = 0; i < chain.length; i++){
-      chain[i](message);
-    }
-  };
-
   this.bind = (event_name, callback) => {
     callbacks[event_name] = callbacks[event_name] || [];
     callbacks[event_name].push(callback);
@@ -25,8 +17,8 @@ const MQTTMockDataSupplier = (url) => {
   client.on('connect', () => {
     client.publish('cblocks-ui-event-mocking', 'MQTT mockdata enabled');
 
-    client.publish('nodes/59510e6f8eed6e21115a752d/status', '{"status": "online", "timestamp": "2017-12-01T15:10:55.471392"}');
-    client.publish('nodes/59510ef78eed6e21115a7585/status', '{"status": "online", "timestamp": "2017-12-01T15:10:55.555555"}');
+    //client.publish('nodes/59510e6f8eed6e21115a752d/status', '{"status": "online", "timestamp": "2017-12-01T15:10:55.471392"}');
+    //client.publish('nodes/59510ef78eed6e21115a7585/status', '{"status": "online", "timestamp": "2017-12-01T15:10:55.555555"}');
 
     setTimeout(() => {
       client.publish('sensors/5937b05823d3e908cc271eab/status', '{"status": "plugged", "node_id": "59510e6f8eed6e21115a752d", "timestamp": "2017-12-01T15:10:55.123456"}');

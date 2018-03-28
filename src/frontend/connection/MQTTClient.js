@@ -48,7 +48,6 @@ const MQTTClient = (url) => {
         case (/nodes\/[^\/]*\/status/).test(topic):
           nodeId = (/nodes\/(.*)\/status/).exec(topic)[1];
           if (JSON.parse(message).status === 'online') {
-
             dispatch(mqttEvents.NODE_ADDED, nodeId);
           } else if (JSON.parse(message).status === 'offline') {
             dispatch(mqttEvents.NODE_REMOVED, nodeId);

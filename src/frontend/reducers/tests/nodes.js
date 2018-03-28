@@ -189,6 +189,7 @@ const nodesTests = () => {
   testMoveNode();
   testAddDuplicateNode();
   testRemoveNode();
+  testRemoveNodeEmpty();
   return true;
 };
 

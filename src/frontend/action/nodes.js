@@ -19,7 +19,7 @@ export const moveNode = (nodeId, xPos, yPos) => {
     });
 
     if (nodeConnections.length > 0) {
-      setTimeout(function () {
+      setTimeout(() => {
         dispatch(refreshConnections(nodeConnections));
       }, 10);
     }

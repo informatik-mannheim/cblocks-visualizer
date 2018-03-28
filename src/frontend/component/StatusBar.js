@@ -4,6 +4,12 @@ import PropTypes from 'prop-types';
 class StatusBar extends React.Component {
 
   static propTypes = {
+    animation: PropTypes.number,
+    color: PropTypes.string,
+    height: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     percentage: ((props, propName) => {
       if (typeof props[propName] !== 'number') {
         return Progress.throwError('Invalid Props: "percentage" should ∈ ℝ ');
@@ -11,13 +17,7 @@ class StatusBar extends React.Component {
       if (props[propName] < 0 || props[propName] > 100) {
         return Progress.throwError('Invalid Props: "percentage" should be between 0 and 100');
       }
-    }),
-    color: PropTypes.string,
-    animation: PropTypes.number,
-    height: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ])
+    })
   }
 
   static defaultProps = {
