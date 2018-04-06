@@ -8,12 +8,10 @@ import { Card, CardTitle} from 'react-toolbox/lib/card';
 import SensorResource from './SensorResource';
 import {HorizontalDividerLine} from '../component/HorizontalDividerLine';
 import * as action from '../action/';
-import { enableUniqueIds } from 'react-html-id';
 
 const sensorSource = {
   beginDrag (props) {
     // Return the data describing the dragged item
-    //const item = { _id: props._id };
     const {objectID, instanceID, name, xPos, yPos} = props;
     return {objectID, instanceID, name, xPos, yPos};
   },
@@ -22,16 +20,13 @@ const sensorSource = {
     if (!monitor.didDrop()) {
       return;
     }
-
     // When dropped on a compatible target, do something
     const item = monitor.getItem();
-    //console.log('Dropped on compatible target: ' + item);
     const dropResult = monitor.getDropResult();
 
-    if (dropResult.dropEffect === 'move' && dropResult.item === component.props._id) {
+    if (dropResult.dropEffect === 'move' && item.objectID === component.props.objectID && item.instanceID === component.props.instanceID) {
       console.log(dropResult);
       component.props.move(component.props.objectID, component.props.instanceID, dropResult.xPos, dropResult.yPos);
-      //component.props.refreshConnection();
     }
   }
 };
@@ -65,12 +60,8 @@ function getSensorStyles (props) {
 class Sensor extends Component {
   constructor () {
     super();
-    enableUniqueIds(this);
-    let htmlId;
   }
   componentDidMount () {
-    //this.props.mapIdToHtmlId(this.props._id, this.htmlId);
-    //this.props.addConnectionForSensor(this.props._id, this.htmlId);
       // Use empty image as a drag preview so browsers don't draw it
       // and we can draw whatever we want on the custom drag layer instead.
     this.props.connectDragPreview(getEmptyImage(), {
@@ -80,10 +71,9 @@ class Sensor extends Component {
     });
   }
 
-  render (){
-    this.htmlId = this.nextUniqueId();
+  render () {
     return this.props.connectDragSource(
-      <div id={this.htmlId} style={getSensorStyles(this.props)}>
+      <div style={getSensorStyles(this.props)}>
         <Card style={{width: '350px'}}>
           <CardTitle
             title={this.props.name}
@@ -105,13 +95,10 @@ class Sensor extends Component {
 }
 
 Sensor.propTypes = {
-  addConnectionForSensor: PropTypes.func.isRequired,
-  connectDragPreview: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   height: PropTypes.number,
   instanceID: PropTypes.number.isRequired,
   isDragging: PropTypes.bool.isRequired,
-  mapIdToHtmlId: PropTypes.func.isRequired,
   move: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   objectID: PropTypes.number.isRequired,
@@ -124,7 +111,9 @@ Sensor.propTypes = {
 
 Sensor.defaultProps = {
   width: 400,
-  height: 100
+  height: 100,
+  xPos: 500,
+  yPos: 100
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -144,11 +133,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    move: (sensorID, instanceID, xPos, yPos) => dispatch(action.moveSensor(sensorID, instanceID, xPos, yPos)),
-    addConnectionForSensor: (_id) => dispatch(action.addConnectionForSensor(_id)),
-    //TODO: Un-hardcode this old stuff
-    refreshConnection: () => dispatch(action.refreshConnection({sensorId: 'pressure_sensor_id', nodeId: 'node1_id'})),
-    mapIdToHtmlId: (_id, htmlId) => dispatch(action.addHtmlIdMapping(_id, htmlId))
+    move: (sensorID, instanceID, xPos, yPos) => dispatch(action.moveSensor(sensorID, instanceID, xPos, yPos))
   };
 };
 
