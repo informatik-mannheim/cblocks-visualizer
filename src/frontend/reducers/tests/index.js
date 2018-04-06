@@ -5,7 +5,8 @@ import mappingDialogTests from './mappingDialog';
 import mappingTests from './mappings';
 
 const tests = () => {
-  let successful = sensorsTests();
+  let successful;
+  successful = sensorsTests();
   successful = connectionsTests();
   successful = htmlIdsTests();
   successful = mappingDialogTests();

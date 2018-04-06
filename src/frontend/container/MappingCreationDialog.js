@@ -130,7 +130,6 @@ const mapDispatchToProps = (dispatch) => {
     clearDialog: () => dispatch(action.clearMappingDialog()),
     updateDialog: (mcd, changes) => {
       const newState = Object.assign({}, mcd.props.dialogState, changes);
-      console.log(newState);
       dispatch(action.updateMappingDialog(newState));
     }
   };

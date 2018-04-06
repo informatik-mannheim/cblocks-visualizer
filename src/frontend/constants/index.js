@@ -5,7 +5,7 @@ import MQTTEvents from './MQTTEvents';
 import URLs from './URLs';
 import MappingTypes from './MappingTypes';
 
-const MQTT_MOCKING_ENABLED = true;
+const MQTT_MOCKING_ENABLED = false;
 
 export default {
   Actions,

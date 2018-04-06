@@ -8,7 +8,7 @@ export const ServerEventDispatcher = (url) => {
 
   const dispatch = (event_name, message) => {
     const chain = callbacks[event_name];
-    if (typeof chain === 'undefined') return; // no callbacks for this event
+    if (chain === undefined) return; // no callbacks for this event
     for (let i = 0; i < chain.length; i++){
       chain[i](message);
     }

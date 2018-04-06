@@ -36,7 +36,7 @@ class CustomDragLayer extends Component {
   renderItem (type, item) {
     switch (type) {
       case Constants.ItemTypes.SENSOR:
-        return (<SensorDragPreview description={item.description} />);
+        return (<SensorDragPreview name={item.name} />);
       default:
         return null;
     }
