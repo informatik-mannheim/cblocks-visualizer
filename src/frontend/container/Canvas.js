@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import Sensor from './Sensor';
-import Connection from '../component/Connection';
 import Constants from '../constants/';
 import { DropTarget } from 'react-dnd';
 import { subscribe } from 'redux-subscriber';
@@ -125,9 +124,9 @@ class Canvas extends Component {
     return connectDropTarget(
       <div id={this.canvasId} style={dropZoneStyle}>
         {this.props.sensors.all_sensors.map((sensor) => (
-          <div key={sensor._id + '_div'}>
-            <Sensor _id={sensor._id} xPos={sensor.xPos}
-              yPos={sensor.yPos} description={sensor.label} ref={sensor._id}/>
+          <div key={sensor.objectId + '-' + sensor.instanceID + '_div'}>
+            <Sensor objectID={sensor.objectID} instanceID={sensor.instanceID} xPos={sensor.xPos}
+              yPos={sensor.yPos} name={sensor.name} resources={sensor.resources} ref={sensor.objectID + '-' + sensor.instanceID}/>
           </div>
         ))}
         <MappingCreationDialog />

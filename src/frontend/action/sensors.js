@@ -1,27 +1,27 @@
 import Constants from '../constants';
 import { refreshConnection } from './connections';
 
-export const updateSensorValue = (_id, value) => {
-  return {type: Constants.Actions.UPDATE_SENSOR_VALUE, _id, value};
+export const updateSensorValue = (sensorID, instanceID, resourceID, value) => {
+  return {type: Constants.Actions.UPDATE_SENSOR_VALUE, sensorID, instanceID, resourceID, value};
 };
 
-export const move = (sensorId, xPos, yPos) => {
-  return {type: Constants.Actions.MOVE_SENSOR, _id: sensorId, xPos: xPos, yPos: yPos};
+export const move = (sensorID, instanceID, xPos, yPos) => {
+  return {type: Constants.Actions.MOVE_SENSOR, sensorID: sensorID, instanceID: instanceID, xPos: xPos, yPos: yPos};
 };
 
-export const moveSensor = (sensorId, xPos, yPos) => {
+export const moveSensor = (sensorID, xPos, yPos) => {
   return (dispatch, getState) => {
-    dispatch(move(sensorId, xPos, yPos));
+    dispatch(move(sensorID, xPos, yPos));
 
     let thisConnection;
 
     getState().connections.forEach((con) => {
-      if (con.sensorId === sensorId) {
+      if (con.sensorID === sensorID) {
           thisConnection = con;
       }
     });
 
-    if (typeof thisConnection !== 'undefined') {
+    if (thisConnection !== undefined) {
       setTimeout(function () {
           dispatch(refreshConnection(thisConnection));
       }, 10);
@@ -29,12 +29,12 @@ export const moveSensor = (sensorId, xPos, yPos) => {
   };
 };
 
-export const addSensor = (sensor, xPos = 500, yPos = 100) => {
-  return {type: Constants.Actions.ADD_SENSOR, sensor, xPos, yPos};
+export const addSensor = (sensor, instanceID, xPos = 500, yPos = 100) => {
+  return {type: Constants.Actions.ADD_SENSOR, sensor, instanceID, xPos, yPos};
 };
 
-export const removeSensor = (sensorId) => {
-  return {type: Constants.Actions.REMOVE_SENSOR, sensorId};
+export const removeSensor = (sensorID) => {
+  return {type: Constants.Actions.REMOVE_SENSOR, sensorID};
 };
 
 export const fetchSensorHasErrored = (bool) =>
@@ -43,11 +43,11 @@ export const fetchSensorHasErrored = (bool) =>
 export const fetchSensorIsLoading = (bool) =>
   ({type: Constants.Actions.FETCH_SENSOR_IS_LOADING, isLoading: bool});
 
-export const fetchSensor = (url, sensorId) => {
+export const fetchSensor = (url, sensorID, instanceID) => {
   return (dispatch) => {
       dispatch(fetchSensorIsLoading(true));
 
-      fetch(url + sensorId).then((response) => {
+      fetch(url + sensorID).then((response) => {
         if (!response.ok) {
           throw Error(response.statusText);
         }
@@ -56,7 +56,7 @@ export const fetchSensor = (url, sensorId) => {
       }).then((response) => response.json()
         ).then(
           (sens) => {
-            dispatch(addSensor(sens));
+            dispatch(addSensor(sens, instanceID));
           }
        ).catch((e) => {
          console.log(e);

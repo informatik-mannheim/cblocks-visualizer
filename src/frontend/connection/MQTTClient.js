@@ -9,7 +9,7 @@ const MQTTClient = (url) => {
 
   const dispatch = (event_name, message) => {
     const chain = callbacks[event_name];
-    if (typeof chain === 'undefined') return;
+    if (chain === undefined) return;
     for (let i = 0; i < chain.length; i++){
       chain[i](message);
     }
@@ -22,17 +22,18 @@ const MQTTClient = (url) => {
   };
 
   client.on('connect', () => {
-    client.subscribe('cblocks-ui');
-    client.subscribe('nodes/+/status');
-    client.subscribe('sensors/+/status');
-    client.subscribe('sensors/+/outputs/#');
+    //client.subscribe('cblocks-ui');
+    // client.subscribe('nodes/+/status');
+    // client.subscribe('sensors/+/status');
+    // client.subscribe('sensors/+/outputs/#');
+    client.subscribe('#');
     client.publish('cblocks-ui', 'connected');
   });
 
   client.on('message', function (topic, message) {
-    let sensorId;
+    let sensorID, instanceID;
 
-    if (message !== null && typeof message !== 'undefined') {
+    if (message !== null && message !== undefined) {
       switch (true) {
         /*
         UI topic
@@ -45,24 +46,28 @@ const MQTTClient = (url) => {
         /*
         sensor status change
         */
-        case (/sensors\/[^\/]*\/status/).test(topic):
-          sensorId = (/sensors\/(.*)\/status/).exec(topic)[1];
-          if (JSON.parse(message).status === 'plugged') {
-            dispatch(mqttEvents.SENSOR_ADDED, {sensorId: sensorId});
-          } else if (JSON.parse(message).status === 'unplugged') {
-            dispatch(mqttEvents.SENSOR_REMOVED, sensorId);
+        case (/^\d+\/\d\/status/).test(topic):
+          sensorID = Number((/^(\d+)\/(\d)\/status/).exec(topic)[1]);
+          instanceID = Number((/^(\d)+\/(\d)\/status/).exec(topic)[2]);
+
+          if (message.toString() === 'online') {
+            console.log(sensorID + '-' + instanceID + ': online');
+            dispatch(mqttEvents.SENSOR_ADDED, {sensorID: sensorID, instanceID: instanceID});
+          } else if (message.toString() === 'offline') {
+            console.log(sensorID + '-' + instanceID + ': offline');
+            dispatch(mqttEvents.SENSOR_REMOVED, {sensorID: sensorID, instanceID: instanceID});
           }
           break;
         /*
         sensor value updated
         */
-        case (/sensors\/[^\/]*\/outputs\/.*/).test(topic):
-          sensorId = (/sensors\/(.*)\/outputs\/.*/).exec(topic)[1];
-          //check if number
-          if (/^\d+$/.test(message)) {
-            const value = JSON.parse(message);
-            dispatch(mqttEvents.SENSOR_UPDATED, {sensorId: sensorId, value: value});
-          }
+        case (/^\d+\/\d\/\d\/output/).test(topic):
+          sensorID = Number((/^(\d+)\/(\d)\/(\d)\/output/).exec(topic)[1]);
+          instanceID = Number((/^(\d+)\/(\d)\/(\d)\/output/).exec(topic)[2]);
+          const resourceID = Number((/^(\d+)\/(\d)\/(\d)\/output/).exec(topic)[3]);
+
+          const value = JSON.parse(message);
+          dispatch(mqttEvents.SENSOR_UPDATED, {sensorID: sensorID, instanceID: instanceID, resourceID: resourceID, value: value});
           break;
         default:
       }

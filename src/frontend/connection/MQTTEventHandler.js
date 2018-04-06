@@ -18,15 +18,15 @@ export const bindMQTTEvents = (url) => {
     console.log(message.toString());
   });
   client.bind(mqttEvents.SENSOR_ADDED, (params) => {
-    store.dispatch(action.fetchSensor(Constants.URLs.FETCH_SENSOR_URL, params.sensorId));
+    store.dispatch(action.fetchSensor(Constants.URLs.FETCH_SENSOR_URL, params.sensorID, params.instanceID));
   });
-  client.bind(mqttEvents.SENSOR_REMOVED, (sensorId) => {
-    store.dispatch(action.removeSensor(sensorId));
+  client.bind(mqttEvents.SENSOR_REMOVED, (params) => {
+    store.dispatch(action.removeSensor(params.sensorID, params.instanceID));
   });
   client.bind(mqttEvents.SENSOR_STATUS, (sensor) => {
     store.dispatch(action.addSensor(sensor));
   });
   client.bind(mqttEvents.SENSOR_UPDATED, (params) => {
-    store.dispatch(action.updateSensorValue(params.sensorId, params.value));
+    store.dispatch(action.updateSensorValue(params.sensorID, params.instanceID, params.resourceID, params.value));
   });
 };

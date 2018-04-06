@@ -5,7 +5,7 @@ import Constants from '../constants/';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { Card, CardTitle} from 'react-toolbox/lib/card';
-import SensorStatus from './SensorStatus';
+import SensorResource from './SensorResource';
 import {HorizontalDividerLine} from '../component/HorizontalDividerLine';
 import * as action from '../action/';
 import { enableUniqueIds } from 'react-html-id';
@@ -14,8 +14,8 @@ const sensorSource = {
   beginDrag (props) {
     // Return the data describing the dragged item
     //const item = { _id: props._id };
-    const {_id, xPos, yPos, description} = props;
-    return {_id, xPos, yPos, description};
+    const {objectID, instanceID, name, xPos, yPos} = props;
+    return {objectID, instanceID, name, xPos, yPos};
   },
 
   endDrag (props, monitor, component) {
@@ -29,7 +29,8 @@ const sensorSource = {
     const dropResult = monitor.getDropResult();
 
     if (dropResult.dropEffect === 'move' && dropResult.item === component.props._id) {
-      component.props.move(component.props._id, dropResult.xPos, dropResult.yPos);
+      console.log(dropResult);
+      component.props.move(component.props.objectID, component.props.instanceID, dropResult.xPos, dropResult.yPos);
       //component.props.refreshConnection();
     }
   }
@@ -68,8 +69,8 @@ class Sensor extends Component {
     let htmlId;
   }
   componentDidMount () {
-    this.props.mapIdToHtmlId(this.props._id, this.htmlId);
-    this.props.addConnectionForSensor(this.props._id, this.htmlId);
+    //this.props.mapIdToHtmlId(this.props._id, this.htmlId);
+    //this.props.addConnectionForSensor(this.props._id, this.htmlId);
       // Use empty image as a drag preview so browsers don't draw it
       // and we can draw whatever we want on the custom drag layer instead.
     this.props.connectDragPreview(getEmptyImage(), {
@@ -81,17 +82,22 @@ class Sensor extends Component {
 
   render (){
     this.htmlId = this.nextUniqueId();
-
     return this.props.connectDragSource(
       <div id={this.htmlId} style={getSensorStyles(this.props)}>
         <Card style={{width: '350px'}}>
           <CardTitle
-            title={this.props.description}
+            title={this.props.name}
             subtitle="cBlocks Sensor"
           />
-          {/*<CardText>'TEXTTEXT'</CardText>*/}
-          <HorizontalDividerLine/>
-          <SensorStatus currentValue = {this.props.value}/>
+          {Object.entries(this.props.resources).map((resourceKeyValue) => {
+            const currentResource = resourceKeyValue[1];
+            return (
+            <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID}>
+              <HorizontalDividerLine/>
+              <SensorResource resource={currentResource} currentValue={this.props.values[currentResource.resourceID]}
+                ref={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID}/>
+            </div>);
+          })}
         </Card>
       </div>
     );
@@ -99,16 +105,18 @@ class Sensor extends Component {
 }
 
 Sensor.propTypes = {
-  _id: PropTypes.string.isRequired,
   addConnectionForSensor: PropTypes.func.isRequired,
   connectDragPreview: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
-  description: PropTypes.string,
   height: PropTypes.number,
+  instanceID: PropTypes.number.isRequired,
   isDragging: PropTypes.bool.isRequired,
   mapIdToHtmlId: PropTypes.func.isRequired,
   move: PropTypes.func.isRequired,
-  value: PropTypes.number,
+  name: PropTypes.string.isRequired,
+  objectID: PropTypes.number.isRequired,
+  resources: PropTypes.object.isRequired,
+  values: PropTypes.object,
   width: PropTypes.number,
   xPos: PropTypes.number.isRequired,
   yPos: PropTypes.number.isRequired
@@ -116,28 +124,29 @@ Sensor.propTypes = {
 
 Sensor.defaultProps = {
   width: 400,
-  height: 100,
-  description: 'MySensor'
+  height: 100
 };
 
 const mapStateToProps = (state, ownProps) => {
   let thisSensorIndex;
   for (let i = 0; i < state.sensors.count; i++){
-    if (ownProps._id.localeCompare(state.sensors.all_sensors[i]._id) === 0) {
-      thisSensorIndex = i;
+    if (ownProps.objectID === state.sensors.all_sensors[i].objectID
+      && ownProps.instanceID === state.sensors.all_sensors[i].instanceID) {
+          thisSensorIndex = i;
     }
   }
   return {
-          value: state.sensors.all_sensors[thisSensorIndex].value,
           xPos: state.sensors.all_sensors[thisSensorIndex].xPos,
-          yPos: state.sensors.all_sensors[thisSensorIndex].yPos
+          yPos: state.sensors.all_sensors[thisSensorIndex].yPos,
+          values: state.sensors.all_sensors[thisSensorIndex].values
         };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    move: (_id, xPos, yPos) => dispatch(action.moveSensor(_id, xPos, yPos)),
+    move: (sensorID, instanceID, xPos, yPos) => dispatch(action.moveSensor(sensorID, instanceID, xPos, yPos)),
     addConnectionForSensor: (_id) => dispatch(action.addConnectionForSensor(_id)),
+    //TODO: Un-hardcode this old stuff
     refreshConnection: () => dispatch(action.refreshConnection({sensorId: 'pressure_sensor_id', nodeId: 'node1_id'})),
     mapIdToHtmlId: (_id, htmlId) => dispatch(action.addHtmlIdMapping(_id, htmlId))
   };
