@@ -22,10 +22,6 @@ const MQTTClient = (url) => {
   };
 
   client.on('connect', () => {
-    //client.subscribe('cblocks-ui');
-    // client.subscribe('nodes/+/status');
-    // client.subscribe('sensors/+/status');
-    // client.subscribe('sensors/+/outputs/#');
     client.subscribe('#');
     client.publish('cblocks-ui', 'connected');
   });

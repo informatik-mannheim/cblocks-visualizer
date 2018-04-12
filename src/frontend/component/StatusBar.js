@@ -36,10 +36,8 @@ class StatusBar extends React.Component {
     const style = {
       backgroundColor: color,
       width: '100%',
-      marginBottom: '5px',
       marginLeft: '10px',
       marginRight: '10px',
-      marginTop: '5px',
       height: height
     };
 

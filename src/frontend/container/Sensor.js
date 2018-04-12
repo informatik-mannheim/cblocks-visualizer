@@ -5,7 +5,7 @@ import Constants from '../constants/';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { Card, CardTitle} from 'react-toolbox/lib/card';
-import SensorResource from './SensorResource';
+import ResourceWrapper from './Resources/ResourceWrapper';
 import {HorizontalDividerLine} from '../component/HorizontalDividerLine';
 import * as action from '../action/';
 
@@ -81,12 +81,15 @@ class Sensor extends Component {
           />
           {Object.entries(this.props.resources).map((resourceKeyValue) => {
             const currentResource = resourceKeyValue[1];
-            return (
-            <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID}>
-              <HorizontalDividerLine/>
-              <SensorResource resource={currentResource} currentValue={this.props.values[currentResource.resourceID]}
-                ref={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID}/>
-            </div>);
+            const multiResource = currentResource.schema.properties === undefined ? false : true;
+            if (this.props.values[currentResource.resourceID] !== undefined) {
+              return (
+              <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID + '_div'}>
+                <HorizontalDividerLine/>
+                <ResourceWrapper resource={currentResource} currentValue={this.props.values[currentResource.resourceID]}
+                  ref={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID} multiResource={multiResource} />
+              </div>);
+            }
           })}
         </Card>
       </div>
@@ -95,6 +98,7 @@ class Sensor extends Component {
 }
 
 Sensor.propTypes = {
+  connectDragPreview: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   height: PropTypes.number,
   instanceID: PropTypes.number.isRequired,
