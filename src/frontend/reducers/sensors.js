@@ -34,23 +34,23 @@ export function sensors (state = initialSensorsState, action) {
     case Constants.Actions.UPDATE_SENSOR_VALUE:
       return {count: state.all_sensors.length, all_sensors: state.all_sensors.map(currentSensor => sensor(currentSensor, action))};
     case Constants.Actions.REMOVE_SENSOR:
-      // if (state.count !== 0) {
-      //   let sensorIndex;
-      //   let sensorToRemove;
-      //
-      //   //TODO: Check if this works as intended... seems weird :|
-      //   for (sensorIndex = 0; sensorIndex < state.all_sensors.length; sensorIndex++) {
-      //     if (state.all_sensors[sensorIndex]._id === action._id) {
-      //       sensorToRemove = state.all_sensors[sensorIndex];
-      //     }
-      //   }
-      //   sensorIndex--;
-      //   const updatedSensors = [
-      //     ...state.all_sensors.slice(0, sensorIndex),
-      //     ...state.all_sensors.slice(sensorIndex + 1)
-      //   ];
-      //   return {count: updatedSensors.length, all_sensors: updatedSensors};
-      // }
+      if (state.count !== 0) {
+        let sensorIndex;
+        let sensorToRemove;
+
+        //TODO: Check if this works as intended... seems weird :|
+        for (sensorIndex = 0; sensorIndex < state.all_sensors.length; sensorIndex++) {
+          if (state.all_sensors[sensorIndex]._id === action._id) {
+            sensorToRemove = state.all_sensors[sensorIndex];
+          }
+        }
+        sensorIndex--;
+        const updatedSensors = [
+          ...state.all_sensors.slice(0, sensorIndex),
+          ...state.all_sensors.slice(sensorIndex + 1)
+        ];
+        return {count: updatedSensors.length, all_sensors: updatedSensors};
+      }
       return state;
     default:
       return state;

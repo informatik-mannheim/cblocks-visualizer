@@ -15,7 +15,7 @@ class MultiResource extends React.Component {
           resource.label = propertyKeyValue[0];
           return (
             <div key={resource.label + '_' + Math.random(1000)}>
-              <ResourceWrapper currentValue={this.props.currentValue[resource.label]} resource={resource} multiResource={false} smallForm={true}/>
+              <ResourceWrapper currentValue={this.props.currentValue[resource.label]} resource={resource} isWriteable={this.props.isWriteable} multiResource={false} smallForm={true}/>
             </div>
           );
         })}
@@ -26,6 +26,7 @@ class MultiResource extends React.Component {
 
 MultiResource.propTypes = {
   currentValue: PropTypes.any,
+  isWriteable: PropTypes.bool,
   resource: PropTypes.object
 };
 

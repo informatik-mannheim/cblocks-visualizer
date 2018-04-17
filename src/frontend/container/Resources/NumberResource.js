@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import StatusBar from '../../component/StatusBar';
+import StatusBar2 from '../../component/StatusBar2';
 import colorString from 'color-string';
 
 class NumberResource extends React.Component {
@@ -17,7 +17,11 @@ class NumberResource extends React.Component {
         <div>
             <div style={{textAlign: 'center', marginBottom: 4}}>{this.props.resource.name}</div>
             <div>
-              <StatusBar percentage={percentage}/>
+              <StatusBar2
+                currentValue={this.props.currentValue}
+                maximum={max}
+                minimum={min}
+                isWriteable={this.props.isWriteable}/>
               <div style={{textAlign: 'left', fontSize: 12, marginLeft: 8, display: 'block', float: 'left'}}>{min}</div>
               <div style={{textAlign: 'right', fontSize: 12, marginRight: 8, display: 'block', float: 'right'}}>{max}</div>
             </div>
@@ -41,7 +45,13 @@ class NumberResource extends React.Component {
                 {/*this.props.resource.label*/}
               </div>
               <div style={{width: '90%', float: 'right'}}>
-                <StatusBar percentage={percentage} color={barColor} height={20}/>
+                <StatusBar2
+                  currentValue={this.props.currentValue}
+                  maximum={max}
+                  minimum={min}
+                  color={barColor}
+                  height={20}
+                  isWriteable={this.props.isWriteable}/>
                 <div style={{textAlign: 'left', fontSize: 8, marginLeft: 8, display: 'block', float: 'left'}}>{min}</div>
                 <div style={{textAlign: 'right', fontSize: 8, marginRight: 8, display: 'block', float: 'right'}}>{max}</div>
               </div>
@@ -54,6 +64,7 @@ class NumberResource extends React.Component {
 
 NumberResource.propTypes = {
   currentValue: PropTypes.any,
+  isWriteable: PropTypes.bool,
   resource: PropTypes.object,
   smallForm: PropTypes.bool
 };

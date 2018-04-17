@@ -61,6 +61,7 @@ class Sensor extends Component {
   constructor () {
     super();
   }
+
   componentDidMount () {
       // Use empty image as a drag preview so browsers don't draw it
       // and we can draw whatever we want on the custom drag layer instead.
@@ -86,8 +87,11 @@ class Sensor extends Component {
               return (
               <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID + '_div'}>
                 <HorizontalDividerLine/>
-                <ResourceWrapper resource={currentResource} currentValue={this.props.values[currentResource.resourceID]}
-                  ref={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID} multiResource={multiResource} />
+                <ResourceWrapper
+                  resource={currentResource}
+                  currentValue={this.props.values[currentResource.resourceID]}
+                  multiResource={multiResource}
+                  isWriteable={currentResource.is_writeable}/>
               </div>);
             }
           })}
