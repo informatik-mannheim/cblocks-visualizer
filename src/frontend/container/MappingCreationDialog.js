@@ -64,7 +64,6 @@ class MappingCreationDialog extends Component {
   }
 
   componentDidMount () {
-    console.log(this);
     this.getInitialLabel(this);
   }
 

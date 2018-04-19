@@ -25,7 +25,7 @@ const sensorSource = {
     const dropResult = monitor.getDropResult();
 
     if (dropResult.dropEffect === 'move' && item.objectID === component.props.objectID && item.instanceID === component.props.instanceID) {
-      console.log(dropResult);
+      //console.log(dropResult);
       component.props.move(component.props.objectID, component.props.instanceID, dropResult.xPos, dropResult.yPos);
     }
   }

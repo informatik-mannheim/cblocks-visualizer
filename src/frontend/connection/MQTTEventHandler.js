@@ -29,4 +29,11 @@ export const bindMQTTEvents = (url) => {
   client.bind(mqttEvents.SENSOR_UPDATED, (params) => {
     store.dispatch(action.updateSensorValue(params.sensorID, params.instanceID, params.resourceID, params.value));
   });
+  client.bind(mqttEvents.REQUEST_RESPONSE_RECEIVED, (params) => {
+    store.dispatch(action.handleRequestResponse(params));
+  });
+  setTimeout(() => {
+    console.log('client.requestResourceChange(3304, 0, 0, false);');
+    client.requestResourceChange(3304, 0, 0, false);
+  }, 10000);
 };

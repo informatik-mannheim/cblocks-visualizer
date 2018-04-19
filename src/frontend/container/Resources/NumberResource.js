@@ -10,6 +10,7 @@ class NumberResource extends React.Component {
       const max = this.props.resource.schema.maximum;
       const min = this.props.resource.schema.minimum;
 
+      // TODO: keep for now in case the old StatusBar is going to be needed
       const percentage = Math.round(this.props.currentValue
         / (max - min) * 100);
 
@@ -34,6 +35,7 @@ class NumberResource extends React.Component {
       const max = this.props.resource.maximum;
       const min = this.props.resource.minimum;
 
+      // TODO: keep for now in case the old StatusBar is going to be needed
       const percentage = Math.round(this.props.currentValue
         / (max - min) * 100);
 

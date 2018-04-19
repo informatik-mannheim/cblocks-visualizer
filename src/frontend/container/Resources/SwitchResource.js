@@ -1,17 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Switch} from 'react-toolbox/lib';
+import { Switch } from 'react-toolbox/lib';
 
 class SwitchResource extends React.Component {
+
+  handleChange = (field, value) => {
+    console.log(field + ', ' + value);
+  };
+
   render () {
-    const valueBool = this.props.currentValue === 1 ? true : false;
     return (
       <div>
         <div style={{textAlign: 'center'}}>{this.props.resource.name}</div>
-        <Switch
-          checked={valueBool}
-          label={this.props.resource.name}
-        />
+          <Switch
+            style={{zIndex: 100}}
+            checked={this.props.currentValue}
+            label={this.props.resource.name}
+            onChange={this.handleChange.bind(this, 'switch')}
+          />
+          <Switch
+            style={{zIndex: -100}}
+            checked={this.props.currentValue}
+            label={this.props.resource.name}
+            disabled={true}
+            onChange={this.handleChange.bind(this, 'switch')}
+          />
       </div>
     );
   }

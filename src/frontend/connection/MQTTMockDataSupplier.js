@@ -27,7 +27,6 @@ const MQTTMockDataSupplier = (url) => {
         client.publish('3303/2/1/output', '' + randomIntFromInterval(36, 38));
       }, 500);
     }, 500);
-
   });
 
   return this;

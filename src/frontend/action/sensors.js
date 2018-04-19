@@ -9,9 +9,9 @@ export const move = (sensorID, instanceID, xPos, yPos) => {
   return {type: Constants.Actions.MOVE_SENSOR, sensorID: sensorID, instanceID: instanceID, xPos: xPos, yPos: yPos};
 };
 
-export const moveSensor = (sensorID, xPos, yPos) => {
+export const moveSensor = (sensorID, instanceID, xPos, yPos) => {
   return (dispatch, getState) => {
-    dispatch(move(sensorID, xPos, yPos));
+    dispatch(move(sensorID, instanceID, xPos, yPos));
 
     let thisConnection;
 

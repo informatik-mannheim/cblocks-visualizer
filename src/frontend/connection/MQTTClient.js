@@ -7,6 +7,16 @@ const MQTTClient = (url) => {
 
   const callbacks = {};
 
+  this.requestResourceChange = (objectID, instanceID, resourceID, data) => {
+    const topic = 'cblocks-ui/' + objectID + '/' + instanceID + '/' + resourceID + '/input';
+    console.log(topic);
+    const message = {
+      requestID: 1234,
+      data: data
+    };
+    client.publish(topic, message + '');
+  };
+
   const dispatch = (event_name, message) => {
     const chain = callbacks[event_name];
     if (chain === undefined) return;
@@ -34,9 +44,23 @@ const MQTTClient = (url) => {
         /*
         UI topic
         */
-        case (/cblocks-ui/).test(topic):
+        case (/cblocks-ui[^\/]/).test(topic):
           if (message === 'connected') {
             dispatch(mqttEvents.CONNECTION_ESTABLISHED, message);
+          }
+          break;
+        /*
+        response to a request
+        */
+        case (/cblocks-ui\/responses/).test(topic):
+          const requestID = JSON.parse(message).requestID;
+          const success = JSON.parse(message).success;
+          const msg = JSON.parse(message).message;
+
+          console.log(requestID + ': ' + success);
+
+          if (success === true) {
+            dispatch(mqttEvents.REQUEST_RESPONSE_RECEIVED, requestID, success, msg);
           }
           break;
         /*
@@ -50,8 +74,9 @@ const MQTTClient = (url) => {
             console.log(sensorID + '-' + instanceID + ': online');
             dispatch(mqttEvents.SENSOR_ADDED, {sensorID: sensorID, instanceID: instanceID});
           } else if (message.toString() === 'offline') {
-            console.log(sensorID + '-' + instanceID + ': offline');
-            dispatch(mqttEvents.SENSOR_REMOVED, {sensorID: sensorID, instanceID: instanceID});
+            console.log(sensorID + '-' + instanceID + ': offline... ignoring');
+            //TODO: take this back in as soon as the offline bug is fixed (hardware)
+            //dispatch(mqttEvents.SENSOR_REMOVED, {sensorID: sensorID, instanceID: instanceID});
           }
           break;
         /*
