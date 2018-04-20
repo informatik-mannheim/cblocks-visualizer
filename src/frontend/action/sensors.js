@@ -15,12 +15,6 @@ export const moveSensor = (sensorID, instanceID, xPos, yPos) => {
 
     let thisConnection;
 
-    getState().connections.forEach((con) => {
-      if (con.sensorID === sensorID) {
-          thisConnection = con;
-      }
-    });
-
     if (thisConnection !== undefined) {
       setTimeout(function () {
           dispatch(refreshConnection(thisConnection));

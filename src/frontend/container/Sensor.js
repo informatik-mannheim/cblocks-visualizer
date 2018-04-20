@@ -88,6 +88,8 @@ class Sensor extends Component {
               <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID + '_div'}>
                 <HorizontalDividerLine/>
                 <ResourceWrapper
+                  objectID={this.props.objectID}
+                  instanceID={this.props.instanceID}
                   resource={currentResource}
                   currentValue={this.props.values[currentResource.resourceID]}
                   multiResource={multiResource}

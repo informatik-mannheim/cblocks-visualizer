@@ -39,8 +39,10 @@ class ResourceWrapper extends React.Component {
 
 ResourceWrapper.propTypes = {
   currentValue: PropTypes.any,
+  instanceID: PropTypes.number,
   isWriteable: PropTypes.bool,
   multiResource: PropTypes.bool,
+  objectID: PropTypes.number,
   resource: PropTypes.object,
   smallForm: PropTypes.bool
 };

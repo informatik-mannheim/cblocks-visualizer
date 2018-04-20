@@ -66,7 +66,9 @@ class NumberResource extends React.Component {
 
 NumberResource.propTypes = {
   currentValue: PropTypes.any,
+  instanceID: PropTypes.number,
   isWriteable: PropTypes.bool,
+  objectID: PropTypes.number,
   resource: PropTypes.object,
   smallForm: PropTypes.bool
 };

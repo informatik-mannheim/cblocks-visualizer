@@ -26,7 +26,9 @@ class MultiResource extends React.Component {
 
 MultiResource.propTypes = {
   currentValue: PropTypes.any,
+  instanceID: PropTypes.number,
   isWriteable: PropTypes.bool,
+  objectID: PropTypes.number,
   resource: PropTypes.object
 };
 
