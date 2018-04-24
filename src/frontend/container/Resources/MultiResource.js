@@ -13,9 +13,18 @@ class MultiResource extends React.Component {
         {Object.entries(properties).map((propertyKeyValue) => {
           const resource = propertyKeyValue[1];
           resource.label = propertyKeyValue[0];
+          //console.log(resource);
           return (
             <div key={resource.label + '_' + Math.random(1000)}>
-              <ResourceWrapper currentValue={this.props.currentValue[resource.label]} resource={resource} isWriteable={this.props.isWriteable} multiResource={false} smallForm={true}/>
+              <ResourceWrapper
+                objectID={this.props.objectID}
+                instanceID={this.props.instanceID}
+                resourceID={this.props.resource.resourceID}
+                currentValue={this.props.currentValue[resource.label]}
+                resource={resource}
+                isWriteable={this.props.isWriteable}
+                multiResource={false}
+                smallForm={true}/>
             </div>
           );
         })}

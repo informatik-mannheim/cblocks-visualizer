@@ -13,7 +13,6 @@ class SwitchResource extends React.Component {
   };
 
   render () {
-    console.log(this.props.resource);
     return (
       <div>
         <div style={{textAlign: 'center'}}>{this.props.resource.name}</div>

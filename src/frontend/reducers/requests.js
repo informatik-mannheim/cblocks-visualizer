@@ -30,7 +30,6 @@ export function requests (state = initialRequestsState, action) {
       //TODO: proper error handling when success false
 
       const index = state.unresolvedRequests.findIndex(x => x.requestID === action.requestID);
-      console.log(index);
 
       const newlyResolvedRequest = Object.assign(
         {},

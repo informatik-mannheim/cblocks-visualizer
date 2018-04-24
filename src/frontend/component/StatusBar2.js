@@ -7,13 +7,20 @@ class StatusBar extends React.Component {
   static propTypes = {
     color: PropTypes.string,
     currentValue: PropTypes.number,
+    instanceID: PropTypes.number,
     isWriteable: PropTypes.bool,
     maximum: PropTypes.number,
-    minimum: PropTypes.number
+    minimum: PropTypes.number,
+    objectID: PropTypes.number,
+    resourceID: PropTypes.number,
+    sendRequest: PropTypes.func
   }
 
   handleChange = (slider, value) => {
-    console.log(value);
+    //console.log(this.props.objectID);
+    if (this.props.isWriteable === true) {
+      this.props.sendRequest(this.props.objectID, this.props.instanceID, this.props.resourceID, value);
+    }
   };
 
   render () {

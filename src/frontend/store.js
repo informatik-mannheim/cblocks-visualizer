@@ -6,6 +6,6 @@ import initSubscriber from 'redux-subscriber';
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 console.log(store.getState());
-const subscribe = initSubscriber(store);
+export const subscribe = initSubscriber(store);
 
 export default store;

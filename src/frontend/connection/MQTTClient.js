@@ -1,5 +1,7 @@
 import { connect } from 'mqtt';
 import Constants from '../constants/';
+import {subscribe} from 'redux-subscriber';
+//import { subscribe}
 
 const mqttEvents = Constants.MQTTEvents;
 const MQTTClient = (url) => {
@@ -57,8 +59,6 @@ const MQTTClient = (url) => {
           const success = JSON.parse(message).success;
           const msg = JSON.parse(message).message;
 
-          console.log(requestID + ': ' + success);
-
           if (success === true) {
             dispatch(mqttEvents.REQUEST_RESPONSE_RECEIVED, requestID, success, msg);
           }
@@ -94,6 +94,14 @@ const MQTTClient = (url) => {
       }
     }
   });
+
+  const unsubscribeFromRequests = subscribe('requests.totalRequests', state => {
+      const currentRequest = state.requests.unresolvedRequests[0];
+      const topic = 'cblocks-ui/' + currentRequest.objectID + '/' + currentRequest.instanceID + '/' + currentRequest.resourceID + '/input';
+      const data = Object.assign({}, {requestID: currentRequest.requestID, data: currentRequest.value});
+      client.publish(topic, JSON.stringify(data));
+  });
+
   return this;
 };
 

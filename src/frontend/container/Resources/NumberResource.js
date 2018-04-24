@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StatusBar2 from '../../component/StatusBar2';
 import colorString from 'color-string';
+import { connect } from 'react-redux';
+import * as action from '../../action/';
 
 class NumberResource extends React.Component {
   render () {
@@ -10,15 +12,15 @@ class NumberResource extends React.Component {
       const max = this.props.resource.schema.maximum;
       const min = this.props.resource.schema.minimum;
 
-      // TODO: keep for now in case the old StatusBar is going to be needed
-      const percentage = Math.round(this.props.currentValue
-        / (max - min) * 100);
-
       return (
         <div>
             <div style={{textAlign: 'center', marginBottom: 4}}>{this.props.resource.name}</div>
             <div>
               <StatusBar2
+                objectID={this.props.objectID}
+                instanceID={this.props.instanceID}
+                resourceID={this.props.resource.resourceID}
+                sendRequest={this.props.sendRequest}
                 currentValue={this.props.currentValue}
                 maximum={max}
                 minimum={min}
@@ -35,10 +37,6 @@ class NumberResource extends React.Component {
       const max = this.props.resource.maximum;
       const min = this.props.resource.minimum;
 
-      // TODO: keep for now in case the old StatusBar is going to be needed
-      const percentage = Math.round(this.props.currentValue
-        / (max - min) * 100);
-
       const barColor = colorString.get.rgb(this.props.resource.label) !== null ? this.props.resource.label : undefined;
       return (
         <div>
@@ -48,6 +46,10 @@ class NumberResource extends React.Component {
               </div>
               <div style={{width: '90%', float: 'right'}}>
                 <StatusBar2
+                  objectID={this.props.objectID}
+                  instanceID={this.props.instanceID}
+                  resourceID={this.props.resource.resourceID}
+                  sendRequest={this.props.sendRequest}
                   currentValue={this.props.currentValue}
                   maximum={max}
                   minimum={min}
@@ -70,6 +72,7 @@ NumberResource.propTypes = {
   isWriteable: PropTypes.bool,
   objectID: PropTypes.number,
   resource: PropTypes.object,
+  sendRequest: PropTypes.func,
   smallForm: PropTypes.bool
 };
 
@@ -77,4 +80,15 @@ NumberResource.defaultProps = {
   smallForm: false
 };
 
-export default NumberResource;
+const mapStateToProps = (state) => {
+  return {
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    sendRequest: (objectID, instanceID, resourceID, value) => dispatch(action.sendRequest(objectID, instanceID, resourceID, value))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NumberResource);
