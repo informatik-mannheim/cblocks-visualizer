@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 import NumberResource from './NumberResource';
 import SwitchResource from './SwitchResource';
 import MultiResource from './MultiResource';
-
+import * as action from '../../action/';
+import { connect } from 'react-redux';
 
 class ResourceWrapper extends React.Component {
   render () {
     let Component;
-    //TODO: add check for isWritable...
     if (this.props.multiResource === false) {
       //Single value resource
       const type = this.props.resource.schema === undefined ? this.props.resource.type : this.props.resource.schema.type;
@@ -22,8 +22,10 @@ class ResourceWrapper extends React.Component {
         case 'number':
           Component = NumberResource;
           break;
+        case 'string':
+          //TODO: implement
+          break;
         default:
-
       }
     } else {
       Component = MultiResource;
@@ -44,6 +46,7 @@ ResourceWrapper.propTypes = {
   multiResource: PropTypes.bool,
   objectID: PropTypes.number,
   resource: PropTypes.object,
+  sendRequest: PropTypes.func,
   smallForm: PropTypes.bool
 };
 
@@ -52,4 +55,11 @@ ResourceWrapper.defaultProps = {
   smallForm: false
 };
 
-export default ResourceWrapper;
+const mapStateToProps = () => ({});
+const mapDispatchToProps = (dispatch) => {
+  return {
+    sendRequest: (objectID, instanceID, resourceID, value) => dispatch(action.sendRequest(objectID, instanceID, resourceID, value))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResourceWrapper);

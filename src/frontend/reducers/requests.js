@@ -10,6 +10,8 @@ export function requests (state = initialRequestsState, action) {
   switch (action.type) {
     case Constants.Actions.SEND_REQUEST:
 
+      console.log(state.unresolvedRequests.length);
+
       const newRequest = Object.assign(
         {},
         {requestID: state.totalRequests + 1},

@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import StatusBar2 from '../../component/StatusBar2';
+import StatusBar from '../../component/StatusBar';
 import colorString from 'color-string';
-import { connect } from 'react-redux';
-import * as action from '../../action/';
 
 class NumberResource extends React.Component {
   render () {
@@ -16,15 +14,15 @@ class NumberResource extends React.Component {
         <div>
             <div style={{textAlign: 'center', marginBottom: 4}}>{this.props.resource.name}</div>
             <div>
-              <StatusBar2
+              <StatusBar
                 objectID={this.props.objectID}
                 instanceID={this.props.instanceID}
                 resourceID={this.props.resource.resourceID}
-                sendRequest={this.props.sendRequest}
                 currentValue={this.props.currentValue}
                 maximum={max}
                 minimum={min}
-                isWriteable={this.props.isWriteable}/>
+                isWriteable={this.props.isWriteable}
+                requestChangeToSubresource={this.props.requestChangeToSubresource}/>
               <div style={{textAlign: 'left', fontSize: 12, marginLeft: 8, display: 'block', float: 'left'}}>{min}</div>
               <div style={{textAlign: 'right', fontSize: 12, marginRight: 8, display: 'block', float: 'right'}}>{max}</div>
             </div>
@@ -38,6 +36,7 @@ class NumberResource extends React.Component {
       const min = this.props.resource.minimum;
 
       const barColor = colorString.get.rgb(this.props.resource.label) !== null ? this.props.resource.label : undefined;
+
       return (
         <div>
             <div style={{display: 'block'}}>
@@ -45,17 +44,18 @@ class NumberResource extends React.Component {
                 {/*this.props.resource.label*/}
               </div>
               <div style={{width: '90%', float: 'right'}}>
-                <StatusBar2
+                <StatusBar
                   objectID={this.props.objectID}
                   instanceID={this.props.instanceID}
                   resourceID={this.props.resource.resourceID}
-                  sendRequest={this.props.sendRequest}
                   currentValue={this.props.currentValue}
                   maximum={max}
                   minimum={min}
                   color={barColor}
                   height={20}
-                  isWriteable={this.props.isWriteable}/>
+                  isWriteable={this.props.isWriteable}
+                  requestChangeToSubresource={this.props.requestChangeToSubresource}
+                  label={this.props.resource.label}/>
                 <div style={{textAlign: 'left', fontSize: 8, marginLeft: 8, display: 'block', float: 'left'}}>{min}</div>
                 <div style={{textAlign: 'right', fontSize: 8, marginRight: 8, display: 'block', float: 'right'}}>{max}</div>
               </div>
@@ -71,6 +71,7 @@ NumberResource.propTypes = {
   instanceID: PropTypes.number,
   isWriteable: PropTypes.bool,
   objectID: PropTypes.number,
+  requestChangeToSubresource: PropTypes.func,
   resource: PropTypes.object,
   sendRequest: PropTypes.func,
   smallForm: PropTypes.bool
@@ -80,15 +81,4 @@ NumberResource.defaultProps = {
   smallForm: false
 };
 
-const mapStateToProps = (state) => {
-  return {
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    sendRequest: (objectID, instanceID, resourceID, value) => dispatch(action.sendRequest(objectID, instanceID, resourceID, value))
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(NumberResource);
+export default NumberResource;

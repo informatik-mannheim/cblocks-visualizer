@@ -2,7 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ResourceWrapper from './ResourceWrapper';
 
+
 class MultiResource extends React.Component {
+
+  requestChangeToSubresource (subresourceName, value) {
+    const properties = this.props.resource.schema.properties;
+    const newValue = {};
+    Object.entries(properties).map((propertyKeyValue) => {
+      const resource = propertyKeyValue[1];
+      if (subresourceName === resource.label) {
+        newValue[resource.label] = value;
+      } else {
+        newValue[resource.label] = this.props.currentValue[resource.label];
+      }
+    });
+
+    this.props.sendRequest(this.props.objectID, this.props.instanceID, this.props.resource.resourceID, newValue);
+  }
+
   render () {
     const name = this.props.resource.name;
     const properties = this.props.resource.schema.properties;
@@ -13,7 +30,6 @@ class MultiResource extends React.Component {
         {Object.entries(properties).map((propertyKeyValue) => {
           const resource = propertyKeyValue[1];
           resource.label = propertyKeyValue[0];
-          //console.log(resource);
           return (
             <div key={resource.label + '_' + Math.random(1000)}>
               <ResourceWrapper
@@ -24,13 +40,14 @@ class MultiResource extends React.Component {
                 resource={resource}
                 isWriteable={this.props.isWriteable}
                 multiResource={false}
-                smallForm={true}/>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
+                smallForm={true}
+                requestChangeToSubresource={this.requestChangeToSubresource.bind(this)}/>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
 }
 
 MultiResource.propTypes = {
@@ -38,7 +55,8 @@ MultiResource.propTypes = {
   instanceID: PropTypes.number,
   isWriteable: PropTypes.bool,
   objectID: PropTypes.number,
-  resource: PropTypes.object
+  resource: PropTypes.object,
+  sendRequest: PropTypes.func
 };
 
 export default MultiResource;

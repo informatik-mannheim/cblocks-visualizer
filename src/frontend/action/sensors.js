@@ -10,7 +10,7 @@ export const move = (sensorID, instanceID, xPos, yPos) => {
 };
 
 export const moveSensor = (sensorID, instanceID, xPos, yPos) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(move(sensorID, instanceID, xPos, yPos));
 
     let thisConnection;
