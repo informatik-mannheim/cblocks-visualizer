@@ -124,7 +124,7 @@ class Canvas extends Component {
     return connectDropTarget(
       <div id={this.canvasId} style={dropZoneStyle}>
         {this.props.sensors.all_sensors.map((sensor) => (
-          <div key={sensor.objectId + '-' + sensor.instanceID + '_div'}>
+          <div key={sensor.objectID + '-' + sensor.instanceID + '_div'}>
             <Sensor objectID={sensor.objectID} instanceID={sensor.instanceID} xPos={sensor.xPos}
               yPos={sensor.yPos} name={sensor.name} resources={sensor.resources} ref={sensor.objectID + '-' + sensor.instanceID}/>
           </div>

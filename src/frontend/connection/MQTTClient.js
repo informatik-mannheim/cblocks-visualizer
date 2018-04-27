@@ -75,7 +75,6 @@ const MQTTClient = (url) => {
             dispatch(mqttEvents.SENSOR_ADDED, {sensorID: sensorID, instanceID: instanceID});
           } else if (message.toString() === 'offline') {
             console.log(sensorID + '-' + instanceID + ': offline');
-            //TODO: take this back in as soon as the offline bug is fixed (hardware)
             dispatch(mqttEvents.SENSOR_REMOVED, {sensorID: sensorID, instanceID: instanceID});
           }
           break;
