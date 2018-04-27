@@ -26,7 +26,7 @@ class StatusBar extends React.Component {
     //make slider editable if appropriate
     const slider = this.props.isWriteable === true
     ? (<Slider pinned editable min={this.props.minimum} max={this.props.maximum}
-      value={this.props.currentValue} onInput={console.log('input')} onChange={this.handleChange.bind(this, 'slider')} />)
+      value={this.props.currentValue} onChange={this.handleChange.bind(this, 'slider')} />)
     : (<Slider pinned min={this.props.minimum} max={this.props.maximum}
         value={this.props.currentValue} onChange={this.handleChange.bind(this, 'slider')} />);
 
