@@ -42,7 +42,7 @@ export function sensors (state = initialSensorsState, action) {
 
         //TODO: Check if this works as intended... seems weird :|
         for (sensorIndex = 0; sensorIndex < state.all_sensors.length; sensorIndex++) {
-          if (state.all_sensors[sensorIndex]._id === action._id) {
+          if (state.all_sensors[sensorIndex].objectID === action.objectID && state.all_sensors[sensorIndex].instanceID === action.instanceID) {
             sensorToRemove = state.all_sensors[sensorIndex];
           }
         }

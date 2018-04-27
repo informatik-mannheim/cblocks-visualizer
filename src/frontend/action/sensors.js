@@ -27,8 +27,8 @@ export const addSensor = (sensor, instanceID, xPos = 500, yPos = 100) => {
   return {type: Constants.Actions.ADD_SENSOR, sensor, instanceID, xPos, yPos};
 };
 
-export const removeSensor = (sensorID) => {
-  return {type: Constants.Actions.REMOVE_SENSOR, sensorID};
+export const removeSensor = (objectID, instanceID) => {
+  return {type: Constants.Actions.REMOVE_SENSOR, objectID, instanceID};
 };
 
 export const fetchSensorHasErrored = (bool) =>

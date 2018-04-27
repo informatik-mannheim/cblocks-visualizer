@@ -384,7 +384,8 @@ const testRemoveSensor = () => {
     count: 1,
     all_sensors: [
       {
-        _id: 'sensor',
+        objectID: 9999,
+        instanceID: 0,
         label: 'Pressure Sensor',
         resources: [
           'bla'
@@ -395,7 +396,7 @@ const testRemoveSensor = () => {
       }
     ]
   };
-  const action = actions.removeSensor('sensor');
+  const action = actions.removeSensor(9999, 0);
   const stateAfter = initialSensorsState;
 
   deepFreeze(stateBefore);
