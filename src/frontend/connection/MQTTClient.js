@@ -86,8 +86,14 @@ const MQTTClient = (url) => {
           instanceID = Number((/^(\d+)\/(\d)\/(\d)\/output/).exec(topic)[2]);
           const resourceID = Number((/^(\d+)\/(\d)\/(\d)\/output/).exec(topic)[3]);
 
-          const value = JSON.parse(message);
-          dispatch(mqttEvents.SENSOR_UPDATED, {sensorID: sensorID, instanceID: instanceID, resourceID: resourceID, value: value});
+          try {
+            const value = JSON.parse(message);
+            dispatch(mqttEvents.SENSOR_UPDATED, {sensorID: sensorID, instanceID: instanceID, resourceID: resourceID, value: value});
+          } catch (e) {
+            console.log(e);
+            const value = message.toString();
+            dispatch(mqttEvents.SENSOR_UPDATED, {sensorID: sensorID, instanceID: instanceID, resourceID: resourceID, value: value});
+          }
           break;
         default:
       }

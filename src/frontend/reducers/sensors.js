@@ -20,8 +20,6 @@ export function sensors (state = initialSensorsState, action) {
        //Check if duplicate
        for (let i = 0; i < state.all_sensors.length; i++) {
          if (state.all_sensors[i].objectID === newSensor.objectID && state.all_sensors[i].instanceID === newSensor.instanceID) {
-           console.log(state.all_sensors[i].objectID + ' = ' + newSensor.objectID);
-           console.log(state.all_sensors[i].instanceID + ' = ' + newSensor.instanceID);
            return state;
          }
        }

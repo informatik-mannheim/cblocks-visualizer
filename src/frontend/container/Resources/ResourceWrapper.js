@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 // https://www.slightedgecoder.com/2017/12/03/loading-react-components-dynamically-demand/
 import NumberResource from './NumberResource';
 import SwitchResource from './SwitchResource';
+import StringResource from './StringResource';
 import MultiResource from './MultiResource';
 import * as action from '../../action/';
 import { connect } from 'react-redux';
@@ -23,7 +24,8 @@ class ResourceWrapper extends React.Component {
           Component = NumberResource;
           break;
         case 'string':
-          //TODO: implement
+          //TODO: implement properly
+          Component = StringResource;
           break;
         default:
       }
