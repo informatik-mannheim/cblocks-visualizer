@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as action from '../../action/';
-import { Switch } from 'react-toolbox/lib';
 import { connect } from 'react-redux';
 
 class StringResource extends React.Component {
@@ -16,9 +15,7 @@ class StringResource extends React.Component {
     return (
       <div>
         <div style={{textAlign: 'center'}}>{this.props.resource.name}</div>
-          <div>
-            {this.props.currentValue}
-          </div>
+        <div style={{textAlign: 'center', fontSize: 25, marginTop: 4, marginBottom: 4}}>{this.props.currentValue}</div>
       </div>
     );
   }
@@ -33,15 +30,10 @@ StringResource.propTypes = {
   toggleSwitch: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => {
-  return {
-  };
-};
+const mapStateToProps = () => ({});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleSwitch: (objectID, instanceID, resourceID, value) => dispatch(action.sendRequest(objectID, instanceID, resourceID, value))
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  toggleSwitch: (objectID, instanceID, resourceID, value) => dispatch(action.sendRequest(objectID, instanceID, resourceID, value))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(StringResource);
