@@ -1,7 +1,16 @@
 import { connect } from 'mqtt';
 import Constants from '../constants/';
 import {subscribe} from 'redux-subscriber';
-//import { subscribe}
+
+const isParsableJSON = (jsonString) => {
+    try {
+        const o = JSON.parse(jsonString);
+        return true;
+    } catch (e) {
+      //ignore
+    }
+    return false;
+};
 
 const mqttEvents = Constants.MQTTEvents;
 const MQTTClient = (url) => {
@@ -86,14 +95,14 @@ const MQTTClient = (url) => {
           instanceID = Number((/^(\d+)\/(\d)\/(\d)\/output/).exec(topic)[2]);
           const resourceID = Number((/^(\d+)\/(\d)\/(\d)\/output/).exec(topic)[3]);
 
-          try {
-            const value = JSON.parse(message);
-            dispatch(mqttEvents.SENSOR_UPDATED, {sensorID: sensorID, instanceID: instanceID, resourceID: resourceID, value: value});
-          } catch (e) {
-            console.log(e);
-            const value = message.toString();
-            dispatch(mqttEvents.SENSOR_UPDATED, {sensorID: sensorID, instanceID: instanceID, resourceID: resourceID, value: value});
+          let value;
+          if (isParsableJSON(message.toString())) {
+            value = JSON.parse(message);
+          } else {
+            value = message.toString();
           }
+
+          dispatch(mqttEvents.SENSOR_UPDATED, {sensorID: sensorID, instanceID: instanceID, resourceID: resourceID, value: value});
           break;
         default:
       }
@@ -101,10 +110,13 @@ const MQTTClient = (url) => {
   });
 
   const unsubscribeFromRequests = subscribe('requests.totalRequests', state => {
-      const currentRequest = state.requests.unresolvedRequests[0];
+
+    for (let i = 0; i < state.requests.unresolvedRequests.length; i++) {
+      const currentRequest = state.requests.unresolvedRequests[i];
       const topic = 'cblocks-ui/' + currentRequest.objectID + '/' + currentRequest.instanceID + '/' + currentRequest.resourceID + '/input';
       const data = Object.assign({}, {requestID: currentRequest.requestID, data: currentRequest.value});
       client.publish(topic, JSON.stringify(data));
+    }
   });
 
   return this;
