@@ -1,27 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardTitle } from 'react-toolbox/lib/card';
-
-const styles = {
-  display: 'inline-block',
-  transform: 'rotate(-45deg)',
-  WebkitTransform: 'rotate(-45deg)',
-  width: 100,
-  height: 100,
-  border: '1px solid black',
-  borderRadius: 5
-};
+import { Card, CardContent, Typography } from '@material-ui/core';
 
 class SensorDragPreview extends Component {
 
   render () {
-    const { name } = this.props;
     return (
-      <Card style={{width: '350px'}}>
-        <CardTitle
-          title={this.props.name}
-        />
-      </Card>
+        <Card style={{width: 350}}>
+          <CardContent>
+            <Typography variant="headline" component="h2" align="center" >
+              {this.props.name}
+            </Typography>
+          </CardContent>
+        </Card>
     );
   }
 }

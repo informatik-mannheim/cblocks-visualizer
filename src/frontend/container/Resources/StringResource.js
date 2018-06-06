@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as action from '../../action/';
 import { connect } from 'react-redux';
+import Typography from '@material-ui/core/Typography';
 
 class StringResource extends React.Component {
 
@@ -14,8 +15,8 @@ class StringResource extends React.Component {
   render () {
     return (
       <div>
-        <div style={{textAlign: 'center'}}>{this.props.resource.name}</div>
-        <div style={{textAlign: 'center', fontSize: 25, marginTop: 4, marginBottom: 4}}>{this.props.currentValue}</div>
+        <Typography variant='subheading' align='center'>{this.props.resource.name}</Typography>
+        <Typography variant='display1' align='center'>{this.props.currentValue}</Typography>
       </div>
     );
   }

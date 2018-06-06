@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Slider } from 'react-toolbox/lib/slider';
+import { withStyles } from '@material-ui/core/styles';
+import Slider from '@material-ui/lab/Slider';
 
 class StatusBar extends React.Component {
   static propTypes = {
@@ -24,12 +25,12 @@ class StatusBar extends React.Component {
 
   render () {
     //make slider editable if appropriate
-    const slider = this.props.isWriteable === true
-    ? (<Slider pinned editable min={this.props.minimum} max={this.props.maximum}
-      value={this.props.currentValue} onChange={this.handleChange.bind(this, 'slider')} />)
-    : (<Slider pinned min={this.props.minimum} max={this.props.maximum}
-        value={this.props.currentValue} onChange={this.handleChange.bind(this, 'slider')} />);
-
+    // const slider = this.props.isWriteable === true
+    // ? (<Slider pinned editable min={this.props.minimum} max={this.props.maximum}
+    //   value={this.props.currentValue} onChange={this.handleChange.bind(this, 'slider')} />)
+    // : (<Slider pinned min={this.props.minimum} max={this.props.maximum}
+    //     value={this.props.currentValue} onChange={this.handleChange.bind(this, 'slider')} />);
+    const slider = <Slider value={this.props.currentValue} aria-labelledby="label" onChange={this.handleChange} />;
     return (
       <div>
         { slider }

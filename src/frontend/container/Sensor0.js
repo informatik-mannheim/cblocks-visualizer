@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Constants from '../constants/';
 import { DragSource } from 'react-dnd';
-import { Card, CardContent, Typography } from '@material-ui/core';
 import { getEmptyImage } from 'react-dnd-html5-backend';
+import { Card, CardTitle} from 'react-toolbox/lib/card';
 import ResourceWrapper from './Resources/ResourceWrapper';
-import { HorizontalDividerLine } from '../component/HorizontalDividerLine';
+import {HorizontalDividerLine} from '../component/HorizontalDividerLine';
 import * as action from '../action/';
 
 const sensorSource = {
@@ -75,29 +75,28 @@ class Sensor extends Component {
   render () {
     return this.props.connectDragSource(
       <div style={getSensorStyles(this.props)}>
-        <Card style={{minWidth: 350}}>
-          <CardContent>
-            <Typography variant="headline" component="h2" align="center" >
-              {this.props.name}
-            </Typography>
-            {Object.entries(this.props.resources).map((resourceKeyValue) => {
-              const currentResource = resourceKeyValue[1];
-              const multiResource = currentResource.schema.properties === undefined ? false : true;
-              if (this.props.values[currentResource.resourceID] !== undefined) {
-                return (
-                <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID + '_div'}>
-                  <HorizontalDividerLine/>
-                  <ResourceWrapper
-                    objectID={this.props.objectID}
-                    instanceID={this.props.instanceID}
-                    resource={currentResource}
-                    currentValue={this.props.values[currentResource.resourceID]}
-                    multiResource={multiResource}
-                    isWriteable={currentResource.is_writeable}/>
-                </div>);
-              }
-            })}
-          </CardContent>
+        <Card style={{width: '350px'}}>
+          <CardTitle
+            title={this.props.name}
+            subtitle="cBlocks Sensor"
+          />
+          {Object.entries(this.props.resources).map((resourceKeyValue) => {
+            const currentResource = resourceKeyValue[1];
+            const multiResource = currentResource.schema.properties === undefined ? false : true;
+            if (this.props.values[currentResource.resourceID] !== undefined) {
+              return (
+              <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID + '_div'}>
+                <HorizontalDividerLine/>
+                <ResourceWrapper
+                  objectID={this.props.objectID}
+                  instanceID={this.props.instanceID}
+                  resource={currentResource}
+                  currentValue={this.props.values[currentResource.resourceID]}
+                  multiResource={multiResource}
+                  isWriteable={currentResource.is_writeable}/>
+              </div>);
+            }
+          })}
         </Card>
       </div>
     );

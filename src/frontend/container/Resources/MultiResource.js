@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ResourceWrapper from './ResourceWrapper';
-
+import Typography from '@material-ui/core/Typography';
 
 class MultiResource extends React.Component {
 
@@ -26,7 +26,7 @@ class MultiResource extends React.Component {
 
     return (
       <div>
-        <div style={{textAlign: 'center', marginBottom: 4}}>{name}</div>
+        <Typography variant='subheading' align='center'>{name}</Typography>
         {Object.entries(properties).map((propertyKeyValue) => {
           const resource = propertyKeyValue[1];
           resource.label = propertyKeyValue[0];

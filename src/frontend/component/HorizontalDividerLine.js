@@ -8,7 +8,7 @@ export class HorizontalDividerLine extends React.Component {
       border: 0,
       height: '1px',
       backgroundImage: '-webkit-linear-gradient(left, #f0f0f0, #dfdfdf, #f0f0f0)',
-      width: '90%'
+      width: '100%'
     };
 
     return (

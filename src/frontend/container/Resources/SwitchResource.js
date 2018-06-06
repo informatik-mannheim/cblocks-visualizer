@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as action from '../../action/';
-import { Switch } from 'react-toolbox/lib';
+import Switch from '@material-ui/core/Switch';
+import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 
 class SwitchResource extends React.Component {
@@ -15,11 +16,9 @@ class SwitchResource extends React.Component {
   render () {
     return (
       <div>
-        <div style={{textAlign: 'center'}}>{this.props.resource.name}</div>
+        <Typography variant='subheading' align='center'>{this.props.resource.name}</Typography>
           <Switch
-            style={{zIndex: 100}}
             checked={this.props.currentValue}
-            label={this.props.resource.name}
             onChange={this.handleChange.bind(this, 'switch')}
           />
       </div>

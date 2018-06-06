@@ -1,10 +1,9 @@
-import Dialog from 'react-toolbox/lib/dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as action from '../action/';
-import Dropdown from 'react-toolbox/lib/dropdown';
-import Input from 'react-toolbox/lib/input';
 import Constants from '../constants';
 
 class MappingCreationDialog extends Component {
@@ -77,7 +76,7 @@ class MappingCreationDialog extends Component {
   render () {
     return (
       <div>
-        <Dialog
+        {/* <Dialog
           actions={this.actions}
           active={this.props.active}
           //onEscKeyDown={this.props.cancel()}
@@ -87,7 +86,7 @@ class MappingCreationDialog extends Component {
           <Input type='text' ref='nameInput' label='Name' name='name' value={this.props.label} onChange={this.handleChangeName}/>
           <div>Sensor: <Dropdown ref='sensorDropdown' source={this.getSensorDropdownSource(this.props)} value={this.props.sensorId} onChange={this.handleChangeSensorDropdown}/></div>
           <div>Mapping Type: <Dropdown ref='typeDropdown' source={this.getMappingTypeDropdownSource()} value={this.props.mappingType} onChange={this.handleChangeMappingTypeDropdown}/></div>
-        </Dialog>
+        </Dialog> */}
       </div>
     );
   }

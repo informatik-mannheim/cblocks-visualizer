@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StatusBar from '../../component/StatusBar';
 import colorString from 'color-string';
+import Typography from '@material-ui/core/Typography';
 
 class NumberResource extends React.Component {
   render () {
@@ -12,7 +13,7 @@ class NumberResource extends React.Component {
 
       return (
         <div>
-            <div style={{textAlign: 'center', marginBottom: 4}}>{this.props.resource.name}</div>
+            <Typography variant='subheading' align='center'>{this.props.resource.name}</Typography>
             <div>
               <StatusBar
                 objectID={this.props.objectID}
@@ -23,11 +24,17 @@ class NumberResource extends React.Component {
                 minimum={min}
                 isWriteable={this.props.isWriteable}
                 requestChangeToSubresource={this.props.requestChangeToSubresource}/>
-              <div style={{textAlign: 'left', fontSize: 12, marginLeft: 8, display: 'block', float: 'left'}}>{min}</div>
-              <div style={{textAlign: 'right', fontSize: 12, marginRight: 8, display: 'block', float: 'right'}}>{max}</div>
+
+              <div style={{display: 'block', float: 'left'}}>
+                <Typography variant='body2'>{min}</Typography>
+              </div>
+              <div style={{display: 'block', float: 'right'}}>
+                <Typography variant='body2'>{max}</Typography>
+              </div>
+
             </div>
-            <div style={{textAlign: 'center', fontSize: 25, marginTop: 4, marginBottom: 4}}>{this.props.currentValue
-              + ' ' + this.props.resource.schema.unit}</div>
+            <Typography variant='display1' align='center'>{this.props.currentValue
+              + ' ' + this.props.resource.schema.unit}</Typography>
         </div>
       );
     } else {
@@ -40,9 +47,6 @@ class NumberResource extends React.Component {
       return (
         <div>
             <div style={{display: 'block'}}>
-              <div style={{float: 'left', marginLeft: 8}}>
-                {/*this.props.resource.label*/}
-              </div>
               <div style={{width: '90%', float: 'right'}}>
                 <StatusBar
                   objectID={this.props.objectID}
@@ -56,8 +60,12 @@ class NumberResource extends React.Component {
                   isWriteable={this.props.isWriteable}
                   requestChangeToSubresource={this.props.requestChangeToSubresource}
                   label={this.props.resource.label}/>
-                <div style={{textAlign: 'left', fontSize: 8, marginLeft: 8, display: 'block', float: 'left'}}>{min}</div>
-                <div style={{textAlign: 'right', fontSize: 8, marginRight: 8, display: 'block', float: 'right'}}>{max}</div>
+                  <div style={{display: 'block', float: 'left'}}>
+                    <Typography variant='body2'>{min}</Typography>
+                  </div>
+                  <div style={{display: 'block', float: 'right'}}>
+                    <Typography variant='body2'>{max}</Typography>
+                  </div>
               </div>
             </div>
         </div>

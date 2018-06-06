@@ -84,17 +84,6 @@ class Canvas extends Component {
     let state;
   }
 
-  componentDidMount () {
-/*
-    jsPlumbInstance.ready(function (){
-      jsPlumbInstance.setContainer(this.canvasId);
-    });
-*/
-    const unsubscribeFromMoveNode = subscribe('connections', state => {
-      //renderConnections(state);
-    });
-
-  }
   componentWillReceiveProps (nextProps) {
     if (!this.props.isOver && nextProps.isOver) {
       // You can use this as enter handler
@@ -116,13 +105,14 @@ class Canvas extends Component {
     const dropZoneStyle = {
       top: 200,
       left: 200,
-      height: 800,
-      width: '100%'
+      height: 900,
+      width: '100%',
+      backgroundColor: '#2E2F41'
     };
     this.canvasId = this.nextUniqueId();
 
     return connectDropTarget(
-      <div id={this.canvasId} style={dropZoneStyle}>
+      <div id={this.canvasId} style={dropZoneStyle} >
         {this.props.sensors.all_sensors.map((sensor) => (
           <div key={sensor.objectID + '-' + sensor.instanceID + '_div'}>
             <Sensor objectID={sensor.objectID} instanceID={sensor.instanceID} xPos={sensor.xPos}

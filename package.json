@@ -17,12 +17,14 @@
     "npm": ">=4.0.1"
   },
   "dependencies": {
+    "@material-ui/core": "^1.2.0",
+    "@material-ui/icons": "^1.1.0",
+    "@material-ui/lab": "^1.0.0-alpha.4",
     "babel-preset-react-native-stage-0": "^1.0.1",
     "classnames": "^2.2.5",
     "color-string": "^1.5.2",
     "deep-freeze": "0.0.1",
     "expect": "^1.20.2",
-    "material-kit-react": "^0.1.0",
     "mqtt": "^2.18.0",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
@@ -31,11 +33,11 @@
     "react-dom": "^16.3.2",
     "react-html-id": "^0.1.1",
     "react-redux": "^5.0.7",
-    "react-toolbox": "^2.0.0-beta.5",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.2",
     "redux-subscriber": "^1.1.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "typeface-roboto": "0.0.54"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
