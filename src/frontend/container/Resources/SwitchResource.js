@@ -9,7 +9,7 @@ class SwitchResource extends React.Component {
 
   handleChange = (field, value) => {
     if (this.props.isWriteable === true) {
-      this.props.toggleSwitch(this.props.objectID, this.props.instanceID, this.props.resource.resourceID, value);
+      this.props.toggleSwitch(this.props.objectID, this.props.instanceID, this.props.resource.resourceID, this.props.currentValue);
     }
   };
 
@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleSwitch: (objectID, instanceID, resourceID, value) => dispatch(action.sendRequest(objectID, instanceID, resourceID, value))
+    toggleSwitch: (objectID, instanceID, resourceID, value) => dispatch(action.sendRequest(objectID, instanceID, resourceID, !value))
   };
 };
 
