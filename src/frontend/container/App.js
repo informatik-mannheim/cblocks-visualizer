@@ -16,10 +16,28 @@ const theme = createMuiTheme({
       contrastText: '#fff'
     },
     secondary: {
-      light: '#d52c3c',
-      main: '#d52c3c',
-      dark: '#d52c3c',
+      light: '#DD302A',
+      main: '#DD302A',
+      dark: '#DD302A',
       contrastText: '#000'
+    }
+  },
+  overrides: {
+    MuiCard: {
+      root: {
+        borderRadius: 10
+      }
+    },
+    MuiCardHeader: {
+      root: {
+        background: '#a3445d'
+      },
+      title: {
+        color: '#fff',
+        fontSize: '1.5rem',
+        fontWeight: 400,
+        lineHeight: '1.35417em'
+      }
     }
   }
 });

@@ -1,23 +1,37 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardContent, Typography } from '@material-ui/core';
+import { Avatar, Card, CardHeader, withStyles } from '@material-ui/core';
+
+const styles = {
+  card: {
+    width: 350
+  },
+  cardHeader: {
+    title: {
+      variant: 'display4'
+    }
+  }
+};
 
 class SensorDragPreview extends Component {
-
   render () {
     return (
-        <Card style={{width: 350}}>
-          <CardContent>
-            <Typography variant="headline" component="h2" align="center" >
-              {this.props.name}
-            </Typography>
-          </CardContent>
+        <Card className={this.props.classes.card}>
+          <CardHeader
+            className={this.props.classes.cardHeader}
+            avatar={
+              <Avatar>
+                R
+              </Avatar>
+            }
+            title={this.props.name}/>
         </Card>
     );
   }
 }
 
 SensorDragPreview.propTypes = {
+  classes: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired
 };
-export default SensorDragPreview;
+export default withStyles(styles)(SensorDragPreview);

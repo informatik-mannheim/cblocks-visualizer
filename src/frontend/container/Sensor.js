@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Constants from '../constants/';
 import { DragSource } from 'react-dnd';
-import { Card, CardContent, Typography } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { Avatar, Card, CardContent, CardHeader } from '@material-ui/core';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import ResourceWrapper from './Resources/ResourceWrapper';
 import { HorizontalDividerLine } from '../component/HorizontalDividerLine';
@@ -42,7 +43,7 @@ function collect (cnnct, monitor) {
   };
 }
 
-function getSensorStyles (props) {
+const getBoundingDivStyles = (props) => {
   const { xPos, yPos, isDragging } = props;
   const transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
 
@@ -54,8 +55,18 @@ function getSensorStyles (props) {
     height: isDragging ? 0 : '',
     cursor: 'move'
   };
-}
+};
 
+const styles = theme => ({
+  card: {
+    minWidth: 350,
+    border: 0
+  },
+  title: {
+    marginBottom: 16,
+    fontSize: 30
+  }
+});
 
 class Sensor extends Component {
   constructor () {
@@ -73,13 +84,18 @@ class Sensor extends Component {
   }
 
   render () {
+    const {classes} = this.props;
     return this.props.connectDragSource(
-      <div style={getSensorStyles(this.props)}>
-        <Card style={{minWidth: 350}}>
+      <div style={getBoundingDivStyles(this.props)}>
+        <Card className={this.props.classes.card}>
+          <CardHeader
+            avatar={
+              <Avatar>
+                R
+              </Avatar>
+            }
+            title={this.props.name}/>
           <CardContent>
-            <Typography variant="headline" component="h2" align="center" >
-              {this.props.name}
-            </Typography>
             {Object.entries(this.props.resources).map((resourceKeyValue) => {
               const currentResource = resourceKeyValue[1];
               const multiResource = currentResource.schema.properties === undefined ? false : true;
@@ -105,6 +121,7 @@ class Sensor extends Component {
 }
 
 Sensor.propTypes = {
+  classes: PropTypes.object.isRequired,
   connectDragPreview: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   height: PropTypes.number,
@@ -151,4 +168,4 @@ const mapDispatchToProps = (dispatch) => {
 
 const dragSourceSensor = DragSource(Constants.ItemTypes.SENSOR, sensorSource, collect)(Sensor);
 const connectedSensor = connect(mapStateToProps, mapDispatchToProps)(dragSourceSensor);
-export default connectedSensor;
+export default withStyles(styles)(connectedSensor);
