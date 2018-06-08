@@ -41,7 +41,6 @@ const theme = createMuiTheme({
     },
     MuiCardContent: {
       root: {
-        paddingTop: 0
       }
     }
   }
@@ -59,6 +58,4 @@ class App extends React.Component {
   }
 }
 
-const dragDropApp = DragDropContext(HTML5Backend)(App);
-//export default withStyles(styles)(dragDropApp);
-export default dragDropApp;
+export default DragDropContext(HTML5Backend)(App);

@@ -8,7 +8,10 @@ import { Avatar, Card, CardContent, CardHeader } from '@material-ui/core';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import ResourceWrapper from './Resources/ResourceWrapper';
 import { HorizontalDividerLine } from '../component/HorizontalDividerLine';
+import SvgIcon from '@material-ui/core/SvgIcon';
 import * as action from '../action/';
+import svgIcons from '../img/icons/svgIcons';
+
 
 const sensorSource = {
   beginDrag (props) {
@@ -65,6 +68,10 @@ const styles = theme => ({
   title: {
     marginBottom: 16,
     fontSize: 30
+  },
+  sensorAvatar: {
+    color: 'primary',
+    backgroundColor: '#fff'
   }
 });
 
@@ -84,14 +91,35 @@ class Sensor extends Component {
   }
 
   render () {
+    let path;
+    switch (this.props.objectID) {
+      case 3303:
+        path = svgIcons.room;
+        break;
+      case 3304:
+        path = svgIcons.led;
+        break;
+      case 3305:
+        path = svgIcons.rfid;
+        break;
+      default:
+        path = svgIcons.default;
+    }
+
+    const sensorIcon = (
+      <SvgIcon color='primary'>
+        <path d={path} />
+      </SvgIcon>
+    );
+
     let i = 0;
     return this.props.connectDragSource(
       <div style={getBoundingDivStyles(this.props)}>
         <Card className={this.props.classes.card}>
           <CardHeader
             avatar={
-              <Avatar>
-                R
+              <Avatar className={this.props.classes.sensorAvatar}>
+                {sensorIcon}
               </Avatar>
             }
             title={this.props.name}/>
@@ -103,6 +131,7 @@ class Sensor extends Component {
                 <HorizontalDividerLine/>
               );
               i++;
+
               const currentResource = resourceKeyValue[1];
               const multiResource = currentResource.schema.properties === undefined ? false : true;
               if (this.props.values[currentResource.resourceID] !== undefined) {

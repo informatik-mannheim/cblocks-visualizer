@@ -36,7 +36,7 @@ class CustomDragLayer extends Component {
   renderItem (type, item) {
     switch (type) {
       case Constants.ItemTypes.SENSOR:
-        return (<SensorDragPreview name={item.name} />);
+        return (<SensorDragPreview name={item.name} objectID={item.objectID}/>);
       default:
         return null;
     }
@@ -60,17 +60,17 @@ class CustomDragLayer extends Component {
 }
 
 CustomDragLayer.propTypes = {
-  item: PropTypes.object,
-  itemType: PropTypes.string,
-  initialOffset: PropTypes.shape({
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired
-  }),
   currentOffset: PropTypes.shape({
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired
   }),
-  isDragging: PropTypes.bool.isRequired
+  initialOffset: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired
+  }),
+  isDragging: PropTypes.bool.isRequired,
+  item: PropTypes.object,
+  itemType: PropTypes.string
 };
 
 export default DragLayer(monitor => ({
