@@ -84,7 +84,7 @@ class Sensor extends Component {
   }
 
   render () {
-    const {classes} = this.props;
+    let i = 0;
     return this.props.connectDragSource(
       <div style={getBoundingDivStyles(this.props)}>
         <Card className={this.props.classes.card}>
@@ -97,12 +97,18 @@ class Sensor extends Component {
             title={this.props.name}/>
           <CardContent>
             {Object.entries(this.props.resources).map((resourceKeyValue) => {
+              const dividerLine = (i === 0) ? (
+                <div/>
+              ) : (
+                <HorizontalDividerLine/>
+              );
+              i++;
               const currentResource = resourceKeyValue[1];
               const multiResource = currentResource.schema.properties === undefined ? false : true;
               if (this.props.values[currentResource.resourceID] !== undefined) {
                 return (
                 <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID + '_div'}>
-                  <HorizontalDividerLine/>
+                  {dividerLine}
                   <ResourceWrapper
                     objectID={this.props.objectID}
                     instanceID={this.props.instanceID}

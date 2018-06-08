@@ -38,6 +38,11 @@ const theme = createMuiTheme({
         fontWeight: 400,
         lineHeight: '1.35417em'
       }
+    },
+    MuiCardContent: {
+      root: {
+        paddingTop: 0
+      }
     }
   }
 });
