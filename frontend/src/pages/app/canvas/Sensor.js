@@ -55,8 +55,7 @@ const getBoundingDivStyles = (props) => {
     transform,
     WebkitTransform: transform,
     opacity: isDragging ? 0 : 1,
-    height: isDragging ? 0 : '',
-    cursor: 'move'
+    height: isDragging ? 0 : ''
   };
 };
 
@@ -113,45 +112,52 @@ class Sensor extends Component {
     );
 
     let i = 0;
-    return this.props.connectDragSource(
-      <div style={getBoundingDivStyles(this.props)}>
-        <Card className={this.props.classes.card}>
-          <CardHeader
-            avatar={
-              <Avatar className={this.props.classes.sensorAvatar}>
-                {sensorIcon}
-              </Avatar>
-            }
-            title={this.props.name}/>
-          <CardContent>
-            {Object.entries(this.props.resources).map((resourceKeyValue) => {
-              const dividerLine = (i === 0) ? (
-                <div/>
-              ) : (
-                <HorizontalDividerLine/>
-              );
-              i++;
-
-              const currentResource = resourceKeyValue[1];
-              const multiResource = currentResource.schema.properties === undefined ? false : true;
-              if (this.props.values[currentResource.resourceID] !== undefined) {
-                return (
-                <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID + '_div'}>
-                  {dividerLine}
-                  <ResourceWrapper
-                    objectID={this.props.objectID}
-                    instanceID={this.props.instanceID}
-                    resource={currentResource}
-                    currentValue={this.props.values[currentResource.resourceID]}
-                    multiResource={multiResource}
-                    isWriteable={currentResource.is_writeable}/>
-                </div>);
-              }
-            })}
-          </CardContent>
-        </Card>
+    const header = (
+      <div>
+        <CardHeader
+          style={{cursor: 'move'}}
+          avatar={
+            <Avatar className={this.props.classes.sensorAvatar}>
+              {sensorIcon}
+            </Avatar>
+          }
+          title={this.props.name}/>
       </div>
     );
+
+    const sensorComponent = (<div style={getBoundingDivStyles(this.props)}>
+      <Card className={this.props.classes.card}>
+        {this.props.connectDragSource(header)}
+        <CardContent>
+          {Object.entries(this.props.resources).map((resourceKeyValue) => {
+            const dividerLine = (i === 0) ? (
+              <div/>
+            ) : (
+              <HorizontalDividerLine/>
+            );
+            i++;
+
+            const currentResource = resourceKeyValue[1];
+            const multiResource = currentResource.schema.properties === undefined ? false : true;
+            if (this.props.values[currentResource.resourceID] !== undefined) {
+              return (
+              <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID + '_div'}>
+                {dividerLine}
+                <ResourceWrapper
+                  objectID={this.props.objectID}
+                  instanceID={this.props.instanceID}
+                  resource={currentResource}
+                  currentValue={this.props.values[currentResource.resourceID]}
+                  multiResource={multiResource}
+                  isWriteable={currentResource.is_writeable}/>
+              </div>);
+            }
+          })}
+        </CardContent>
+      </Card>
+    </div>);
+
+    return sensorComponent;
   }
 }
 

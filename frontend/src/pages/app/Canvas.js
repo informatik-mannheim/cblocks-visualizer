@@ -131,9 +131,6 @@ Canvas.propTypes = {
   sensors: PropTypes.object
 };
 
-Canvas.defaultProps = {
-};
-
 const mapStateToProps = (state) => {
   return {
     connections: state.connections,

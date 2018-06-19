@@ -29,7 +29,7 @@ class StatusBar extends React.Component {
     //   value={this.props.currentValue} onChange={this.handleChange.bind(this, 'slider')} />)
     // : (<Slider pinned min={this.props.minimum} max={this.props.maximum}
     //     value={this.props.currentValue} onChange={this.handleChange.bind(this, 'slider')} />);
-    const slider = <Slider value={this.props.currentValue} onChange={this.handleChange} min={this.props.minimum} max={this.props.maximum}/>;
+    const slider = <Slider value={this.props.currentValue} onDragEnd={this.handleChange} min={this.props.minimum} max={this.props.maximum}/>;
     return (
       <div>
         { slider }
