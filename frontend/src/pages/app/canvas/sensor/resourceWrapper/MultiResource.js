@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ResourceWrapper from './ResourceWrapper';
+import ResourceWrapper from '../ResourceWrapper';
 import Typography from '@material-ui/core/Typography';
 
 class MultiResource extends React.Component {

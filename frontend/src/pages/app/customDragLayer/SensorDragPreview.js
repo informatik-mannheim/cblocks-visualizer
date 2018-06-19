@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, Card, CardHeader, withStyles, SvgIcon } from '@material-ui/core';
-import svgIcons from '../img/icons/svgIcons';
+import svgIcons from '../../../images/svgIcons';
 
 const styles = {
   card: {

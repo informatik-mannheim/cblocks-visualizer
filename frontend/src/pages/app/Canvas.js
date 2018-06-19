@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
-import Sensor from './Sensor';
-import Constants from '../constants/';
+import Sensor from './canvas/Sensor';
+import Constants from '../../constants/';
 import { DropTarget } from 'react-dnd';
-import { subscribe } from 'redux-subscriber';
 import { enableUniqueIds } from 'react-html-id';
-import MappingCreationDialog from './MappingCreationDialog';
 
 /**
  * Specifies the drop target contract.
@@ -119,7 +117,6 @@ class Canvas extends Component {
               yPos={sensor.yPos} name={sensor.name} resources={sensor.resources} ref={sensor.objectID + '-' + sensor.instanceID}/>
           </div>
         ))}
-        <MappingCreationDialog />
       </div>
     );
   }

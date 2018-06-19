@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DragLayer } from 'react-dnd';
-import Constants from '../constants/';
-import SensorDragPreview from './SensorDragPreview';
+import Constants from '../../constants/';
+import SensorDragPreview from './customDragLayer/SensorDragPreview';
 
 const layerStyles = {
   position: 'fixed',

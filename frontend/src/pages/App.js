@@ -1,9 +1,9 @@
 import React from 'react';
-import CBlocksAppBar from './CBlocksAppBar.js';
-import Canvas from './Canvas';
+import CBlocksAppBar from './app/CBlocksAppBar.js';
+import Canvas from './app/Canvas';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
-import CustomDragLayer from '../component/CustomDragLayer';
+import CustomDragLayer from './app/CustomDragLayer';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 
 const theme = createMuiTheme({
@@ -40,6 +40,9 @@ const theme = createMuiTheme({
       }
     },
     MuiCardContent: {
+      root: {}
+    },
+    Slider: {
       root: {
       }
     }

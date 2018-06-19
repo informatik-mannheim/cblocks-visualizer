@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as action from '../../action/';
+import * as action from '../../../../../action/';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 

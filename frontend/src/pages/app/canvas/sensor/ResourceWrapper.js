@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 //TODO: implement dynamic imports
 // https://www.slightedgecoder.com/2017/12/03/loading-react-components-dynamically-demand/
-import NumberResource from './NumberResource';
-import SwitchResource from './SwitchResource';
-import StringResource from './StringResource';
-import MultiResource from './MultiResource';
-import * as action from '../../action/';
+import NumberResource from './resourceWrapper/NumberResource';
+import SwitchResource from './resourceWrapper/SwitchResource';
+import StringResource from './resourceWrapper/StringResource';
+import MultiResource from './resourceWrapper/MultiResource';
+import * as action from '../../../../action/';
 import { connect } from 'react-redux';
 
 class ResourceWrapper extends React.Component {

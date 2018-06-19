@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Constants from '../constants/';
+import Constants from '../../../constants/';
 import { DragSource } from 'react-dnd';
 import { withStyles } from '@material-ui/core/styles';
 import { Avatar, Card, CardContent, CardHeader } from '@material-ui/core';
 import { getEmptyImage } from 'react-dnd-html5-backend';
-import ResourceWrapper from './Resources/ResourceWrapper';
-import { HorizontalDividerLine } from '../component/HorizontalDividerLine';
+import ResourceWrapper from './sensor/ResourceWrapper';
+import { HorizontalDividerLine } from './sensor/HorizontalDividerLine';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import * as action from '../action/';
-import svgIcons from '../img/icons/svgIcons';
+import * as action from '../../../action/';
+import svgIcons from '../../../images/svgIcons';
 
 
 const sensorSource = {

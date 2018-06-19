@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import StatusBar from '../../component/StatusBar';
+import StatusBar from '../../../../../components/StatusBar';
 import colorString from 'color-string';
 import Typography from '@material-ui/core/Typography';
 

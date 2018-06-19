@@ -5,7 +5,7 @@ const settings = {
   entry: {
     bundle: [
       'react-hot-loader/patch',
-      './src/frontend/index.js'
+      './frontend/src/index.js'
     ]
   },
   output: {
@@ -75,7 +75,7 @@ const settings = {
     ]
   },
   devServer: {
-    contentBase: path.resolve('src/www'),
+    contentBase: path.resolve('frontend/public/'),
     publicPath: 'http://localhost:8080/', // full URL is necessary for Hot Module Replacement if additional path will be added.
     quiet: false,
     hot: true,

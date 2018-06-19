@@ -1,6 +1,6 @@
 import { connect } from 'mqtt';
 import Constants from '../constants/';
-import {subscribe} from 'redux-subscriber';
+import { subscribe } from 'redux-subscriber';
 
 const isParsableJSON = (jsonString) => {
     try {
