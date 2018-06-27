@@ -24,7 +24,6 @@ class ResourceWrapper extends React.Component {
           Component = NumberResource;
           break;
         case 'string':
-          //TODO: implement properly
           Component = StringResource;
           break;
         default:

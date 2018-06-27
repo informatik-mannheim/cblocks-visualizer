@@ -78,8 +78,6 @@ class Canvas extends Component {
   constructor () {
     super();
     enableUniqueIds(this);
-    let canvasId;
-    let state;
   }
 
   componentWillReceiveProps (nextProps) {

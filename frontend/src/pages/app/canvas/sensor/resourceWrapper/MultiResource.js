@@ -2,8 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ResourceWrapper from '../ResourceWrapper';
 import Typography from '@material-ui/core/Typography';
+import deepEqual from 'deep-equal';
 
 class MultiResource extends React.Component {
+
+  shouldComponentUpdate (nextProps, nextState) {
+    if (deepEqual(nextProps.currentValue, this.props.currentValue)) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   requestChangeToSubresource (subresourceName, value) {
     const properties = this.props.resource.schema.properties;
