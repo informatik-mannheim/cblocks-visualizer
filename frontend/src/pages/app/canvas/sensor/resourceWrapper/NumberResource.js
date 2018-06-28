@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MaterialSlider from '../../../../../components/MaterialSlider';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import svgIcons from '../../../../../images/svgIcons';
 
 class NumberResource extends React.Component {
   render () {
@@ -9,6 +12,12 @@ class NumberResource extends React.Component {
       //Single Resource
       const max = this.props.resource.schema.maximum;
       const min = this.props.resource.schema.minimum;
+
+      const graphIcon = (
+        <SvgIcon>
+          <path d={svgIcons.chart} />
+        </SvgIcon>
+      );
 
       return (
         <div>
@@ -31,11 +40,15 @@ class NumberResource extends React.Component {
               <div style={{display: 'block', float: 'right'}}>
                 <Typography variant='body2'>{max}</Typography>
               </div>
-
             </div>
             <br/>
             <Typography variant='display1' align='center'>{this.props.currentValue
               + ' ' + this.props.resource.schema.unit}</Typography>
+            <div style={{float: 'right', marginBottom: 10}}>
+              <Button variant='fab' mini aria-label="Show Graph" color='secondary' /*onClick={}*/>
+                {graphIcon}
+              </Button>
+            </div>
         </div>
       );
     } else {
