@@ -70,6 +70,7 @@ const testAddSensor = () => {
         },
         name: 'Room Sensor',
         values: {},
+        valueHistory: [],
         xPos: 500,
         yPos: 100
       }
@@ -269,6 +270,7 @@ const testUpdateSensorValue = () => {
               0: 22.2,
               1: 33.3
             },
+            valueHistory: [{0: 22.2, 1: 99}, {0: 22.4, 1: 98}, {0: 22.3, 1: 97}, {0: 23, 1: 95}, {0: 22.9, 1: 96}],
             xPos: 500,
             yPos: 100
           }
@@ -308,70 +310,12 @@ const testUpdateSensorValue = () => {
               0: 22.2,
               1: 100
             },
+            valueHistory: [{0: 22.2, 1: 99}, {0: 22.4, 1: 98}, {0: 22.3, 1: 97}, {0: 23, 1: 95}, {0: 22.9, 1: 96}, {0: 22.2, 1: 100}],
             xPos: 500,
             yPos: 100
           }
         ]
       };
-
-  deepFreeze(stateBefore);
-  deepFreeze(action);
-
-  expect(sensors(stateBefore, action)).toEqual(stateAfter);
-};
-
-const testUpdateSensorValue2 = () => {
-  const stateBefore = {
-    count: 2,
-    all_sensors: [
-      {
-        _id: 'sensor',
-        label: 'Pressure Sensor',
-        resources: [
-          'bla'
-        ],
-        xPos: 0,
-        yPos: 0,
-        value: 0
-      },
-      {
-        _id: 'sensor2',
-        label: 'Other Sensor',
-        resources: [
-          'blub'
-        ],
-        xPos: 100,
-        yPos: 190,
-        value: 900
-      }
-    ]
-  };
-  const action = actions.updateSensorValue('sensor', 700);
-  const stateAfter = {
-    count: 2,
-    all_sensors: [
-      {
-        _id: 'sensor',
-        label: 'Pressure Sensor',
-        resources: [
-          'bla'
-        ],
-        xPos: 0,
-        yPos: 0,
-        value: 700
-      },
-      {
-        _id: 'sensor2',
-        label: 'Other Sensor',
-        resources: [
-          'blub'
-        ],
-        xPos: 100,
-        yPos: 190,
-        value: 900
-      }
-    ]
-  };
 
   deepFreeze(stateBefore);
   deepFreeze(action);
@@ -410,8 +354,7 @@ const sensorsTests = () => {
   testAddDuplicateSensor();
   testMoveSensor();
   testUpdateSensorValue();
-  // testUpdateSensorValue2();
-  // testRemoveSensor();
+  testRemoveSensor();
   return true;
 };
 

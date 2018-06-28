@@ -14,6 +14,7 @@ export function sensors (state = initialSensorsState, action) {
         {resources: action.sensor.resources},
         {name: action.sensor.name},
         {values: {}},
+        {valueHistory: []},
         {xPos: action.xPos},
         {yPos: action.yPos});
 
@@ -72,10 +73,15 @@ function sensor (state = {}, action) {
 
     case Constants.Actions.UPDATE_SENSOR_VALUE:
       const sensorToUpdate = Object.assign({}, state);
+      //Replace old values with new values
       const newValues = Object.assign({}, sensorToUpdate.values);
       newValues[action.resourceID] = action.value;
-
       sensorToUpdate.values = newValues;
+
+      //Add new values to valueHistory if max 100 values, else delete oldest
+      if (sensorToUpdate.valueHistory.length >= 100) sensorToUpdate.valueHistory.shift();
+      sensorToUpdate.valueHistory = sensorToUpdate.valueHistory.concat(newValues);
+
       return sensorToUpdate;
     default:
       return state;
