@@ -1,17 +1,15 @@
 import { combineReducers } from 'redux';
 import { sensors } from './sensors';
-import { htmlIds } from './htmlIds';
-import { connections } from './connections';
 import { mappingDialog } from './mappingDialog';
 import { requests } from './requests';
+import { modals } from './modals';
 import tests from './tests/';
 
 
 const rootReducer = combineReducers({
   sensors,
-  //htmlIds,
-  //connections,
   mappingDialog,
+  modals,
   requests
 });
 

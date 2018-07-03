@@ -5,5 +5,6 @@ export * from './connections';
 export * from './mappingDialog';
 export * from './mappings';
 export * from './requests';
+export * from './modals';
 
 export const addHtmlIdMapping = (_id, htmlId) => ({type: Constants.Actions.ADD_HTMLIDMAPPING, _id, htmlId});

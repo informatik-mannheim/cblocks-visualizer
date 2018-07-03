@@ -59,7 +59,8 @@ ResourceWrapper.defaultProps = {
 const mapStateToProps = () => ({});
 const mapDispatchToProps = (dispatch) => {
   return {
-    sendRequest: (objectID, instanceID, resourceID, value) => dispatch(action.sendRequest(objectID, instanceID, resourceID, value))
+    sendRequest: (objectID, instanceID, resourceID, value) => dispatch(action.sendRequest(objectID, instanceID, resourceID, value)),
+    showModal: (modalType, modalProps) => dispatch(action.showModal(modalType, modalProps))
   };
 };
 

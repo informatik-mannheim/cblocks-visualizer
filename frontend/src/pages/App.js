@@ -5,6 +5,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import CustomDragLayer from './app/CustomDragLayer';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import ModalRoot from './app/ModalRoot';
 
 const theme = createMuiTheme({
   palette: {
@@ -56,6 +57,7 @@ class App extends React.Component {
         <CBlocksAppBar />
         <Canvas/>
         <CustomDragLayer/>
+        <ModalRoot/>
       </MuiThemeProvider>
     );
   }

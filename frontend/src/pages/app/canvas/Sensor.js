@@ -11,6 +11,7 @@ import { HorizontalDividerLine } from './sensor/HorizontalDividerLine';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import * as action from '../../../action/';
 import svgIcons from '../../../images/svgIcons';
+import Grow from '@material-ui/core/Grow';
 
 
 const sensorSource = {
@@ -77,16 +78,18 @@ const styles = theme => ({
 class Sensor extends Component {
   constructor () {
     super();
+    // this.isVisible = true;
+    // console.log('constructor');
   }
 
   componentDidMount () {
       // Use empty image as a drag preview so browsers don't draw it
-      // and we can draw whatever we want on the custom drag layer instead.
     this.props.connectDragPreview(getEmptyImage(), {
       // IE fallback: specify that we'd rather screenshot the node
       // when it already knows it's being dragged so we can hide it with CSS.
       captureDraggingState: true
     });
+    //this.isVisible = false;
   }
 
   render () {
@@ -125,37 +128,41 @@ class Sensor extends Component {
       </div>
     );
 
-    const sensorComponent = (<div style={getBoundingDivStyles(this.props)}>
-      <Card className={this.props.classes.card}>
-        {this.props.connectDragSource(header)}
-        <CardContent>
-          {Object.entries(this.props.resources).map((resourceKeyValue) => {
-            const dividerLine = (i === 0) ? (
-              <div/>
-            ) : (
-              <HorizontalDividerLine/>
-            );
-            i++;
+    const sensorComponent = (
+      <Grow in={this.isVisible}>
+        <div style={getBoundingDivStyles(this.props)}>
+          <Card className={this.props.classes.card}>
+          {this.props.connectDragSource(header)}
+          <CardContent>
+            {Object.entries(this.props.resources).map((resourceKeyValue) => {
+              const dividerLine = (i === 0) ? (
+                <div/>
+              ) : (
+                <HorizontalDividerLine/>
+              );
+              i++;
 
-            const currentResource = resourceKeyValue[1];
-            const multiResource = currentResource.schema.properties === undefined ? false : true;
-            if (this.props.values[currentResource.resourceID] !== undefined) {
-              return (
-              <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID + '_div'}>
-                {dividerLine}
-                <ResourceWrapper
-                  objectID={this.props.objectID}
-                  instanceID={this.props.instanceID}
-                  resource={currentResource}
-                  currentValue={this.props.values[currentResource.resourceID]}
-                  multiResource={multiResource}
-                  isWriteable={currentResource.is_writeable}/>
-              </div>);
-            }
-          })}
-        </CardContent>
-      </Card>
-    </div>);
+              const currentResource = resourceKeyValue[1];
+              const multiResource = currentResource.schema.properties === undefined ? false : true;
+              if (this.props.values[currentResource.resourceID] !== undefined) {
+                return (
+                  <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID + '_div'}>
+                    {dividerLine}
+                    <ResourceWrapper
+                      objectID={this.props.objectID}
+                      instanceID={this.props.instanceID}
+                      resource={currentResource}
+                      currentValue={this.props.values[currentResource.resourceID]}
+                      multiResource={multiResource}
+                      isWriteable={currentResource.is_writeable}/>
+                  </div>);
+                }
+              })}
+            </CardContent>
+          </Card>
+        </div>
+      </Grow>
+    );
 
     return sensorComponent;
   }

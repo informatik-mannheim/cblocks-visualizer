@@ -7,6 +7,11 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import svgIcons from '../../../../../images/svgIcons';
 
 class NumberResource extends React.Component {
+  constructor () {
+    super();
+    this.showChartModal = false;
+  }
+
   render () {
     if (this.props.smallForm === false) {
       //Single Resource
@@ -45,7 +50,7 @@ class NumberResource extends React.Component {
             <Typography variant='display1' align='center'>{this.props.currentValue
               + ' ' + this.props.resource.schema.unit}</Typography>
             <div style={{float: 'right', marginBottom: 10}}>
-              <Button variant='fab' mini aria-label="Show Graph" color='secondary' /*onClick={}*/>
+              <Button variant='fab' mini aria-label="Show Graph" color='secondary' onClick={() => this.props.showModal('CHART', {open: true})}>
                 {graphIcon}
               </Button>
             </div>
@@ -92,6 +97,7 @@ NumberResource.propTypes = {
   requestChangeToSubresource: PropTypes.func,
   resource: PropTypes.object,
   sendRequest: PropTypes.func,
+  showModal: PropTypes.func,
   smallForm: PropTypes.bool
 };
 
