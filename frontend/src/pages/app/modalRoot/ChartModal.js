@@ -34,11 +34,29 @@ class ChartModal extends Component {
   };
 
   render () {
+    const {objectID, instanceID, resourceID, sensors} = this.props;
+
+    const chartData = [];
+    let sensorLabel, resourceLabel, unit;
+    for (let i = 0; i < sensors.length; i++) {
+      const currentSensor = sensors[i];
+      sensorLabel = currentSensor.name;
+      if (objectID === currentSensor.objectID && instanceID === currentSensor.instanceID) {
+        const valueHistory = currentSensor.valueHistory;
+        for (let j = 0; j < valueHistory.length; j++) {
+          //TODO: Check if  valueHistory[j][resourceID] exists
+          //TODO: Add check for MultiResources' data structure
+          chartData[j] = valueHistory[j][resourceID];
+          resourceLabel = currentSensor.resources[resourceID].name;
+          unit = currentSensor.resources[resourceID].schema.unit;
+        }
+      }
+    }
+
     return (
       <Modal open={this.props.open} onClose={this.handleClose}>
         <div style={getModalStyle()} className={this.props.classes.paper}>
-          <Typography>TEST</Typography>
-          <LineChart/>
+          <LineChart data={chartData} sensorLabel={sensorLabel} resourceLabel={resourceLabel} unit={unit}/>
         </div>
       </Modal>
     );
@@ -47,8 +65,12 @@ class ChartModal extends Component {
 
 ChartModal.propTypes = {
   classes: PropTypes.object,
+  hideModal: PropTypes.func,
+  instanceID: PropTypes.number,
+  objectID: PropTypes.number,
   open: PropTypes.bool,
-  hideModal: PropTypes.func
+  resourceID: PropTypes.number,
+  sensors: PropTypes.array
 };
 
-export default withStyles(styles)(ChartModal);
+export default connect(state => ({sensors: state.sensors.all_sensors}))(withStyles(styles)(ChartModal));

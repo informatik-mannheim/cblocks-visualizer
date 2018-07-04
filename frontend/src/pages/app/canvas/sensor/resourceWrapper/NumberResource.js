@@ -24,6 +24,13 @@ class NumberResource extends React.Component {
         </SvgIcon>
       );
 
+      const modalProps = {
+        open: true,
+        objectID: this.props.objectID,
+        instanceID: this.props.instanceID,
+        resourceID: this.props.resource.resourceID
+      };
+
       return (
         <div>
             <Typography variant='subheading' align='center'>{this.props.resource.name}</Typography>
@@ -50,7 +57,7 @@ class NumberResource extends React.Component {
             <Typography variant='display1' align='center'>{this.props.currentValue
               + ' ' + this.props.resource.schema.unit}</Typography>
             <div style={{float: 'right', marginBottom: 10}}>
-              <Button variant='fab' mini aria-label="Show Graph" color='secondary' onClick={() => this.props.showModal('CHART', {open: true})}>
+              <Button variant='fab' mini aria-label="Show Graph" color='secondary' onClick={() => this.props.showModal('CHART', modalProps)}>
                 {graphIcon}
               </Button>
             </div>
