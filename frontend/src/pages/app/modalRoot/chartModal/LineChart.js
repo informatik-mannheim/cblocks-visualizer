@@ -33,16 +33,17 @@ class LineChart extends Component {
       responsive: false,
       legend: {
         display: true,
+        position: 'top',
         labels: {
           fontColor: 'rgba(141, 45, 86, 1)'
         }
         },
       scales: {
         yAxes: [{
-          // ticks: {
-          //     max: 1,
-          //     min: -1
-          // }
+          ticks: {
+              max: Math.max(...this.props.data) + 0.5,
+              min: Math.min(...this.props.data) - 0.5
+          }
         }],
         xAxes: [{
           display: false
