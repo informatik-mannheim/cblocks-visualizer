@@ -5,6 +5,9 @@ import Modal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import LineChart from './ChartModal/LineChart';
+import svgIcons from '../../../images/svgIcons';
+import Button from '@material-ui/core/Button';
+import SvgIcon from '@material-ui/core/SvgIcon';
 
 const styles = theme => ({
   paper: {
@@ -40,8 +43,9 @@ class ChartModal extends Component {
     let sensorLabel, resourceLabel, unit;
     for (let i = 0; i < sensors.length; i++) {
       const currentSensor = sensors[i];
-      sensorLabel = currentSensor.name;
+
       if (objectID === currentSensor.objectID && instanceID === currentSensor.instanceID) {
+        sensorLabel = currentSensor.name;
         const valueHistory = currentSensor.valueHistory;
         for (let j = 0; j < valueHistory.length; j++) {
           //TODO: Check if  valueHistory[j][resourceID] exists
@@ -53,10 +57,24 @@ class ChartModal extends Component {
       }
     }
 
+    const graphIcon = (
+      <SvgIcon>
+        <path d={svgIcons.pin} />
+      </SvgIcon>
+    );
+
     return (
       <Modal open={this.props.open} onClose={this.handleClose}>
         <div style={getModalStyle()} className={this.props.classes.paper}>
+          <Typography variant="title" gutterBottom>
+            {sensorLabel}
+          </Typography>
           <LineChart data={chartData} sensorLabel={sensorLabel} resourceLabel={resourceLabel} unit={unit}/>
+          <div style={{float: 'right'}}>
+            <Button variant='fab' mini aria-label="Pin" color='secondary' onClick={() => console.log('woohoo')}>
+              {graphIcon}
+            </Button>
+          </div>
         </div>
       </Modal>
     );
