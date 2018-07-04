@@ -50,7 +50,13 @@ class ChartModal extends Component {
         for (let j = 0; j < valueHistory.length; j++) {
           //TODO: Check if  valueHistory[j][resourceID] exists
           //TODO: Add check for MultiResources' data structure
-          chartData[j] = valueHistory[j][resourceID];
+          if (valueHistory[j][resourceID]) {
+            chartData[j] = valueHistory[j][resourceID];
+          } else if (valueHistory.length >= (j + 1)) {
+              chartData[j] = valueHistory[j + 1][resourceID];
+            } else {
+              chartData[j] = valueHistory[j - 1][resourceID];
+            }
           resourceLabel = currentSensor.resources[resourceID].name;
           unit = currentSensor.resources[resourceID].schema.unit;
         }
