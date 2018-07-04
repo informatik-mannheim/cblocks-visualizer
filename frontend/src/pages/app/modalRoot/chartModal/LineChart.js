@@ -5,7 +5,7 @@ import { Line } from 'react-chartjs-2';
 class LineChart extends Component {
   render () {
     const labels = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < this.props.data.length; i++) {
       labels[i] = '';
     }
     //TODO: create sensible data in ChartModal
@@ -27,7 +27,7 @@ class LineChart extends Component {
 
     const options = {
       animation: {
-        duration: 500,
+        duration: 100,
         easing: 'linear'
       },
       responsive: false,
