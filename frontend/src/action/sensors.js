@@ -1,5 +1,4 @@
 import Constants from '../constants';
-import { refreshConnection } from './connections';
 
 export const updateSensorValue = (sensorID, instanceID, resourceID, value) => {
   return {type: Constants.Actions.UPDATE_SENSOR_VALUE, sensorID, instanceID, resourceID, value};
@@ -12,14 +11,6 @@ export const move = (sensorID, instanceID, xPos, yPos) => {
 export const moveSensor = (sensorID, instanceID, xPos, yPos) => {
   return (dispatch) => {
     dispatch(move(sensorID, instanceID, xPos, yPos));
-
-    let thisConnection;
-
-    if (thisConnection !== undefined) {
-      setTimeout(function () {
-          dispatch(refreshConnection(thisConnection));
-      }, 10);
-    }
   };
 };
 
