@@ -1,4 +1,5 @@
 export default {
   NODE: 'node',
-  SENSOR: 'sensor'
+  SENSOR: 'sensor',
+  CHART: 'chart'
 };

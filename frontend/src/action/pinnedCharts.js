@@ -1,7 +1,7 @@
 import Constants from '../constants';
 
-export const moveChart = (chartID, xPos, yPos) => {
-  return {type: Constants.Actions.MOVE_CHART, chartID: chartID, xPos: xPos, yPos: yPos};
+export const moveChart = (chartProps, xPos, yPos) => {
+  return {type: Constants.Actions.MOVE_CHART, chartProps: chartProps, xPos: xPos, yPos: yPos};
 };
 
 export const pinChart = (chartProps, xPos = 500, yPos = 100) => {

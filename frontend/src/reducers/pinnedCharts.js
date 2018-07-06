@@ -60,7 +60,7 @@ export function pinnedCharts (state = initialState, action) {
 }
 
 function chart (state = {}, action) {
-  if (state.chartID !== action.chartID) {
+  if (state.chartID !== getIDFromProps(action.chartProps)) {
     return state;
   }
 

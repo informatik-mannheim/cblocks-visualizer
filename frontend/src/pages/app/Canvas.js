@@ -6,6 +6,7 @@ import Sensor from './canvas/Sensor';
 import Constants from '../../constants/';
 import { DropTarget } from 'react-dnd';
 import { enableUniqueIds } from 'react-html-id';
+import DraggableChart from './canvas/DraggableChart';
 
 /**
  * Specifies the drop target contract.
@@ -16,7 +17,6 @@ const canvasTarget = {
     // You can disallow drop based on props or item
     const item = monitor.getItem();
     return true;
-    //return canMakeChessMove(item.fromPosition, props.position);
   },
 
   hover (props, monitor, component) {
@@ -115,6 +115,12 @@ class Canvas extends Component {
               yPos={sensor.yPos} name={sensor.name} resources={sensor.resources} ref={sensor.objectID + '-' + sensor.instanceID}/>
           </div>
         ))}
+        {this.props.pinnedCharts.all_charts.map((chart) => (
+          <div key={chart.chartID + '_div'}>
+            <DraggableChart xPos={chart.xPos} yPos={chart.yPos}
+              chartProps={chart.chartProps} ref={chart.chartID + '_ref'}/>
+          </div>
+        ))}
       </div>
     );
   }
@@ -126,11 +132,13 @@ Canvas.propTypes = {
   connections: PropTypes.array,
   isOver: PropTypes.bool,
   isOverCurrent: PropTypes.bool,
+  pinnedCharts: PropTypes.object,
   sensors: PropTypes.object
 };
 
 const mapStateToProps = (state) => {
   return {
+    pinnedCharts: state.pinnedCharts,
     connections: state.connections,
     sensors: state.sensors
   };
@@ -141,6 +149,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const dropTargetCanvas = DropTarget([Constants.ItemTypes.SENSOR], canvasTarget, collect)(Canvas);
+const dropTargetCanvas = DropTarget([Constants.ItemTypes.SENSOR, Constants.ItemTypes.CHART], canvasTarget, collect)(Canvas);
 const connectedCanvas = connect(mapStateToProps, mapDispatchToProps)(dropTargetCanvas);
 export default connectedCanvas;

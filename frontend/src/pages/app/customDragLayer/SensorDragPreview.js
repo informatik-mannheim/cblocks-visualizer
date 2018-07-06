@@ -20,7 +20,6 @@ const styles = {
 
 class SensorDragPreview extends Component {
   render () {
-
     let path;
     switch (this.props.objectID) {
       case 3303:

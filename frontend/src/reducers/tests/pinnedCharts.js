@@ -232,7 +232,11 @@ const testMoveChart = () => {
       }
     ]
   };
-  const action = actions.moveChart('chart-3303-0-0', 1000, 5000);
+  const action = actions.moveChart({
+    objectID: 3303,
+    instanceID: 0,
+    resourceID: 0
+  }, 1000, 5000);
   const stateAfter = {
     count: 2,
     all_charts: [

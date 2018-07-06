@@ -13,7 +13,6 @@ import * as action from '../../../action/';
 import svgIcons from '../../../images/svgIcons';
 import Grow from '@material-ui/core/Grow';
 
-
 const sensorSource = {
   beginDrag (props) {
     // Return the data describing the dragged item
@@ -30,7 +29,6 @@ const sensorSource = {
     const dropResult = monitor.getDropResult();
 
     if (dropResult.dropEffect === 'move' && item.objectID === component.props.objectID && item.instanceID === component.props.instanceID) {
-      //console.log(dropResult);
       component.props.move(component.props.objectID, component.props.instanceID, dropResult.xPos, dropResult.yPos);
     }
   }

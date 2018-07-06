@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { DragLayer } from 'react-dnd';
 import Constants from '../../constants/';
 import SensorDragPreview from './customDragLayer/SensorDragPreview';
+import ChartDragPreview from './customDragLayer/ChartDragPreview';
 
 const layerStyles = {
   position: 'fixed',
@@ -37,6 +38,8 @@ class CustomDragLayer extends Component {
     switch (type) {
       case Constants.ItemTypes.SENSOR:
         return (<SensorDragPreview name={item.name} objectID={item.objectID}/>);
+      case Constants.ItemTypes.CHART:
+        return (<ChartDragPreview/>);
       default:
         return null;
     }
