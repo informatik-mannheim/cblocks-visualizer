@@ -34,7 +34,7 @@ StringResource.propTypes = {
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleSwitch: (objectID, instanceID, resourceID, value) => dispatch(action.sendRequest(objectID, instanceID, resourceID, value))
+  toggleSwitch: (objectID, instanceID, resourceID, value) => dispatch(action.buildRequest(objectID, instanceID, resourceID, value))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StringResource);

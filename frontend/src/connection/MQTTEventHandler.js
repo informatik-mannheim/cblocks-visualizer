@@ -32,4 +32,7 @@ export const bindMQTTEvents = (url) => {
   client.bind(mqttEvents.REQUEST_RESPONSE_RECEIVED, (params) => {
     store.dispatch(action.handleRequestResponse(params));
   });
+  client.bind(mqttEvents.REQUEST_SENT, (params) => {
+    store.dispatch(action.sendRequest(params));
+  });
 };

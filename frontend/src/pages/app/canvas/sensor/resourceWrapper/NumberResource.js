@@ -97,13 +97,13 @@ class NumberResource extends React.Component {
 }
 
 NumberResource.propTypes = {
+  buildRequest: PropTypes.func,
   currentValue: PropTypes.any,
   instanceID: PropTypes.number,
   isWriteable: PropTypes.bool,
   objectID: PropTypes.number,
   requestChangeToSubresource: PropTypes.func,
   resource: PropTypes.object,
-  sendRequest: PropTypes.func,
   showModal: PropTypes.func,
   smallForm: PropTypes.bool
 };

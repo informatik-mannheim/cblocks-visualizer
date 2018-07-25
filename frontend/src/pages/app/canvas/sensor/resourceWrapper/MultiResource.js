@@ -26,7 +26,7 @@ class MultiResource extends React.Component {
       }
     });
 
-    this.props.sendRequest(this.props.objectID, this.props.instanceID, this.props.resource.resourceID, newValue);
+    this.props.buildRequest(this.props.objectID, this.props.instanceID, this.props.resource.resourceID, newValue);
   }
 
   render () {
@@ -65,7 +65,7 @@ MultiResource.propTypes = {
   isWriteable: PropTypes.bool,
   objectID: PropTypes.number,
   resource: PropTypes.object,
-  sendRequest: PropTypes.func
+  buildRequest: PropTypes.func
 };
 
 export default MultiResource;

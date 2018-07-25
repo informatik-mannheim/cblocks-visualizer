@@ -41,13 +41,13 @@ class ResourceWrapper extends React.Component {
 }
 
 ResourceWrapper.propTypes = {
+  buildRequest: PropTypes.func,
   currentValue: PropTypes.any,
   instanceID: PropTypes.number,
   isWriteable: PropTypes.bool,
   multiResource: PropTypes.bool,
   objectID: PropTypes.number,
   resource: PropTypes.object,
-  sendRequest: PropTypes.func,
   smallForm: PropTypes.bool
 };
 
@@ -59,7 +59,7 @@ ResourceWrapper.defaultProps = {
 const mapStateToProps = () => ({});
 const mapDispatchToProps = (dispatch) => {
   return {
-    sendRequest: (objectID, instanceID, resourceID, value) => dispatch(action.sendRequest(objectID, instanceID, resourceID, value)),
+    buildRequest: (objectID, instanceID, resourceID, value) => dispatch(action.buildRequest(objectID, instanceID, resourceID, value)),
     showModal: (modalType, modalProps) => dispatch(action.showModal(modalType, modalProps))
   };
 };

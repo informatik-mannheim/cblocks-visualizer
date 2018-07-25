@@ -110,13 +110,20 @@ const MQTTClient = (url) => {
   });
 
   const unsubscribeFromRequests = subscribe('requests.totalRequests', state => {
-
-    for (let i = 0; i < state.requests.unresolvedRequests.length; i++) {
-      const currentRequest = state.requests.unresolvedRequests[i];
-      const topic = 'cblocks-ui/' + currentRequest.objectID + '/' + currentRequest.instanceID + '/' + currentRequest.resourceID + '/input';
-      const data = Object.assign({}, {requestID: currentRequest.requestID, data: currentRequest.value});
-      client.publish(topic, JSON.stringify(data));
+    for (const req of state.requests.unresolvedRequests) {
+      if (req.sent === false) {
+        dispatch(mqttEvents.REQUEST_SENT, req.requestID);
+        const topic = 'cblocks-ui/' + req.objectID + '/' + req.instanceID + '/' + req.resourceID + '/input';
+        const data = Object.assign({}, {requestID: req.requestID, data: req.value});
+        client.publish(topic, JSON.stringify(data));
+      }
     }
+    // for (let i = 0; i < state.requests.unresolvedRequests.length; i++) {
+    //   const currentRequest = state.requests.unresolvedRequests[i];
+    //   const topic = 'cblocks-ui/' + currentRequest.objectID + '/' + currentRequest.instanceID + '/' + currentRequest.resourceID + '/input';
+    //   const data = Object.assign({}, {requestID: currentRequest.requestID, data: currentRequest.value});
+    //   client.publish(topic, JSON.stringify(data));
+    // }
   });
 
   return this;
