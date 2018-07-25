@@ -1,15 +1,10 @@
 import Constants from '../constants';
 
-// export const sendRequest = (objectID, instanceID, resourceID, value) => {
-//   return (dispatch, getState) => {
-//     dispatch(request(objectID, instanceID, resourceID, value));
-//   };
-// };
+export const buildRequest = (objectID, instanceID, resourceID, value) =>
+  ({type: Constants.Actions.BUILD_REQUEST, objectID, instanceID, resourceID, value});
 
-export const sendRequest = (objectID, instanceID, resourceID, value) => {
-  return {type: Constants.Actions.SEND_REQUEST, objectID, instanceID, resourceID, value};
-};
+export const sendRequest = (requestID) =>
+({type: Constants.Actions.SEND_REQUEST, requestID});
 
-export const handleRequestResponse = (requestID, success, message) => {
-  return {type: Constants.Actions.HANDLE_REQUEST_RESPONSE, requestID, success, message};
-};
+export const handleRequestResponse = (requestID, success, message) =>
+  ({type: Constants.Actions.HANDLE_REQUEST_RESPONSE, requestID, success, message});

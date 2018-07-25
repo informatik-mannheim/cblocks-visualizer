@@ -8,7 +8,7 @@ const initialRequestsState = {
 
 export function requests (state = initialRequestsState, action) {
   switch (action.type) {
-    case Constants.Actions.SEND_REQUEST:
+    case Constants.Actions.BUILD_REQUEST:
 
       const newRequest = Object.assign(
         {},
@@ -16,6 +16,7 @@ export function requests (state = initialRequestsState, action) {
         {objectID: action.objectID},
         {instanceID: action.instanceID},
         {resourceID: action.resourceID},
+        {sent: false},
         {value: action.value}
       );
 
@@ -25,6 +26,15 @@ export function requests (state = initialRequestsState, action) {
          unresolvedRequests: newUnresolvedRequests,
          resolvedRequests: state.resolvedRequests
        };
+    case Constants.Actions.SEND_REQUEST:
+
+    const unresolvedRequestsUpdated = state.unresolvedRequests.map(req => {
+      if (req.requestID === action.requestID) {
+        return Object.assign({}, req, {sent: true});
+      }
+      return req;
+    });
+    return Object.assign({}, state, {unresolvedRequests: unresolvedRequestsUpdated});
 
     case Constants.Actions.HANDLE_REQUEST_RESPONSE:
       //TODO: proper error handling when success false

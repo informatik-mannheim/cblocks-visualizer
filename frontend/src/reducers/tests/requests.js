@@ -9,9 +9,9 @@ const initialRequestsState = {
   resolvedRequests: []
 };
 
-const testSendRequest = () => {
+const testBuildRequest = () => {
   const stateBefore = initialRequestsState;
-  const action = actions.sendRequest(3303, 0, 0, 100);
+  const action = actions.buildRequest(3303, 0, 0, 100);
   const stateAfter = {
     totalRequests: 1,
     unresolvedRequests: [
@@ -20,6 +20,44 @@ const testSendRequest = () => {
         objectID: 3303,
         instanceID: 0,
         resourceID: 0,
+        sent: false,
+        value: 100
+      }
+    ],
+    resolvedRequests: []
+  };
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(requests(stateBefore, action)).toEqual(stateAfter);
+};
+
+const testSendRequest = () => {
+  const stateBefore = {
+    totalRequests: 1,
+    unresolvedRequests: [
+      {
+        requestID: 1,
+        objectID: 3303,
+        instanceID: 0,
+        resourceID: 0,
+        sent: false,
+        value: 100
+      }
+    ],
+    resolvedRequests: []
+  };
+  const action = actions.sendRequest(1);
+  const stateAfter = {
+    totalRequests: 1,
+    unresolvedRequests: [
+      {
+        requestID: 1,
+        objectID: 3303,
+        instanceID: 0,
+        resourceID: 0,
+        sent: true,
         value: 100
       }
     ],
@@ -223,10 +261,11 @@ const testHandleResponseFrom3WithSomeDone = () => {
 
 
 const requestsTests = () => {
-  testSendRequest();
+  testBuildRequest();
   testHandleResponseFrom1();
   testHandleResponseFrom2();
   testHandleResponseFrom3WithSomeDone();
+  testSendRequest();
   return true;
 };
 
