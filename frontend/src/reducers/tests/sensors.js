@@ -349,12 +349,87 @@ const testRemoveSensor = () => {
   expect(sensors(stateBefore, action)).toEqual(stateAfter);
 };
 
+const testRemoveSensorFrom3 = () => {
+  const stateBefore = {
+    count: 3,
+    all_sensors: [
+      {
+        objectID: 8888,
+        instanceID: 0,
+        label: 'Pressure Sensor',
+        resources: [
+          'bla'
+        ],
+        xPos: 0,
+        yPos: 0,
+        value: 0
+      },
+      {
+        objectID: 9999,
+        instanceID: 0,
+        label: 'Pressure Sensor',
+        resources: [
+          'bla'
+        ],
+        xPos: 0,
+        yPos: 0,
+        value: 0
+      },
+      {
+        objectID: 7777,
+        instanceID: 0,
+        label: 'Pressure Sensor',
+        resources: [
+          'bla'
+        ],
+        xPos: 0,
+        yPos: 0,
+        value: 0
+      }
+    ]
+  };
+  const action = actions.removeSensor(9999, 0);
+  const stateAfter = {
+    count: 2,
+    all_sensors: [
+      {
+        objectID: 8888,
+        instanceID: 0,
+        label: 'Pressure Sensor',
+        resources: [
+          'bla'
+        ],
+        xPos: 0,
+        yPos: 0,
+        value: 0
+      },
+      {
+        objectID: 7777,
+        instanceID: 0,
+        label: 'Pressure Sensor',
+        resources: [
+          'bla'
+        ],
+        xPos: 0,
+        yPos: 0,
+        value: 0
+      }
+    ]
+  };
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(sensors(stateBefore, action)).toEqual(stateAfter);
+};
+
 const sensorsTests = () => {
   testAddSensor();
   testAddDuplicateSensor();
   testMoveSensor();
   testUpdateSensorValue();
   testRemoveSensor();
+  testRemoveSensorFrom3();
   return true;
 };
 

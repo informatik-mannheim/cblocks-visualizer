@@ -36,7 +36,7 @@ export function sensors (state = initialSensorsState, action) {
       return {count: state.all_sensors.length, all_sensors: state.all_sensors.map(currentSensor => sensor(currentSensor, action))};
     case Constants.Actions.REMOVE_SENSOR:
       if (state.count !== 0) {
-        const updatedSensors = state.all_sensors.filter(item => (item.objectID !== action.objectID && item.instanceID !== action.instanceID));
+        const updatedSensors = state.all_sensors.filter(item => (item.objectID !== action.objectID || item.instanceID !== action.instanceID));
         return {count: updatedSensors.length, all_sensors: updatedSensors};
       }
       return state;
