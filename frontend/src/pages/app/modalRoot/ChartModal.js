@@ -39,6 +39,7 @@ class ChartModal extends Component {
 
   handlePin = () => {
     const {objectID, instanceID, resourceID} = this.props;
+    this.handleClose();
     this.props.pinChart({objectID, instanceID, resourceID});
   }
 
