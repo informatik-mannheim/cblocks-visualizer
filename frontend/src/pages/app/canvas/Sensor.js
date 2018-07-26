@@ -12,6 +12,7 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import * as action from '../../../action/';
 import svgIcons from '../../../images/svgIcons';
 import Grow from '@material-ui/core/Grow';
+import equal from 'deep-equal';
 
 const sensorSource = {
   beginDrag (props) {
@@ -28,8 +29,10 @@ const sensorSource = {
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
 
-    if (dropResult.dropEffect === 'move' && item.objectID === component.props.objectID && item.instanceID === component.props.instanceID) {
-      component.props.move(component.props.objectID, component.props.instanceID, dropResult.xPos, dropResult.yPos);
+    if (dropResult.dropEffect === 'move'
+      && item.objectID === component.props.objectID
+      && item.instanceID === component.props.instanceID) {
+        component.props.move(component.props.objectID, component.props.instanceID, dropResult.xPos, dropResult.yPos);
     }
   }
 };
@@ -76,7 +79,6 @@ const styles = theme => ({
 class Sensor extends Component {
   constructor () {
     super();
-    // this.isVisible = true;
     // console.log('constructor');
   }
 
@@ -87,7 +89,22 @@ class Sensor extends Component {
       // when it already knows it's being dragged so we can hide it with CSS.
       captureDraggingState: true
     });
-    //this.isVisible = false;
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    // const timeBefore = Date.now();
+    // console.log(nextProps);
+    // console.log(this.props);
+    // console.log('');
+    // if (equal(nextProps.values, this.props.values) === true
+    //   && nextProps.xPos === this.props.xPos
+    //   && nextProps.yPos === this.props.yPos
+    //   && this.props.isDragging === false) {
+    //     // console.log(Date.now() - timeBefore);
+    //     return false;
+    // }
+
+    return true;
   }
 
   render () {
@@ -192,7 +209,7 @@ Sensor.defaultProps = {
 
 const mapStateToProps = (state, ownProps) => {
   let thisSensorIndex;
-  for (let i = 0; i < state.sensors.count; i++){
+  for (let i = 0; i < state.sensors.count; i++) {
     if (ownProps.objectID === state.sensors.all_sensors[i].objectID
       && ownProps.instanceID === state.sensors.all_sensors[i].instanceID) {
           thisSensorIndex = i;

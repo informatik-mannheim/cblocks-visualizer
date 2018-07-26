@@ -12,7 +12,6 @@ const testAddSensor = () => {
   const stateBefore = initialSensorsState;
   const action = actions.addSensor({
     objectID: 3303,
-    instanceID: 0,
     resources: {
       '0': {
         resourceID: 0,
@@ -35,10 +34,7 @@ const testAddSensor = () => {
         }
       }
     },
-    name: 'Room Sensor',
-    values: {},
-    xPos: 500,
-    yPos: 100
+    name: 'Room Sensor'
   }, 0);
   const stateAfter = {
     count: 1,
@@ -71,8 +67,227 @@ const testAddSensor = () => {
         name: 'Room Sensor',
         values: {},
         valueHistory: [],
-        xPos: 500,
-        yPos: 100
+        xPos: 10,
+        yPos: 10
+      }
+    ]
+  };
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(sensors(stateBefore, action)).toEqual(stateAfter);
+};
+
+const testAddSecondSensor = () => {
+  const stateBefore = {
+    count: 1,
+    all_sensors: [
+      {
+        objectID: 3303,
+        instanceID: 0,
+        resources: {},
+        name: 'Room Sensor',
+        values: {},
+        valueHistory: [],
+        xPos: 10,
+        yPos: 10
+      }
+    ]
+  };
+  const action = actions.addSensor({
+    objectID: 3304,
+    resources: {},
+    name: 'LED Stripe'
+  }, 0);
+  const stateAfter = {
+    count: 2,
+    all_sensors: [
+      {
+        objectID: 3303,
+        instanceID: 0,
+        resources: {},
+        name: 'Room Sensor',
+        values: {},
+        valueHistory: [],
+        xPos: 10,
+        yPos: 10
+      },
+      {
+        objectID: 3304,
+        instanceID: 0,
+        resources: {},
+        name: 'LED Stripe',
+        values: {},
+        valueHistory: [],
+        xPos: 370,
+        yPos: 10
+      }
+    ]
+  };
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(sensors(stateBefore, action)).toEqual(stateAfter);
+};
+
+const testAddThirdSensor = () => {
+  const stateBefore = {
+    count: 2,
+    all_sensors: [
+      {
+        objectID: 3303,
+        instanceID: 0,
+        resources: {},
+        name: 'Room Sensor',
+        values: {},
+        valueHistory: [],
+        xPos: 10,
+        yPos: 10
+      },
+      {
+        objectID: 3304,
+        instanceID: 0,
+        resources: {},
+        name: 'LED Stripe',
+        values: {},
+        valueHistory: [],
+        xPos: 370,
+        yPos: 10
+      }
+    ]
+  };
+  const action = actions.addSensor({
+    objectID: 3305,
+    resources: {},
+    name: 'RFID'
+  }, 0);
+  const stateAfter = {
+    count: 3,
+    all_sensors: [
+      {
+        objectID: 3303,
+        instanceID: 0,
+        resources: {},
+        name: 'Room Sensor',
+        values: {},
+        valueHistory: [],
+        xPos: 10,
+        yPos: 10
+      },
+      {
+        objectID: 3304,
+        instanceID: 0,
+        resources: {},
+        name: 'LED Stripe',
+        values: {},
+        valueHistory: [],
+        xPos: 370,
+        yPos: 10
+      },
+      {
+        objectID: 3305,
+        instanceID: 0,
+        resources: {},
+        name: 'RFID',
+        values: {},
+        valueHistory: [],
+        xPos: 730,
+        yPos: 10
+      }
+    ]
+  };
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(sensors(stateBefore, action)).toEqual(stateAfter);
+};
+
+const testAddFourthSensor = () => {
+  const stateBefore = {
+    count: 3,
+    all_sensors: [
+      {
+        objectID: 3303,
+        instanceID: 0,
+        resources: {},
+        name: 'Room Sensor',
+        values: {},
+        valueHistory: [],
+        xPos: 10,
+        yPos: 10
+      },
+      {
+        objectID: 3304,
+        instanceID: 0,
+        resources: {},
+        name: 'LED Stripe',
+        values: {},
+        valueHistory: [],
+        xPos: 370,
+        yPos: 10
+      },
+      {
+        objectID: 3305,
+        instanceID: 0,
+        resources: {},
+        name: 'RFID',
+        values: {},
+        valueHistory: [],
+        xPos: 730,
+        yPos: 10
+      }
+    ]
+  };
+  const action = actions.addSensor({
+    objectID: 3306,
+    resources: {},
+    name: 'TEST'
+  }, 0);
+  const stateAfter = {
+    count: 4,
+    all_sensors: [
+      {
+        objectID: 3303,
+        instanceID: 0,
+        resources: {},
+        name: 'Room Sensor',
+        values: {},
+        valueHistory: [],
+        xPos: 10,
+        yPos: 10
+      },
+      {
+        objectID: 3304,
+        instanceID: 0,
+        resources: {},
+        name: 'LED Stripe',
+        values: {},
+        valueHistory: [],
+        xPos: 370,
+        yPos: 10
+      },
+      {
+        objectID: 3305,
+        instanceID: 0,
+        resources: {},
+        name: 'RFID',
+        values: {},
+        valueHistory: [],
+        xPos: 730,
+        yPos: 10
+      },
+      {
+        objectID: 3306,
+        instanceID: 0,
+        resources: {},
+        name: 'TEST',
+        values: {},
+        valueHistory: [],
+        xPos: 1090,
+        yPos: 10
       }
     ]
   };
@@ -121,7 +336,6 @@ const testAddDuplicateSensor = () => {
       };
   const action = actions.addSensor({
     objectID: 3303,
-    instanceID: 0,
     resources: {
       '0': {
         resourceID: 0,
@@ -144,10 +358,7 @@ const testAddDuplicateSensor = () => {
         }
       }
     },
-    name: 'Room Sensor',
-    values: {},
-    xPos: 500,
-    yPos: 100
+    name: 'Room Sensor'
   }, 0);
   const stateAfter = stateBefore;
 
@@ -425,6 +636,9 @@ const testRemoveSensorFrom3 = () => {
 
 const sensorsTests = () => {
   testAddSensor();
+  testAddSecondSensor();
+  testAddThirdSensor();
+  testAddFourthSensor();
   testAddDuplicateSensor();
   testMoveSensor();
   testUpdateSensorValue();

@@ -8,6 +8,28 @@ const initialSensorsState = {
 export function sensors (state = initialSensorsState, action) {
   switch (action.type) {
     case Constants.Actions.ADD_SENSOR:
+
+      const sensorCount = state.all_sensors.length;
+      let xPos, yPos = 10;
+      switch (sensorCount) {
+        case 0:
+          xPos = 10;
+          break;
+        case 1:
+          xPos = 370;
+          break;
+        case 2:
+          xPos = 730;
+          break;
+        case 3:
+          xPos = 1090;
+          break;
+        case 4:
+          xPos = 1090;
+          break;
+        default:
+          xPos = 10;
+      }
       const newSensor = Object.assign({},
         {objectID: action.sensor.objectID},
         {instanceID: action.instanceID},
@@ -15,8 +37,8 @@ export function sensors (state = initialSensorsState, action) {
         {name: action.sensor.name},
         {values: {}},
         {valueHistory: []},
-        {xPos: action.xPos},
-        {yPos: action.yPos});
+        {xPos: xPos},
+        {yPos: yPos});
 
        //Check if duplicate
        for (let i = 0; i < state.all_sensors.length; i++) {
