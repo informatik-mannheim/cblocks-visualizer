@@ -104,6 +104,22 @@ const MQTTClient = (url) => {
 
           dispatch(mqttEvents.SENSOR_UPDATED, {sensorID: sensorID, instanceID: instanceID, resourceID: resourceID, value: value});
           break;
+
+          /*
+          mapping value updated
+          */
+        case (/mappings\/.+/).test(topic):
+          const mappingID = (/mappings\/(.+)/).exec(topic)[1];
+
+          if (isParsableJSON(message.toString())) {
+            value = JSON.parse(message);
+          } else {
+            value = message.toString();
+          }
+
+          //TODO: PROPERLY PARSE MESSAGE!
+          dispatch(mqttEvents.NEW_MAPPING_VALUE, {mappingID: mappingID, value: value});
+          break;
         default:
       }
     }
@@ -118,12 +134,6 @@ const MQTTClient = (url) => {
         client.publish(topic, JSON.stringify(data));
       }
     }
-    // for (let i = 0; i < state.requests.unresolvedRequests.length; i++) {
-    //   const currentRequest = state.requests.unresolvedRequests[i];
-    //   const topic = 'cblocks-ui/' + currentRequest.objectID + '/' + currentRequest.instanceID + '/' + currentRequest.resourceID + '/input';
-    //   const data = Object.assign({}, {requestID: currentRequest.requestID, data: currentRequest.value});
-    //   client.publish(topic, JSON.stringify(data));
-    // }
   });
 
   return this;

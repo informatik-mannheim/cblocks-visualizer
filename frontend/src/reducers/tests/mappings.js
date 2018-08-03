@@ -2,112 +2,70 @@ import deepFreeze from 'deep-freeze';
 import expect from 'expect';
 import { mappings } from '../mappings';
 import * as actions from '../../action';
-import Constants from '../../constants';
 
 const initialMappingsState = {
   count: 0,
   all_mappings: []
 };
 
-const sampleMappingState = {
-  count: 1,
-  all_mappings: [
-    {
-      _id: '1001',
-      label: 'Chair',
-      nodeId: 123,
-      sources: [
-        {
-          port: 0,
-          sensorId: 987,
-          ressourceId: 1
-        }
-      ],
-      type: Constants.MappingTypes.RANGE,
-      sections: [
-        {
-          sectionId: 0,
-          label: 'Empty',
-          from: 0,
-          to: 300,
-          color_code: '#008d00'
-        },
-        {
-          sectionId: 1,
-          label: 'Occupied',
-          from: 301,
-          to: 1023,
-          color_code: '#00008d'
-        }
-      ]
-    }
-  ]
+const exampleMapping = {
+  mappingId: 'asdfasdf19280u34981uf',
+  label: 'ExampleMapping',
+  default: 'Unmatched',
+  objectID: 3303,
+  instanceID: 0,
+  resourceID: 0,
+  ranges: [{
+    label: 'firstRange',
+    greaterEqualsThan: 15,
+    lessThan: 30
+  }, {
+    label: 'secondRange',
+    greaterEqualsThan: 45,
+    lessThan: 80
+  }]
 };
 
-const testAddMapping = () => {
+const exampleMapping2 = {
+  mappingId: 'asdfasdf19280u349avdrtf3',
+  label: 'ExampleMapping2',
+  default: 'UnmatchedYOO',
+  objectID: 3304,
+  instanceID: 0,
+  resourceID: 0,
+  ranges: [{
+    label: 'firstRange',
+    greaterEqualsThan: 15,
+    lessThan: 30
+  }, {
+    label: 'secondRange',
+    greaterEqualsThan: 45,
+    lessThan: 80
+  }]
+};
+
+const testAddMappings = () => {
   const stateBefore = initialMappingsState;
-  const action = actions.addMapping({
-    _id: '1001',
-    label: 'Chair',
-    nodeId: 123,
-    sources: [
-      {
-        port: 0,
-        sensorId: 987,
-        ressourceId: 1
-      }
-    ],
-    type: Constants.MappingTypes.RANGE,
-    sections: [
-      {
-        sectionId: 0,
-        label: 'Empty',
-        from: 0,
-        to: 300,
-        color_code: '#008d00'
-      },
-      {
-        sectionId: 1,
-        label: 'Occupied',
-        from: 301,
-        to: 1023,
-        color_code: '#00008d'
-      }
-    ]
-  });
+  const action = actions.addMappings([exampleMapping]);
   const stateAfter = {
     count: 1,
-    all_mappings: [
-      {
-        _id: '1001',
-        label: 'Chair',
-        nodeId: 123,
-        sources: [
-          {
-            port: 0,
-            sensorId: 987,
-            ressourceId: 1
-          }
-        ],
-        type: Constants.MappingTypes.RANGE,
-        sections: [
-          {
-            sectionId: 0,
-            label: 'Empty',
-            from: 0,
-            to: 300,
-            color_code: '#008d00'
-          },
-          {
-            sectionId: 1,
-            label: 'Occupied',
-            from: 301,
-            to: 1023,
-            color_code: '#00008d'
-          }
-        ]
-      }
-    ]
+    all_mappings: [{
+      mappingId: 'asdfasdf19280u34981uf',
+      label: 'ExampleMapping',
+      default: 'Unmatched',
+      objectID: 3303,
+      instanceID: 0,
+      resourceID: 0,
+      ranges: [{
+        label: 'firstRange',
+        greaterEqualsThan: 15,
+        lessThan: 30
+      }, {
+        label: 'secondRange',
+        greaterEqualsThan: 45,
+        lessThan: 80
+      }]
+    }]
   };
 
   deepFreeze(stateBefore);
@@ -116,132 +74,160 @@ const testAddMapping = () => {
   expect(mappings(stateBefore, action)).toEqual(stateAfter);
 };
 
-const testAddAnotherMapping = () => {
-  const stateBefore = {
-    count: 1,
-    all_mappings: [
-      {
-        _id: '1001',
-        label: 'Chair',
-        nodeId: 123,
-        sources: [
-          {
-            port: 0,
-            sensorId: 987,
-            ressourceId: 1
-          }
-        ],
-        type: Constants.MappingTypes.RANGE,
-        sections: [
-          {
-            sectionId: 0,
-            label: 'Empty',
-            from: 0,
-            to: 300,
-            color_code: '#008d00'
-          },
-          {
-            sectionId: 1,
-            label: 'Occupied',
-            from: 301,
-            to: 1023,
-            color_code: '#00008d'
-          }
-        ]
-      }
-    ]
-  };
-  const action = actions.addMapping({
-    _id: '1002',
-    label: 'Door',
-    nodeId: 1234,
-    sources: [
-      {
-        port: 1,
-        sensorId: 123123,
-        ressourceId: 2
-      }
-    ],
-    type: Constants.MappingTypes.RANGE,
-    sections: [
-      {
-        sectionId: 0,
-        label: 'Closed',
-        from: 0,
-        to: 500,
-        color_code: '#008d00'
-      },
-      {
-        sectionId: 1,
-        label: 'Open',
-        from: 501,
-        to: 1023,
-        color_code: '#00008d'
-      }
-    ]
-  });
+const testAddMappings2 = () => {
+  const stateBefore = initialMappingsState;
+  const action = actions.addMappings([exampleMapping, exampleMapping2]);
   const stateAfter = {
     count: 2,
-    all_mappings: [
-      {
-        _id: '1001',
-        label: 'Chair',
-        nodeId: 123,
-        sources: [
-          {
-            port: 0,
-            sensorId: 987,
-            ressourceId: 1
-          }
-        ],
-        type: Constants.MappingTypes.RANGE,
-        sections: [
-          {
-            sectionId: 0,
-            label: 'Empty',
-            from: 0,
-            to: 300,
-            color_code: '#008d00'
-          },
-          {
-            sectionId: 1,
-            label: 'Occupied',
-            from: 301,
-            to: 1023,
-            color_code: '#00008d'
-          }
-        ]
-      },
-      {
-        _id: '1002',
-        label: 'Door',
-        nodeId: 1234,
-        sources: [
-          {
-            port: 1,
-            sensorId: 123123,
-            ressourceId: 2
-          }
-        ],
-        type: Constants.MappingTypes.RANGE,
-        sections: [
-          {
-            sectionId: 0,
-            label: 'Closed',
-            from: 0,
-            to: 500,
-            color_code: '#008d00'
-          },
-          {
-            sectionId: 1,
-            label: 'Open',
-            from: 501,
-            to: 1023,
-            color_code: '#00008d'
-          }
-        ]
-      }
-    ]
+    all_mappings: [{
+      mappingId: 'asdfasdf19280u34981uf',
+      label: 'ExampleMapping',
+      default: 'Unmatched',
+      objectID: 3303,
+      instanceID: 0,
+      resourceID: 0,
+      ranges: [{
+        label: 'firstRange',
+        greaterEqualsThan: 15,
+        lessThan: 30
+      }, {
+        label: 'secondRange',
+        greaterEqualsThan: 45,
+        lessThan: 80
+      }]
+    },
+    {
+      mappingId: 'asdfasdf19280u349avdrtf3',
+      label: 'ExampleMapping2',
+      default: 'UnmatchedYOO',
+      objectID: 3304,
+      instanceID: 0,
+      resourceID: 0,
+      ranges: [{
+        label: 'firstRange',
+        greaterEqualsThan: 15,
+        lessThan: 30
+      }, {
+        label: 'secondRange',
+        greaterEqualsThan: 45,
+        lessThan: 80
+      }]
+    }]
+  };
+
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(mappings(stateBefore, action)).toEqual(stateAfter);
+};
+
+const testAddMappings3 = () => {
+  const stateBefore = {
+    count: 2,
+    all_mappings: [{
+      mappingId: 'asdfasdf19280u34981uf',
+      label: 'ExampleMapping',
+      default: 'Unmatched',
+      objectID: 3303,
+      instanceID: 0,
+      resourceID: 0,
+      ranges: [{
+        label: 'firstRange',
+        greaterEqualsThan: 15,
+        lessThan: 30
+      }, {
+        label: 'secondRange',
+        greaterEqualsThan: 45,
+        lessThan: 80
+      }]
+    },
+    {
+      mappingId: 'asdfasdf19280u349avdrtf3',
+      label: 'ExampleMapping2',
+      default: 'UnmatchedYOO',
+      objectID: 3304,
+      instanceID: 0,
+      resourceID: 0,
+      ranges: [{
+        label: 'firstRange',
+        greaterEqualsThan: 15,
+        lessThan: 30
+      }, {
+        label: 'secondRange',
+        greaterEqualsThan: 45,
+        lessThan: 80
+      }]
+    }]
+  };
+  const action = actions.addMappings([{
+      mappingId: 'asdfasdfasdfasdfasdf',
+      label: 'ExampleMADSGGGG',
+      default: 'UnmatchedYasdOO',
+      objectID: 3304,
+      instanceID: 0,
+      resourceID: 0,
+      ranges: [{
+        label: 'firstRange',
+        greaterEqualsThan: 15,
+        lessThan: 30
+      }, {
+        label: 'secondRange',
+        greaterEqualsThan: 45,
+        lessThan: 80
+      }]
+    }, exampleMapping2]);
+  const stateAfter = {
+    count: 3,
+    all_mappings: [{
+      mappingId: 'asdfasdf19280u34981uf',
+      label: 'ExampleMapping',
+      default: 'Unmatched',
+      objectID: 3303,
+      instanceID: 0,
+      resourceID: 0,
+      ranges: [{
+        label: 'firstRange',
+        greaterEqualsThan: 15,
+        lessThan: 30
+      }, {
+        label: 'secondRange',
+        greaterEqualsThan: 45,
+        lessThan: 80
+      }]
+    },
+    {
+      mappingId: 'asdfasdf19280u349avdrtf3',
+      label: 'ExampleMapping2',
+      default: 'UnmatchedYOO',
+      objectID: 3304,
+      instanceID: 0,
+      resourceID: 0,
+      ranges: [{
+        label: 'firstRange',
+        greaterEqualsThan: 15,
+        lessThan: 30
+      }, {
+        label: 'secondRange',
+        greaterEqualsThan: 45,
+        lessThan: 80
+      }]
+    }, {
+      mappingId: 'asdfasdfasdfasdfasdf',
+      label: 'ExampleMADSGGGG',
+      default: 'UnmatchedYasdOO',
+      objectID: 3304,
+      instanceID: 0,
+      resourceID: 0,
+      ranges: [{
+        label: 'firstRange',
+        greaterEqualsThan: 15,
+        lessThan: 30
+      }, {
+        label: 'secondRange',
+        greaterEqualsThan: 45,
+        lessThan: 80
+      }]
+    }]
   };
 
   deepFreeze(stateBefore);
@@ -252,148 +238,27 @@ const testAddAnotherMapping = () => {
 
 const testRemoveMapping = () => {
   const stateBefore = {
-    count: 2,
-    all_mappings: [
-      {
-        _id: '1001',
-        label: 'Chair',
-        nodeId: 123,
-        sources: [
-          {
-            port: 0,
-            sensorId: 987,
-            ressourceId: 1
-          }
-        ],
-        type: Constants.MappingTypes.RANGE,
-        sections: [
-          {
-            sectionId: 0,
-            label: 'Empty',
-            from: 0,
-            to: 300,
-            color_code: '#008d00'
-          },
-          {
-            sectionId: 1,
-            label: 'Occupied',
-            from: 301,
-            to: 1023,
-            color_code: '#00008d'
-          }
-        ]
-      },
-      {
-        _id: '1002',
-        label: 'Door',
-        nodeId: 1234,
-        sources: [
-          {
-            port: 1,
-            sensorId: 123123,
-            ressourceId: 2
-          }
-        ],
-        type: Constants.MappingTypes.RANGE,
-        sections: [
-          {
-            sectionId: 0,
-            label: 'Closed',
-            from: 0,
-            to: 500,
-            color_code: '#008d00'
-          },
-          {
-            sectionId: 1,
-            label: 'Open',
-            from: 501,
-            to: 1023,
-            color_code: '#00008d'
-          }
-        ]
-      }
-    ]
-  };
-
-  const action = actions.removeMapping('1002');
-  const stateAfter = {
     count: 1,
-    all_mappings: [
-      {
-        _id: '1001',
-        label: 'Chair',
-        nodeId: 123,
-        sources: [
-          {
-            port: 0,
-            sensorId: 987,
-            ressourceId: 1
-          }
-        ],
-        type: Constants.MappingTypes.RANGE,
-        sections: [
-          {
-            sectionId: 0,
-            label: 'Empty',
-            from: 0,
-            to: 300,
-            color_code: '#008d00'
-          },
-          {
-            sectionId: 1,
-            label: 'Occupied',
-            from: 301,
-            to: 1023,
-            color_code: '#00008d'
-          }
-        ]
-      }
-    ]
+    all_mappings: [{
+      mappingId: 'asdfasdf19280u34981uf',
+      label: 'ExampleMapping',
+      default: 'Unmatched',
+      objectID: 3303,
+      instanceID: 0,
+      resourceID: 0,
+      ranges: [{
+        label: 'firstRange',
+        greaterEqualsThan: 15,
+        lessThan: 30
+      }, {
+        label: 'secondRange',
+        greaterEqualsThan: 45,
+        lessThan: 80
+      }]
+    }]
   };
 
-  deepFreeze(stateBefore);
-  deepFreeze(action);
-
-  expect(mappings(stateBefore, action)).toEqual(stateAfter);
-};
-
-const testRemoveMappingToEmpty = () => {
-  const stateBefore = {
-    count: 1,
-    all_mappings: [
-      {
-        _id: '1001',
-        label: 'Chair',
-        nodeId: 123,
-        sources: [
-          {
-            port: 0,
-            sensorId: 987,
-            ressourceId: 1
-          }
-        ],
-        type: Constants.MappingTypes.RANGE,
-        sections: [
-          {
-            sectionId: 0,
-            label: 'Empty',
-            from: 0,
-            to: 300,
-            color_code: '#008d00'
-          },
-          {
-            sectionId: 1,
-            label: 'Occupied',
-            from: 301,
-            to: 1023,
-            color_code: '#00008d'
-          }
-        ]
-      }
-    ]
-  };
-
-  const action = actions.removeMapping('1001');
+  const action = actions.removeMapping('asdfasdf19280u34981uf');
   const stateAfter = initialMappingsState;
 
   deepFreeze(stateBefore);
@@ -401,26 +266,12 @@ const testRemoveMappingToEmpty = () => {
 
   expect(mappings(stateBefore, action)).toEqual(stateAfter);
 };
-
-const testRemoveMappingFromEmpty = () => {
-  const stateBefore = initialMappingsState;
-
-  const action = actions.removeMapping('1001');
-  const stateAfter = initialMappingsState;
-
-  deepFreeze(stateBefore);
-  deepFreeze(action);
-
-  expect(mappings(stateBefore, action)).toEqual(stateAfter);
-};
-
 
 const mappingsTests = () => {
-  testAddMapping();
-  testAddAnotherMapping();
+  console.log(actions);
+  testAddMappings();
+  testAddMappings2();
   testRemoveMapping();
-  testRemoveMappingToEmpty();
-  testRemoveMappingFromEmpty();
   return true;
 };
 

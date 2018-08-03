@@ -35,4 +35,14 @@ export const bindMQTTEvents = (url) => {
   client.bind(mqttEvents.REQUEST_SENT, (params) => {
     store.dispatch(action.sendRequest(params));
   });
+  client.bind(mqttEvents.NEW_MAPPING_VALUE, (params) => {
+    const mappingState = store.getState().mappings.all_mappings;
+    const relevantMapping = mappingState.filter(mapping => mapping.mappingID === params.mappingID);
+
+    if (relevantMapping.length > 0) {
+      store.dispatch(action.updateMappingValue(params.mappingID, params.value));
+    } else {
+      store.dispatch(action.fetchMapping(params.mappingID));
+    }
+  });
 };

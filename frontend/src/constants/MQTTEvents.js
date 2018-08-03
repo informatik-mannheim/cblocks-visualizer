@@ -1,6 +1,7 @@
 export default {
   CONNECTION_ESTABLISHED: 'connection_established',
   CONNECTION_LOST: 'connection_lost',
+  NEW_MAPPING_VALUE: 'new_mapping_value',
   NODE_ADDED: 'node_added',
   NODE_REMOVED: 'node_removed',
   NODE_STATUS: 'node_status',

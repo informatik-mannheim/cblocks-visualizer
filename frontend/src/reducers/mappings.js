@@ -5,62 +5,70 @@ const initialMappingsState = {
   all_mappings: []
 };
 
+const mappingIdIsInArray = (m, currentMappings) => {
+  let isInArray = false;
+  currentMappings.forEach((currentMapping) => {if (currentMapping.mappingID === m.mappingID) isInArray = true;});
+  return isInArray;
+};
+
 export function mappings (state = initialMappingsState, action) {
   switch (action.type) {
-    case Constants.Actions.ADD_MAPPING:
-      const newMapping = Object.assign({}, action.mapping);
-
-      //check for duplicates
-      for (let i = 0; i < state.all_mappings.length; i++) {
-        if (state.all_mappings[i]._id === newMapping._id) {
-          return state;
+    case Constants.Actions.ADD_MAPPINGS:
+      let newMappings = [];
+      state.all_mappings.forEach((m) => {
+        if (!mappingIdIsInArray(m, action.mappings)) {
+          m.value = '';
+          m.valueHistory = [];
+          newMappings.push(m);
         }
-      }
+      });
+      const actionMappingsClone = [];
+      action.mappings.forEach((m) => {
+        const mClone = Object.assign({}, m);
+        mClone.value = '';
+        mClone.valueHistory = [];
+        actionMappingsClone.push(m);
+      });
+      newMappings = newMappings.concat(actionMappingsClone);
 
-      const newAllMappings = state.all_mappings.concat(newMapping);
       return {
-        count: newAllMappings.length,
-        all_mappings: newAllMappings
+        count: newMappings.length,
+        all_mappings: newMappings
       };
+      case Constants.Actions.UPDATE_MAPPING_VALUE:
+        return {count: state.all_mappings.length, all_mappings: state.all_mappings.map(currentMapping => mapping(currentMapping, action))};
     case Constants.Actions.REMOVE_MAPPING:
-      if (state.count !== 0) {
-        let mappingToRemove;
-        let mappingIndex;
-
-        for (mappingIndex = 0; mappingIndex < state.all_mappings.length; mappingIndex++) {
-          if (state.all_mappings[mappingIndex]._id === action.mappingId) {
-            mappingToRemove = state.all_mappings[mappingIndex];
-          }
-        }
-        mappingIndex--;
-        const updatedMappings = [
-          ...state.all_mappings.slice(0, mappingIndex),
-          ...state.all_mappings.slice(mappingIndex + 1)
-        ];
-        return {count: updatedMappings.length, all_mappings: updatedMappings};
-      }
-      return state;
-    case Constants.Actions.BLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA_MAPPING:
-      return {count: state.all_mappings.length, all_mappings: state.all_mappings.map(n => mapping(n, action))};
+    if (state.count !== 0) {
+      const updatedMappings = state.all_mappings.filter(item => (item.mappingID !== action.mappingID));
+      return {count: updatedMappings.length, all_mappings: updatedMappings};
+    }
+    return state;
     default:
       return state;
   }
 }
 
-function mapping (state = {}, action){
-  if (state._id !== action._id) {
+function mapping (state = {}, action) {
+  if (state.mappingID !== action.mappingID) {
     return state;
   }
 
-  console.log(state);
-  console.log(action);
   switch (action.type) {
-    case Constants.Actions.ZZZZZZZZZ:
-      const movedmapping = Object.assign({}, state, {
-        xPos: action.xPos,
-        yPos: action.yPos
-      });
-      return movedmapping;
+    case Constants.Actions.UPDATE_MAPPING_VALUE:
+
+      const mappingToUpdate = Object.assign({}, state);
+      //Replace old values with new values
+      mappingToUpdate.value = action.value;
+
+      //Add new values to valueHistory if max 100 values, else delete oldest
+      if (mappingToUpdate.valueHistory !== undefined) {
+        if (mappingToUpdate.valueHistory.length >= 100) {
+          mappingToUpdate.valueHistory.shift();
+        }
+        mappingToUpdate.valueHistory = mappingToUpdate.valueHistory.concat(action.value);
+      }
+
+      return mappingToUpdate;
     default:
       return state;
   }
