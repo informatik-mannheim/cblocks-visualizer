@@ -9,8 +9,9 @@ export function sensors (state = initialSensorsState, action) {
   switch (action.type) {
     case Constants.Actions.ADD_SENSOR:
 
+      //TODO: this...
       const sensorCount = state.all_sensors.length;
-      let xPos, yPos = 10;
+      let xPos; const yPos = 10;
       switch (sensorCount) {
         case 0:
           xPos = 10;
