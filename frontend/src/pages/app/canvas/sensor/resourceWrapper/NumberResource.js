@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MaterialSlider from '../../../../../components/MaterialSlider';
+import SensorBar from '../../../../../components/SensorBar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import svgIcons from '../../../../../images/svgIcons';
+import { HorizontalDividerLine } from '../../../../../components/HorizontalDividerLine';
+import CategoryMapping from './numberResource/CategoryMapping';
 
 class NumberResource extends React.Component {
-  constructor () {
-    super();
-    this.showChartModal = false;
-  }
-
   render () {
     if (this.props.smallForm === false) {
       //Single Resource
@@ -24,28 +22,23 @@ class NumberResource extends React.Component {
         </SvgIcon>
       );
 
-      const modalProps = {
+      const chartModalProps = {
         open: true,
         objectID: this.props.objectID,
         instanceID: this.props.instanceID,
         resourceID: this.props.resource.resourceID
       };
 
-      return (
+      const NumberResourceComponent = (
         <div>
-            <Typography variant='subheading' align='center'>{this.props.resource.name}</Typography>
+            <Typography variant='headline' align='center'>{this.props.resource.name}</Typography>
+            <br/>
             <br/>
             <div>
-              <MaterialSlider
-                objectID={this.props.objectID}
-                instanceID={this.props.instanceID}
-                resourceID={this.props.resource.resourceID}
+              <SensorBar
                 currentValue={this.props.currentValue}
-                maximum={max}
-                minimum={min}
-                isWriteable={this.props.isWriteable}
-                requestChangeToSubresource={this.props.requestChangeToSubresource}/>
-
+                max={max}
+                min={min}/>
               <div style={{display: 'block', float: 'left'}}>
                 <Typography variant='body2'>{min}</Typography>
               </div>
@@ -53,21 +46,36 @@ class NumberResource extends React.Component {
                 <Typography variant='body2'>{max}</Typography>
               </div>
             </div>
+
             <br/>
-            <Typography variant='display1' align='center'>{this.props.currentValue
+            <Typography variant='title' align='center'>{this.props.currentValue
               + ' ' + this.props.resource.schema.unit}</Typography>
             <div style={{float: 'right', marginBottom: 10}}>
-              <Button variant='fab' mini aria-label="Show Graph" color='secondary' onClick={() => this.props.showModal('CHART', modalProps)}>
+              <Button variant='fab' mini aria-label="Show Graph" color='secondary' onClick={() => this.props.showModal('CHART', chartModalProps)}>
                 {graphIcon}
               </Button>
             </div>
+            {Object.entries(this.props.mappings).map((mappingsKeyValue) => {
+              const currentMapping = mappingsKeyValue[1];
+              return (
+                <div key={currentMapping.mappingID + '_div'}>
+                  <HorizontalDividerLine isMappingDivider={true}/>
+                  <CategoryMapping
+                    mapping={currentMapping}
+                    currentValue={this.props.currentValue}
+                    max={max}
+                    min={min}/>
+                </div>
+              );
+            })}
         </div>
       );
+
+      return NumberResourceComponent;
     } else {
       //Multi Resource
       const max = this.props.resource.maximum;
       const min = this.props.resource.minimum;
-
 
       return (
         <div>
@@ -101,6 +109,7 @@ NumberResource.propTypes = {
   currentValue: PropTypes.any,
   instanceID: PropTypes.number,
   isWriteable: PropTypes.bool,
+  mappings: PropTypes.array,
   objectID: PropTypes.number,
   requestChangeToSubresource: PropTypes.func,
   resource: PropTypes.object,

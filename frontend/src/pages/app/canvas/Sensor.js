@@ -7,12 +7,10 @@ import { withStyles } from '@material-ui/core/styles';
 import { Avatar, Card, CardContent, CardHeader } from '@material-ui/core';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import ResourceWrapper from './sensor/ResourceWrapper';
-import { HorizontalDividerLine } from './sensor/HorizontalDividerLine';
+import { HorizontalDividerLine } from '../../../components/HorizontalDividerLine';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import * as action from '../../../action/';
 import svgIcons from '../../../images/svgIcons';
-import Grow from '@material-ui/core/Grow';
-import equal from 'deep-equal';
 
 const sensorSource = {
   beginDrag (props) {
@@ -92,6 +90,7 @@ class Sensor extends Component {
   }
 
   shouldComponentUpdate (nextProps, nextState) {
+    // TODO: implement or delete commented-out code
     // const timeBefore = Date.now();
     // console.log(nextProps);
     // console.log(this.props);
@@ -144,39 +143,39 @@ class Sensor extends Component {
     );
 
     const sensorComponent = (
-      <Grow in={this.isVisible}>
-        <div style={getBoundingDivStyles(this.props)}>
-          <Card className={this.props.classes.card}>
-          {this.props.connectDragSource(header)}
-          <CardContent>
-            {Object.entries(this.props.resources).map((resourceKeyValue) => {
-              const dividerLine = (i === 0) ? (
-                <div/>
-              ) : (
-                <HorizontalDividerLine/>
-              );
-              i++;
+      <div style={getBoundingDivStyles(this.props)}>
+        <Card className={this.props.classes.card}>
+        {this.props.connectDragSource(header)}
+        <CardContent>
+          {Object.entries(this.props.resources).map((resourceKeyValue) => {
+            const dividerLine = (i === 0) ? (
+              <div/>
+            ) : (
+              <HorizontalDividerLine/>
+            );
+            i++;
 
-              const currentResource = resourceKeyValue[1];
-              const multiResource = currentResource.schema.properties === undefined ? false : true;
-              if (this.props.values[currentResource.resourceID] !== undefined) {
-                return (
-                  <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID + '_div'}>
-                    {dividerLine}
-                    <ResourceWrapper
-                      objectID={this.props.objectID}
-                      instanceID={this.props.instanceID}
-                      resource={currentResource}
-                      currentValue={this.props.values[currentResource.resourceID]}
-                      multiResource={multiResource}
-                      isWriteable={currentResource.is_writeable}/>
-                  </div>);
-                }
-              })}
-            </CardContent>
-          </Card>
-        </div>
-      </Grow>
+            const currentResource = resourceKeyValue[1];
+            const multiResource = currentResource.schema.properties === undefined ? false : true;
+            if (this.props.values[currentResource.resourceID] !== undefined) {
+              const relevantMappings = this.props.mappings.filter((m) => m.resourceID === currentResource.resourceID);
+              return (
+                <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID + '_div'}>
+                  {dividerLine}
+                  <ResourceWrapper
+                    objectID={this.props.objectID}
+                    instanceID={this.props.instanceID}
+                    resource={currentResource}
+                    currentValue={this.props.values[currentResource.resourceID]}
+                    mappings={relevantMappings}
+                    multiResource={multiResource}
+                    isWriteable={currentResource.is_writeable}/>
+                </div>);
+            }
+            })}
+          </CardContent>
+        </Card>
+      </div>
     );
 
     return sensorComponent;
@@ -190,6 +189,7 @@ Sensor.propTypes = {
   height: PropTypes.number,
   instanceID: PropTypes.number.isRequired,
   isDragging: PropTypes.bool.isRequired,
+  mappings: PropTypes.array,
   move: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   objectID: PropTypes.number.isRequired,
@@ -215,9 +215,17 @@ const mapStateToProps = (state, ownProps) => {
           thisSensorIndex = i;
     }
   }
+  const relevantMappings = [];
+  for (let i = 0; i < state.mappings.count; i++) {
+    if (ownProps.objectID === state.mappings.all_mappings[i].objectID
+      && ownProps.instanceID === state.mappings.all_mappings[i].instanceID) {
+          relevantMappings.push(state.mappings.all_mappings[i]);
+    }
+  }
   return {
           xPos: state.sensors.all_sensors[thisSensorIndex].xPos,
           yPos: state.sensors.all_sensors[thisSensorIndex].yPos,
+          mappings: relevantMappings,
           values: state.sensors.all_sensors[thisSensorIndex].values
         };
 };

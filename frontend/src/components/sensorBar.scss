@@ -1,0 +1,122 @@
+// $white: #fff;
+// $black: #000;
+// $grey: #eee;
+// $lightBlue: #03a9f4;
+// $orange: #ff9800;
+// $amber: #ffc107;
+// $green: #4caf50;
+// $teal: #009688;
+// $cyan: #00bcd4;
+// $indigo: #3f51b5;
+// $deepPurple: #673ab7;
+// $pink: #e91e63;
+// $red: #f44336;
+// $yellow: #ffeb3b;
+// $lime: #cddc39;
+// $brown: #795548;
+//
+// .rkmd-slider {
+//   &.slider-discrete {
+//     .slider {
+//       .slider-handle {
+//         position: relative;
+//         z-index: 1;
+//
+//         .slider-label {
+//           position: absolute;
+//           top: -17.5px;
+//           left: -2px;
+//           width: 30px;
+//           height: 30px;
+//           transform-origin: 50% 100%;
+//           border-radius: 50%;
+//           transform: scale(.5) rotate(-45deg);
+//           transition: all .2s ease;
+//
+//           span {
+//             position: absolute;
+//             top: 7px;
+//             left: 0px;
+//             width: 100%;
+//             color: #fff;
+//             font-size: 12px;
+//             text-align: center;
+//             transform: rotate(45deg);
+//             opacity: 0;
+//             user-select: none;
+//           }
+//         }
+//
+//         &.is-active {
+//           top: 0px;
+//           margin-left: -2px;
+//           width: 4px;
+//           height: 4px;
+//
+//           .slider-label {
+//             top: -15px;
+//             left: -2px;
+//             border-radius: 15px 15px 15px 0;
+//             transform: rotate(-45deg) translate(23px, -25px);
+//
+//             span {
+//               opacity: 1;
+//             }
+//           }
+//         }
+//       }
+//     }
+//
+//     &.slider-lightBlue {
+//       .slider-label { background-color: $lightBlue; }
+//     }
+//
+//     &.slider-teal {
+//       .slider-label { background-color: $teal; }
+//     }
+//
+//     &.slider-orange {
+//       .slider-label { background-color: $orange; }
+//     }
+//
+//     &.slider-amber {
+//       .slider-label { background-color: $amber; }
+//     }
+//
+//     &.slider-green {
+//       .slider-label { background-color: $green; }
+//     }
+//
+//     &.slider-cyan {
+//       .slider-label { background-color: $cyan; }
+//     }
+//
+//     &.slider-indigo {
+//       .slider-label { background-color: $indigo; }
+//     }
+//
+//     &.slider-deepPurple {
+//       .slider-label { background-color: $deepPurple; }
+//     }
+//
+//     &.slider-pink {
+//       .slider-label { background-color: $pink; }
+//     }
+//
+//     &.slider-red {
+//       .slider-label { background-color: $red; }
+//     }
+//
+//     &.slider-yellow {
+//       .slider-label { background-color: $yellow; }
+//     }
+//
+//     &.slider-lime {
+//       .slider-label { background-color: $lime; }
+//     }
+//
+//     &.slider-brown {
+//       .slider-label { background-color: $brown; }
+//     }
+//   }
+// }

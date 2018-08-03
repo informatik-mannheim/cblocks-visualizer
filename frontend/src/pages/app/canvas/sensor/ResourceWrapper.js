@@ -45,6 +45,7 @@ ResourceWrapper.propTypes = {
   currentValue: PropTypes.any,
   instanceID: PropTypes.number,
   isWriteable: PropTypes.bool,
+  mappings: PropTypes.array,
   multiResource: PropTypes.bool,
   objectID: PropTypes.number,
   resource: PropTypes.object,
