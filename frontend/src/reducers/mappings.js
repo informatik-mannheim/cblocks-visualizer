@@ -1,75 +1,29 @@
 import Constants from '../constants/';
 
-const initialMappingsState = {
-  count: 0,
-  all_mappings: []
-};
-
-const mappingIdIsInArray = (m, currentMappings) => {
-  let isInArray = false;
-  currentMappings.forEach((currentMapping) => {if (currentMapping.mappingID === m.mappingID) isInArray = true;});
-  return isInArray;
-};
-
-export function mappings (state = initialMappingsState, action) {
+export function mappings (state = {}, action) {
   switch (action.type) {
-    case Constants.Actions.ADD_MAPPINGS:
-      let newMappings = [];
-      state.all_mappings.forEach((m) => {
-        if (!mappingIdIsInArray(m, action.mappings)) {
-          m.value = '';
-          m.valueHistory = [];
-          newMappings.push(m);
-        }
-      });
-      const actionMappingsClone = [];
-      action.mappings.forEach((m) => {
-        const mClone = Object.assign({}, m);
-        mClone.value = '';
-        mClone.valueHistory = [];
-        actionMappingsClone.push(m);
-      });
-      newMappings = newMappings.concat(actionMappingsClone);
+    case Constants.Actions.ADD_MAPPING:
+      if (state[action.mapping.mappingID] !== undefined) return state;
+      const newEntry = {};
+      newEntry[action.mapping.mappingID] = action.mapping;
+      return {...newEntry, ...state};
 
-      return {
-        count: newMappings.length,
-        all_mappings: newMappings
-      };
-      case Constants.Actions.UPDATE_MAPPING_VALUE:
-        return {count: state.all_mappings.length, all_mappings: state.all_mappings.map(currentMapping => mapping(currentMapping, action))};
     case Constants.Actions.REMOVE_MAPPING:
-    if (state.count !== 0) {
-      const updatedMappings = state.all_mappings.filter(item => (item.mappingID !== action.mappingID));
-      return {count: updatedMappings.length, all_mappings: updatedMappings};
-    }
-    return state;
-    default:
-      return state;
-  }
-}
+      if (state[action.mappingID] === undefined) return state;
+      const stateClone = Object.assign({}, state);
+      delete stateClone[action.mappingID];
+      return stateClone;
 
-function mapping (state = {}, action) {
-  if (state.mappingID !== action.mappingID) {
-    return state;
-  }
-
-  switch (action.type) {
     case Constants.Actions.UPDATE_MAPPING_VALUE:
+      if (state[action.mappingID] === undefined) return state;
+      const mappingClone = Object.assign({}, state[action.mappingID]);
+      mappingClone.value = action.value;
+      if (mappingClone.valueHistory.length >= 100) mappingClone.valueHistory.shift();
+      mappingClone.valueHistory = mappingClone.valueHistory.concat(action.value);
+      return {...state, [action.mappingID]: mappingClone};
 
-      const mappingToUpdate = Object.assign({}, state);
-      //Replace old values with new values
-      mappingToUpdate.value = action.value;
-
-      //Add new values to valueHistory if max 100 values, else delete oldest
-      if (mappingToUpdate.valueHistory !== undefined) {
-        if (mappingToUpdate.valueHistory.length >= 100) {
-          mappingToUpdate.valueHistory.shift();
-        }
-        mappingToUpdate.valueHistory = mappingToUpdate.valueHistory.concat(action.value);
-      }
-
-      return mappingToUpdate;
     default:
       return state;
+
   }
 }

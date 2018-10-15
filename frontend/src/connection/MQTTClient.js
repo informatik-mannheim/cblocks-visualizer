@@ -108,8 +108,9 @@ const MQTTClient = (url) => {
           /*
           mapping value updated
           */
-        case (/mappings\/.+/).test(topic):
-          const mappingID = (/mappings\/(.+)/).exec(topic)[1];
+        case (/mappings\/(.+)\/(.+)\/output/).test(topic):
+          const mappingType = (/mappings\/(.+)\/(.+)\/output/).exec(topic)[1];
+          const mappingID = (/mappings\/(.+)\/(.+)\/output/).exec(topic)[2];
 
           if (isParsableJSON(message.toString())) {
             value = JSON.parse(message);
@@ -118,7 +119,7 @@ const MQTTClient = (url) => {
           }
 
           //TODO: PROPERLY PARSE MESSAGE!
-          dispatch(mqttEvents.NEW_MAPPING_VALUE, {mappingID: mappingID, value: value});
+          dispatch(mqttEvents.NEW_MAPPING_VALUE, {mappingType: mappingType, mappingID: mappingID, value: value});
           break;
         default:
       }
