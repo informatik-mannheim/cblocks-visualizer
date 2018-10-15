@@ -49,7 +49,7 @@ class NumberResource extends React.Component {
 
             <br/>
             <Typography variant='title' align='center'>{this.props.currentValue
-              + ' ' + this.props.resource.schema.unit}</Typography>
+              + ' ' + this.props.resource.unit}</Typography>
             <div style={{float: 'right', marginBottom: 10}}>
               <Button variant='fab' mini aria-label="Show Graph" color='secondary' onClick={() => this.props.showModal('CHART', chartModalProps)}>
                 {graphIcon}
