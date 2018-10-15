@@ -28,7 +28,7 @@
     "deep-freeze": "0.0.1",
     "expect": "^1.20.2",
     "mqtt": "^2.18.0",
-    "npm": "^6.1.0",
+    "npm": "^6.4.0",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-chartjs-2": "^2.7.2",
@@ -47,6 +47,7 @@
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-eslint": "~7.1.1",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^7.0.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
@@ -60,6 +61,7 @@
     "eslint-plugin-react": "^6.9.0",
     "file-loader": "^1.1.5",
     "image-webpack-loader": "^3.4.2",
+    "jest": "^23.6.0",
     "mock-socket": "^7.1.0",
     "node-sass": "^4.9.0",
     "postcss-cssnext": "^2.9.0",
@@ -76,8 +78,8 @@
   },
   "scripts": {
     "start": "node_modules/.bin/cross-env NODE_ENV=development node_modules/.bin/webpack-dev-server --colors --config webpack.config.js",
-    "build": "node_modules/.bin/cross-env NODE_ENV=production UV_THREADPOOL_SIZE=100 webpack --config webpack.config.js",
-    "deploy": "gh-pages -d build"
+    "test": "jest",
+    "test:watch": "npm test -- --watch"
   },
   "license": "Apache-2.0",
   "homepage": "https://github.com/react-toolbox/react-toolbox-example#readme"
