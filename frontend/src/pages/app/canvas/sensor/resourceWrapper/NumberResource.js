@@ -15,7 +15,6 @@ class NumberResource extends React.Component {
       //Single Resource
       const max = this.props.resource.schema.maximum;
       const min = this.props.resource.schema.minimum;
-
       const graphIcon = (
         <SvgIcon>
           <path d={svgIcons.chart} />

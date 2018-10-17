@@ -118,7 +118,6 @@ const MQTTClient = (url) => {
             value = message.toString();
           }
 
-          //TODO: PROPERLY PARSE MESSAGE!
           dispatch(mqttEvents.NEW_MAPPING_VALUE, {mappingType: mappingType, mappingID: mappingID, value: value});
           break;
         default:
@@ -126,6 +125,7 @@ const MQTTClient = (url) => {
     }
   });
 
+// subscribes to request substate and publishes them to MQTT
   const unsubscribeFromRequests = subscribe('requests.totalRequests', state => {
     for (const req of state.requests.unresolvedRequests) {
       if (req.sent === false) {

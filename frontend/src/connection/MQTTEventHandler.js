@@ -1,5 +1,4 @@
 import MQTTClient from './MQTTClient';
-import MQTTMockDataSupplier from './MQTTMockDataSupplier';
 import Constants from '../constants/';
 import store from '../store';
 import * as action from '../action/';
@@ -8,11 +7,6 @@ const mqttEvents = Constants.MQTTEvents;
 
 export const bindMQTTEvents = (url) => {
   const client = MQTTClient(url);
-
-  if (Constants.MQTT_MOCKING_ENABLED === true) {
-    console.log('MQTT Mocking Enabled');
-    MQTTMockDataSupplier(url);
-  }
 
   client.bind(mqttEvents.CONNECTION_ESTABLISHED, (message) => {
     console.log(message.toString());

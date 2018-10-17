@@ -34,7 +34,7 @@ export function requests (state = initialRequestsState, action) {
       }
       return req;
     });
-    return Object.assign({}, state, {unresolvedRequests: unresolvedRequestsUpdated});
+    return {...state, unresolvedRequests: unresolvedRequestsUpdated};
 
     case Constants.Actions.HANDLE_REQUEST_RESPONSE:
       //TODO: proper error handling when success false

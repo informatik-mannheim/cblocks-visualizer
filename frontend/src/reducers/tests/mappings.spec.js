@@ -48,7 +48,6 @@ describe('mappings reducer', () => {
   it('should return the initial state', () => {
     expect(mappings(undefined, {})).toEqual({});
   });
-
   it('should add a new mapping to the initial state', () => {
     const addMappingAction = {
       type: Constants.Actions.ADD_MAPPING,
@@ -78,7 +77,6 @@ describe('mappings reducer', () => {
         }
       });
   });
-
   it('should add another mapping to the state', () => {
     const addMappingAction = {
       type: Constants.Actions.ADD_MAPPING,
@@ -218,7 +216,6 @@ describe('mappings reducer', () => {
         valueHistory: ['firstRange']
       }});
   });
-
   it('should do nothing if trying to remove unknown mapping', () => {
     const removeAction = {
       type: Constants.Actions.REMOVE_MAPPING,
@@ -309,7 +306,6 @@ describe('mappings reducer', () => {
       }
     });
   });
-
   it('should update a mapping\'s value and add the previous one to valueHistory', () => {
     const updateAction = {
       type: Constants.Actions.UPDATE_MAPPING_VALUE,
@@ -360,7 +356,6 @@ describe('mappings reducer', () => {
         }
       });
   });
-
   it('should throw out oldest entry in valueHistory if the vH-size limit is reached', () => {
     const addAction = {
       type: Constants.Actions.UPDATE_MAPPING_VALUE,

@@ -24,6 +24,5 @@ export function mappings (state = {}, action) {
 
     default:
       return state;
-
   }
 }

@@ -25,7 +25,7 @@ class LineChart extends Component {
               chartData[j] = valueHistory[j - 1][resourceID];
             }
           resourceLabel = currentSensor.resources[resourceID].name;
-          unit = currentSensor.resources[resourceID].schema.unit;
+          unit = currentSensor.resources[resourceID].unit;
         }
       }
     }

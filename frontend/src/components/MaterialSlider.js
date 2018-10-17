@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Nouislider from 'react-nouislider';
-import './nouislider.scss';
 import Typography from '@material-ui/core/Typography';
 
 class MaterialSlider0 extends React.Component {
