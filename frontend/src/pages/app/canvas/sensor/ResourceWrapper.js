@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-//TODO: implement dynamic imports
-// https://www.slightedgecoder.com/2017/12/03/loading-react-components-dynamically-demand/
 import NumberResource from './resourceWrapper/NumberResource';
 import SwitchResource from './resourceWrapper/SwitchResource';
 import StringResource from './resourceWrapper/StringResource';
@@ -54,10 +52,14 @@ ResourceWrapper.propTypes = {
 
 ResourceWrapper.defaultProps = {
   multiResource: false,
-  smallForm: false
+  smallForm: false,
+  mappings: []
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state, ownProps) => {
+  return {};
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     buildRequest: (objectID, instanceID, resourceID, value) => dispatch(action.buildRequest(objectID, instanceID, resourceID, value)),

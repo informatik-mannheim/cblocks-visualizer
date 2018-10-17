@@ -156,9 +156,8 @@ class Sensor extends Component {
             i++;
 
             const currentResource = resourceKeyValue[1];
-            const multiResource = currentResource.schema.properties === undefined ? false : true;
+            const isMultiResource = currentResource.schema.properties === undefined ? false : true;
             if (this.props.values[currentResource.resourceID] !== undefined) {
-              const relevantMappings = this.props.mappings.filter((m) => m.resourceID === currentResource.resourceID);
               return (
                 <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID + '_div'}>
                   {dividerLine}
@@ -167,8 +166,7 @@ class Sensor extends Component {
                     instanceID={this.props.instanceID}
                     resource={currentResource}
                     currentValue={this.props.values[currentResource.resourceID]}
-                    mappings={relevantMappings}
-                    multiResource={multiResource}
+                    multiResource={isMultiResource}
                     isWriteable={currentResource.is_writeable}/>
                 </div>);
             }
@@ -189,7 +187,6 @@ Sensor.propTypes = {
   height: PropTypes.number,
   instanceID: PropTypes.number.isRequired,
   isDragging: PropTypes.bool.isRequired,
-  mappings: PropTypes.array,
   move: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   objectID: PropTypes.number.isRequired,
@@ -215,17 +212,9 @@ const mapStateToProps = (state, ownProps) => {
           thisSensorIndex = i;
     }
   }
-  const relevantMappings = [];
-  for (let i = 0; i < state.mappings.count; i++) {
-    if (ownProps.objectID === state.mappings.all_mappings[i].objectID
-      && ownProps.instanceID === state.mappings.all_mappings[i].instanceID) {
-          relevantMappings.push(state.mappings.all_mappings[i]);
-    }
-  }
   return {
           xPos: state.sensors.all_sensors[thisSensorIndex].xPos,
           yPos: state.sensors.all_sensors[thisSensorIndex].yPos,
-          mappings: relevantMappings,
           values: state.sensors.all_sensors[thisSensorIndex].values
         };
 };
