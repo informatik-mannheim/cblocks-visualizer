@@ -1,7 +1,7 @@
 {
   "name": "cblocks",
   "description": "A prototyping platform for the IoT.",
-  "version": "0.0.1",
+  "version": "0.0.0-development",
   "author": {
     "name": "Dominick Madden"
   },
@@ -30,7 +30,7 @@
     "expect": "^1.20.2",
     "lodash.clonedeep": "^4.5.0",
     "mqtt": "^2.18.0",
-    "npm": "^6.4.0",
+    "npm": "^6.4.1",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-chartjs-2": "^2.7.2",

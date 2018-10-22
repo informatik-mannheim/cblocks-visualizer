@@ -89,23 +89,6 @@ class Sensor extends Component {
     });
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    // TODO: implement or delete commented-out code
-    // const timeBefore = Date.now();
-    // console.log(nextProps);
-    // console.log(this.props);
-    // console.log('');
-    // if (equal(nextProps.values, this.props.values) === true
-    //   && nextProps.xPos === this.props.xPos
-    //   && nextProps.yPos === this.props.yPos
-    //   && this.props.isDragging === false) {
-    //     // console.log(Date.now() - timeBefore);
-    //     return false;
-    // }
-
-    return true;
-  }
-
   render () {
     let path;
     switch (this.props.objectID) {
@@ -156,6 +139,7 @@ class Sensor extends Component {
             i++;
 
             const currentResource = resourceKeyValue[1];
+            //TODO: implement better check
             const isMultiResource = currentResource.schema.properties === undefined ? false : true;
             if (this.props.values[currentResource.resourceID] !== undefined) {
               return (

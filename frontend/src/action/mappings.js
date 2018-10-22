@@ -7,16 +7,17 @@ const getURLForMappingType = type => {
   if (type === 'label') return Constants.URLs.LABEL_MAPPING_URL;
 };
 
-export const addMapping = (mapping) =>
+export const addMapping = mapping =>
   ({type: Constants.Actions.ADD_MAPPING, mapping});
 
 export const updateMappingValue = (mappingID, value) =>
   ({type: Constants.Actions.UPDATE_MAPPING_VALUE, mappingID, value});
 
-export const removeMapping = (mappingID) =>
+export const removeMapping = mappingID =>
   ({type: Constants.Actions.REMOVE_MAPPING, mappingID});
 
 export const fetchMapping = (mappingType, mappingID, value) => {
+  console.log(`fetching ${mappingType} mappings...`);
   return (dispatch) => {
      axios.get(`${getURLForMappingType(mappingType)}/${mappingID}`)
       .then((response) => {

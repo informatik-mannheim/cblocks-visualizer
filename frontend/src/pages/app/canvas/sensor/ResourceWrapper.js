@@ -10,6 +10,10 @@ import { connect } from 'react-redux';
 class ResourceWrapper extends React.Component {
   render () {
     let Component;
+    const style = {
+      paddingTop: 8
+    };
+
     if (this.props.multiResource === false) {
       //Single value resource
       const type = this.props.resource.schema === undefined ? this.props.resource.type : this.props.resource.schema.type;
@@ -31,7 +35,7 @@ class ResourceWrapper extends React.Component {
     }
 
     return (
-      <div>
+      <div style={style}>
         <Component {...this.props}/>
       </div>
     );
@@ -43,7 +47,6 @@ ResourceWrapper.propTypes = {
   currentValue: PropTypes.any,
   instanceID: PropTypes.number,
   isWriteable: PropTypes.bool,
-  mappings: PropTypes.array,
   multiResource: PropTypes.bool,
   objectID: PropTypes.number,
   resource: PropTypes.object,
@@ -52,8 +55,7 @@ ResourceWrapper.propTypes = {
 
 ResourceWrapper.defaultProps = {
   multiResource: false,
-  smallForm: false,
-  mappings: []
+  smallForm: false
 };
 
 const mapStateToProps = (state, ownProps) => {
