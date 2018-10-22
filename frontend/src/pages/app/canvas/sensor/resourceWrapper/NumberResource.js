@@ -8,6 +8,8 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import svgIcons from '../../../../../images/svgIcons';
 import { HorizontalDividerLine } from '../../../../../components/HorizontalDividerLine';
 import CategoryMapping from './numberResource/CategoryMapping';
+import { connect } from 'react-redux';
+import Constants from '../../../../../Constants';
 
 class NumberResource extends React.Component {
   render () {
@@ -21,39 +23,100 @@ class NumberResource extends React.Component {
         </SvgIcon>
       );
 
-      const chartModalProps = {
-        open: true,
-        objectID: this.props.objectID,
-        instanceID: this.props.instanceID,
-        resourceID: this.props.resource.resourceID
+      const getMappingPalette = i => {
+        const COLORS = Constants.Colors;
+        switch (i % 3) {
+          case 0: return COLORS.secondary_1;
+          case 1: return COLORS.secondary_2;
+          case 2: return COLORS.complementary;
+          default: return COLORS.primary;
+        }
       };
 
-      const NumberResourceComponent = (
+      const normalizedMappings = (mappings) => {
+        const newMappings = [];
+
+        for (let i = 0; i < mappings.length; i++) {
+          const mapping = mappings[i];
+          const mappingPalette = getMappingPalette(i);
+
+          switch (mapping.mappingType) {
+            case 'category': {
+              const normalizedRanges = [];
+              const ranges = mapping.ranges;
+              let j = 0;
+              for (const range of ranges) {
+                  normalizedRanges.push({
+                    color: mappingPalette[j++],
+                    label: range.label,
+                    low: range.greaterEqualsThan,
+                    high: range.lessThan
+                  });
+              }
+              newMappings.push({
+                label: mapping.label,
+                mappingType: mapping.mappingType,
+                ranges: normalizedRanges,
+                active: true
+              });
+              break;
+            }
+            case 'range': {
+              const ranges = [{
+                color: mappingPalette[2],
+                label: mapping.label,
+                low: mapping.greaterEqualsThan,
+                high: mapping.lessEqualsThan
+              }];
+              newMappings.push({
+                label: mapping.label,
+                mappingType: mapping.mappingType,
+                ranges: ranges,
+                active: false
+              });
+              break;
+            }
+            case 'label':
+              console.error('NOT IMPLEMENTED: label mappings');
+              return;
+            default:
+              console.error(`No such mapping type: ${mapping.mappingType}`);
+          }
+        }
+        return newMappings;
+      };
+
+      return (
         <div>
-            <Typography variant='headline' align='center'>{this.props.resource.name}</Typography>
-            <br/>
-            <br/>
+            <Typography variant='title' align='center' style={{marginBottom: 20}}>{this.props.resource.name}</Typography>
             <div>
+              <Typography variant='headline' align='center' style={{marginBottom: 40}}>{this.props.currentValue
+                + ' ' + this.props.resource.unit}</Typography>
               <SensorBar
                 currentValue={this.props.currentValue}
+                mappings={normalizedMappings(this.props.mappings)}
                 max={max}
-                min={min}/>
+                min={min}
+                style={{marginBottom: 0}}/>
               <div style={{display: 'block', float: 'left'}}>
-                <Typography variant='body2'>{min}</Typography>
+                <Typography variant='body2'>{0}</Typography>
               </div>
-              <div style={{display: 'block', float: 'right'}}>
-                <Typography variant='body2'>{max}</Typography>
+              <div style={{display: 'block', float: 'right', marginTop: 0}}>
+                <Typography variant='body2'>{100}</Typography>
               </div>
             </div>
 
             <br/>
-            <Typography variant='title' align='center'>{this.props.currentValue
-              + ' ' + this.props.resource.unit}</Typography>
-            <div style={{float: 'right', marginBottom: 10}}>
+            {
+              //TODO: put the button back in
+              /* <div style={{float: 'right', marginBottom: 10}}>
               <Button variant='fab' mini aria-label="Show Graph" color='secondary' onClick={() => this.props.showModal('CHART', chartModalProps)}>
                 {graphIcon}
               </Button>
-            </div>
+            </div> */
+
+            //TODO: move this part to generic ResourceWrapper component
+            }
             {Object.entries(this.props.mappings).map((mappingsKeyValue) => {
               const currentMapping = mappingsKeyValue[1];
               return (
@@ -69,8 +132,6 @@ class NumberResource extends React.Component {
             })}
         </div>
       );
-
-      return NumberResourceComponent;
     } else {
       //Multi Resource
       const max = this.props.resource.maximum;
@@ -95,8 +156,6 @@ class NumberResource extends React.Component {
           <div style={{display: 'block', float: 'right'}}>
             <Typography variant='body2'>{max}</Typography>
           </div>
-          <br/>
-          <br/>
         </div>
       );
     }
@@ -120,4 +179,14 @@ NumberResource.defaultProps = {
   smallForm: false
 };
 
-export default NumberResource;
+const mapStateToProps = (state, ownProps) => {
+  const mappingIDList = ownProps.resource.mappings;
+  const mappings = [];
+  for (const mappingID of mappingIDList) {
+    mappings.push(state.mappings[mappingID]);
+  }
+  return {mappings: mappings};
+};
+const mapDispatchToProps = (dispatch) => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NumberResource);
