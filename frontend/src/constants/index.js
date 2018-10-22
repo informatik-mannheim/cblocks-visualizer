@@ -4,6 +4,7 @@ import ReactToolboxVariables from './ReactToolboxVariables';
 import MQTTEvents from './MQTTEvents';
 import URLs from './URLs';
 import MappingTypes from './MappingTypes';
+import Colors from './Colors';
 
 const MQTT_MOCKING_ENABLED = false;
 
@@ -14,5 +15,6 @@ export default {
   MQTTEvents,
   URLs,
   MappingTypes,
+  Colors,
   MQTT_MOCKING_ENABLED
 };

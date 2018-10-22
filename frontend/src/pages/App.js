@@ -11,15 +11,15 @@ const theme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      light: '#a3445d',
-      main: '#8d2d56',
-      dark: '#2b193e',
+      light: '#B1557C',
+      main: '#8D2D55',
+      dark: '#691035',
       contrastText: '#fff'
     },
     secondary: {
-      light: '#DD302A',
-      main: '#DD302A',
-      dark: '#DD302A',
+      light: '#489665',
+      main: '#267845',
+      dark: '#0E592A',
       contrastText: '#fff'
     }
   },
@@ -31,7 +31,7 @@ const theme = createMuiTheme({
     },
     MuiCardHeader: {
       root: {
-        background: '#a3445d'
+        background: '#691035'
       },
       title: {
         color: '#fff',
