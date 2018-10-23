@@ -416,4 +416,192 @@ describe('mappings reducer', () => {
       }
     });
   });
+  it('should set the mapping to active', () => {
+    const setActiveAction = {
+      type: Constants.Actions.SET_MAPPING_ACTIVE,
+      mappingID: 'asdfasdfasdfasdfasdfasdf'
+    };
+
+    expect(mappings({
+      asdfasdf19280u34981uf: {
+        active: false,
+        mappingID: 'asdfasdf19280u34981uf',
+        label: 'ExampleMapping',
+        default: 'Unmatched',
+        objectID: 3303,
+        instanceID: 0,
+        resourceID: 0,
+        ranges: [{
+          label: 'firstRange',
+          greaterEqualsThan: 15,
+          lessThan: 30
+        }, {
+          label: 'secondRange',
+          greaterEqualsThan: 45,
+          lessThan: 80
+        }],
+        mappingType: 'category',
+        value: 'firstRange',
+        valueHistory: ['firstRange']
+      },
+      asdfasdfasdfasdfasdfasdf: {
+        active: false,
+        mappingID: 'asdfasdfasdfasdfasdfasdf',
+        label: 'ExampleMapping2',
+        default: 'Unmatched',
+        objectID: 3303,
+        instanceID: 0,
+        resourceID: 1,
+        ranges: [{
+          label: 'firstRange2',
+          greaterEqualsThan: 15,
+          lessThan: 30
+        }, {
+          label: 'secondRange2',
+          greaterEqualsThan: 45,
+          lessThan: 80
+        }],
+        mappingType: 'category',
+        value: 'firstRange',
+        valueHistory: ['firstRange']
+      }
+    }, setActiveAction)).toEqual({
+      asdfasdf19280u34981uf: {
+        active: false,
+        mappingID: 'asdfasdf19280u34981uf',
+        label: 'ExampleMapping',
+        default: 'Unmatched',
+        objectID: 3303,
+        instanceID: 0,
+        resourceID: 0,
+        ranges: [{
+          label: 'firstRange',
+          greaterEqualsThan: 15,
+          lessThan: 30
+        }, {
+          label: 'secondRange',
+          greaterEqualsThan: 45,
+          lessThan: 80
+        }],
+        mappingType: 'category',
+        value: 'firstRange',
+        valueHistory: ['firstRange']
+      },
+      asdfasdfasdfasdfasdfasdf: {
+        active: true,
+        mappingID: 'asdfasdfasdfasdfasdfasdf',
+        label: 'ExampleMapping2',
+        default: 'Unmatched',
+        objectID: 3303,
+        instanceID: 0,
+        resourceID: 1,
+        ranges: [{
+          label: 'firstRange2',
+          greaterEqualsThan: 15,
+          lessThan: 30
+        }, {
+          label: 'secondRange2',
+          greaterEqualsThan: 45,
+          lessThan: 80
+        }],
+        mappingType: 'category',
+        value: 'firstRange',
+        valueHistory: ['firstRange']
+      }
+    });
+  });
+  it('should set the mapping to inactive', () => {
+    const setInactiveAction = {
+      type: Constants.Actions.SET_MAPPING_INACTIVE,
+      mappingID: 'asdfasdfasdfasdfasdfasdf'
+    };
+
+    expect(mappings({
+      asdfasdf19280u34981uf: {
+        active: false,
+        mappingID: 'asdfasdf19280u34981uf',
+        label: 'ExampleMapping',
+        default: 'Unmatched',
+        objectID: 3303,
+        instanceID: 0,
+        resourceID: 0,
+        ranges: [{
+          label: 'firstRange',
+          greaterEqualsThan: 15,
+          lessThan: 30
+        }, {
+          label: 'secondRange',
+          greaterEqualsThan: 45,
+          lessThan: 80
+        }],
+        mappingType: 'category',
+        value: 'firstRange',
+        valueHistory: ['firstRange']
+      },
+      asdfasdfasdfasdfasdfasdf: {
+        active: true,
+        mappingID: 'asdfasdfasdfasdfasdfasdf',
+        label: 'ExampleMapping2',
+        default: 'Unmatched',
+        objectID: 3303,
+        instanceID: 0,
+        resourceID: 1,
+        ranges: [{
+          label: 'firstRange2',
+          greaterEqualsThan: 15,
+          lessThan: 30
+        }, {
+          label: 'secondRange2',
+          greaterEqualsThan: 45,
+          lessThan: 80
+        }],
+        mappingType: 'category',
+        value: 'firstRange',
+        valueHistory: ['firstRange']
+      }
+    }, setInactiveAction)).toEqual({
+      asdfasdf19280u34981uf: {
+        active: false,
+        mappingID: 'asdfasdf19280u34981uf',
+        label: 'ExampleMapping',
+        default: 'Unmatched',
+        objectID: 3303,
+        instanceID: 0,
+        resourceID: 0,
+        ranges: [{
+          label: 'firstRange',
+          greaterEqualsThan: 15,
+          lessThan: 30
+        }, {
+          label: 'secondRange',
+          greaterEqualsThan: 45,
+          lessThan: 80
+        }],
+        mappingType: 'category',
+        value: 'firstRange',
+        valueHistory: ['firstRange']
+      },
+      asdfasdfasdfasdfasdfasdf: {
+        active: false,
+        mappingID: 'asdfasdfasdfasdfasdfasdf',
+        label: 'ExampleMapping2',
+        default: 'Unmatched',
+        objectID: 3303,
+        instanceID: 0,
+        resourceID: 1,
+        ranges: [{
+          label: 'firstRange2',
+          greaterEqualsThan: 15,
+          lessThan: 30
+        }, {
+          label: 'secondRange2',
+          greaterEqualsThan: 45,
+          lessThan: 80
+        }],
+        mappingType: 'category',
+        value: 'firstRange',
+        valueHistory: ['firstRange']
+      }
+    });
+  });
 });

@@ -7,6 +7,12 @@ const getURLForMappingType = type => {
   if (type === 'label') return Constants.URLs.LABEL_MAPPING_URL;
 };
 
+export const setMappingActivity = (mappingID, bool) => {
+  return bool === true
+    ? {type: Constants.Actions.SET_MAPPING_ACTIVE, mappingID: mappingID}
+    : {type: Constants.Actions.SET_MAPPING_INACTIVE, mappingID: mappingID};
+};
+
 export const addMapping = mapping =>
   ({type: Constants.Actions.ADD_MAPPING, mapping});
 
