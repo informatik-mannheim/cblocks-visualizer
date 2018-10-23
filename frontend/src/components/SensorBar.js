@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const rangeColors = {
-  0: '#8d2d56',
-  1: '#FAB2A3',
-  2: '#76B58E',
-  3: '#C2E495',
-  4: '#D58BAA',
-  5: '#267845',
-  6: '#6A9730'
-};
-
 class SensorBar extends Component {
   getPercentage = (min, max, val) => {
     const range = max - min;
