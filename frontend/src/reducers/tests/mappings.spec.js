@@ -1,6 +1,7 @@
 import { mappings } from '../mappings';
 import Constants from '../../constants/';
 import expect from 'expect';
+import clonedeep from 'lodash.clonedeep';
 
 const exampleMapping = {
   mappingID: 'asdfasdf19280u34981uf',
@@ -58,6 +59,7 @@ describe('mappings reducer', () => {
         asdfasdf19280u34981uf: {
           mappingID: 'asdfasdf19280u34981uf',
           label: 'ExampleMapping',
+          active: false,
           default: 'Unmatched',
           objectID: 3303,
           instanceID: 0,
@@ -80,7 +82,7 @@ describe('mappings reducer', () => {
   it('should add another mapping to the state', () => {
     const addMappingAction = {
       type: Constants.Actions.ADD_MAPPING,
-      mapping: exampleMapping2
+      mapping: clonedeep(exampleMapping2)
     };
     expect(mappings({
       asdfasdf19280u34981uf: {
@@ -89,6 +91,7 @@ describe('mappings reducer', () => {
         default: 'Unmatched',
         objectID: 3303,
         instanceID: 0,
+        active: false,
         resourceID: 0,
         ranges: [{
           label: 'firstRange',
@@ -110,6 +113,7 @@ describe('mappings reducer', () => {
           label: 'ExampleMapping',
           default: 'Unmatched',
           objectID: 3303,
+          active: false,
           instanceID: 0,
           resourceID: 0,
           ranges: [{
@@ -129,6 +133,7 @@ describe('mappings reducer', () => {
           mappingID: 'asdfasdfasdfasdfasdfasdf',
           label: 'ExampleMapping2',
           default: 'Unmatched',
+          active: false,
           objectID: 3303,
           instanceID: 0,
           resourceID: 1,

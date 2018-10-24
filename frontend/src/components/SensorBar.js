@@ -1,7 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import ReactTooltip from 'react-tooltip';
 
 class SensorBar extends Component {
+  state = {
+    hovering: false,
+    rangeLabel: ''
+  };
+
+  handleHoverStart = (rangeLabel) => {
+      this.setState(prevState => ({hovering: true, rangeLabel: rangeLabel}));
+  }
+
+  handleHoverEnd = () => {
+      this.setState(prevState => ({hovering: false, rangeLabel: ''}));
+  }
+
   getPercentage = (min, max, val) => {
     const range = max - min;
     return (val / range) * 100;
@@ -59,9 +74,10 @@ class SensorBar extends Component {
               const currentRange = rangesKeyValue[1];
               return (
                 <div
+                  data-tip={currentRange.label}
                   key={'range-' + i++}
-                  onMouseEnter={() => {console.log('onMouseEnter');}}
-                  onMouseLeave={() => {console.log('onMouseLeave');}}
+                  onMouseEnter={() => {this.handleHoverStart(currentRange.label);}}
+                  onMouseLeave={() => {this.handleHoverEnd();}}
                   style={{
                     background: currentRange.color,
                     width:
@@ -78,11 +94,15 @@ class SensorBar extends Component {
                         currentRange.low
                       ) + '%',
                     height: 5,
-                    position: 'absolute'
+                    position: 'absolute',
+                    border:
+                      this.state.rangeLabel === currentRange.label
+                        ? 'double'
+                        : ''
                   }}
                 />
               );
-            }) }
+            })}
         </div>
         <div
           style={{
@@ -94,6 +114,7 @@ class SensorBar extends Component {
             transform: 'rotate(-45deg) translate(14px, -26px)'
           }}
         />
+        <ReactTooltip/>
       </div>
     );
 

@@ -7,6 +7,7 @@ export function mappings (state = {}, action) {
       if (state[action.mapping.mappingID] !== undefined) return state;
       const newEntry = {};
       newEntry[action.mapping.mappingID] = action.mapping;
+      newEntry[action.mapping.mappingID].active = false;
       return {...newEntry, ...state};
 
     case Constants.Actions.REMOVE_MAPPING: {
