@@ -125,10 +125,11 @@ class NumberResource extends React.Component {
                 variant='fab' mini
                 aria-label="Show mappings"
                 onClick={this.toggleMappingDrawer}
+                disableRipple
                 style={{
                   boxShadow: '0px 4px 3px 0px rgba(0, 0, 0, 0.2)',
                   position: 'absolute',
-                  // top: '50%',
+                  zIndex: 5001,
                   left: 'calc(50% - 20px)',
                   transform: 'translate(0, -60%)',
                   color: 'primary',
@@ -211,8 +212,10 @@ NumberResource.defaultProps = {
 const mapStateToProps = (state, ownProps) => {
   const mappingIDList = ownProps.resource.mappings;
   const mappings = [];
-  for (const mappingID of mappingIDList) {
-    mappings.push(state.mappings[mappingID]);
+  if (mappingIDList !== undefined) {
+    for (const mappingID of mappingIDList) {
+      mappings.push(state.mappings[mappingID]);
+    }
   }
   return {mappings: mappings};
 };
