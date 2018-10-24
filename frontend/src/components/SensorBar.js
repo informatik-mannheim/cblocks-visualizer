@@ -60,6 +60,8 @@ class SensorBar extends Component {
               return (
                 <div
                   key={'range-' + i++}
+                  onMouseEnter={() => {console.log('onMouseEnter');}}
+                  onMouseLeave={() => {console.log('onMouseLeave');}}
                   style={{
                     background: currentRange.color,
                     width:

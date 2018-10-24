@@ -131,10 +131,10 @@ class Sensor extends Component {
         {this.props.connectDragSource(header)}
         <CardContent>
           {Object.entries(this.props.resources).map((resourceKeyValue) => {
-            const dividerLine = (i === 0) ? (
-              <div/>
+            const dividerSpace = (i === 0) ? (
+              null
             ) : (
-              <HorizontalDividerLine/>
+              <div style={{height: 20}}/>
             );
             i++;
 
@@ -144,7 +144,7 @@ class Sensor extends Component {
             if (this.props.values[currentResource.resourceID] !== undefined) {
               return (
                 <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID + '_div'}>
-                  {dividerLine}
+                  {dividerSpace}
                   <ResourceWrapper
                     objectID={this.props.objectID}
                     instanceID={this.props.instanceID}

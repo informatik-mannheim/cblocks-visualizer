@@ -4,13 +4,10 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import svgIcons from '../../../../../../images/svgIcons';
-import blue from '@material-ui/core/colors/blue';
 
 class CategoryMapping extends React.Component {
   render () {
-    const { currentValue, min, max} = this.props;
-    const { label, value, ranges } = this.props.mapping;
-    const defaultValue = this.props.mapping.default;
+    const { label, value } = this.props.mapping;
     const shownValue = (typeof value === 'number') ? Math.round(value * 10) / 10 : value;
     return (
       <div style={{position: 'relative'}}>
@@ -19,7 +16,7 @@ class CategoryMapping extends React.Component {
             <Typography variant='headline' align='center' style={{marginTop: 0}}>{shownValue}</Typography>
         </div>
         <div>
-          <div style={{float: 'right', position: 'absolute', right: -15, top: 5}}>
+          <div style={{float: 'right', position: 'absolute', right: 7, top: 5}}>
             <IconButton variant='fab' aria-label="Toggle Visibility" color='primary' onClick={() => console.log('test')}>
               <SvgIcon color='primary'>
                 <path d={svgIcons.eye} />
@@ -33,10 +30,7 @@ class CategoryMapping extends React.Component {
 }
 
 CategoryMapping.propTypes = {
-  currentValue: PropTypes.number,
-  mapping: PropTypes.object,
-  max: PropTypes.number,
-  min: PropTypes.number
+  mapping: PropTypes.object
 };
 
 export default CategoryMapping;

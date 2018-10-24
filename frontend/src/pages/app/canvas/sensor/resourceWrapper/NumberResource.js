@@ -6,22 +6,23 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import svgIcons from '../../../../../images/svgIcons';
-import { HorizontalDividerLine } from '../../../../../components/HorizontalDividerLine';
-import CategoryMapping from './numberResource/CategoryMapping';
+import MappingDrawer from './numberResource/MappingDrawer';
 import { connect } from 'react-redux';
 import Constants from '../../../../../Constants';
+import Expand from 'react-expand-animated';
 
 class NumberResource extends React.Component {
+  state = { mappingDrawerOpen: false };
+
+  toggleMappingDrawer = () => {
+    this.setState(prevState => ({mappingDrawerOpen: !prevState.mappingDrawerOpen}));
+  };
+
   render () {
     if (this.props.smallForm === false) {
       //Single Resource
       const max = this.props.resource.schema.maximum;
       const min = this.props.resource.schema.minimum;
-      const graphIcon = (
-        <SvgIcon>
-          <path d={svgIcons.chart} />
-        </SvgIcon>
-      );
 
       const getMappingPalette = i => {
         const COLORS = Constants.Colors;
@@ -87,49 +88,77 @@ class NumberResource extends React.Component {
       };
 
       return (
-        <div>
+        <div style={{
+          marginLeft: -24,
+          marginRight: -24
+        }}>
             <Typography variant='title' align='center' style={{marginBottom: 20}}>{this.props.resource.name}</Typography>
-            <div>
-              <Typography variant='headline' align='center' style={{marginBottom: 40}}>{this.props.currentValue
-                + ' ' + this.props.resource.unit}</Typography>
-              <SensorBar
-                currentValue={this.props.currentValue}
-                mappings={normalizedMappings(this.props.mappings)}
-                max={max}
-                min={min}
-                style={{marginBottom: 0}}/>
-              <div style={{display: 'block', float: 'left'}}>
-                <Typography variant='body2'>{0}</Typography>
-              </div>
-              <div style={{display: 'block', float: 'right', marginTop: 0}}>
-                <Typography variant='body2'>{100}</Typography>
+            <div
+              style={{
+                marginBottom: 5,
+                paddingBottom: 50,
+                // boxShadow: `1px 3px 1px #9E9E9E`,
+                boxShadow: this.state.mappingDrawerOpen === true
+                  ? '0px 4px 4px 0px rgba(0, 0, 0, 0.2)'
+                  : '0px 1px 0px 0px rgba(0, 0, 0, 0.2)'
+            }}>
+              <div style={{marginLeft: 24, marginRight: 24}}>
+                <Typography variant='headline' align='center' style={{marginBottom: 40}}>{this.props.currentValue
+                  + ' ' + this.props.resource.unit}</Typography>
+                <SensorBar
+                  currentValue={this.props.currentValue}
+                  mappings={normalizedMappings(this.props.mappings)}
+                  max={max}
+                  min={min}
+                  style={{marginBottom: 0}}/>
+                <div style={{display: 'block', float: 'left'}}>
+                  <Typography variant='body2'>{0}</Typography>
+                </div>
+                <div style={{display: 'block', float: 'right', marginTop: 0}}>
+                  <Typography variant='body2'>{100}</Typography>
+                </div>
               </div>
             </div>
-
-            <br/>
+            <div style={{position: 'relative'}}>
+              <Button
+                className='expandButton'
+                variant='fab' mini
+                aria-label="Show mappings"
+                onClick={this.toggleMappingDrawer}
+                style={{
+                  boxShadow: '0px 4px 3px 0px rgba(0, 0, 0, 0.2)',
+                  position: 'absolute',
+                  // top: '50%',
+                  left: 'calc(50% - 20px)',
+                  transform: 'translate(0, -60%)',
+                  color: 'primary',
+                  backgroundColor: '#FFF'
+                }}
+                >
+                <SvgIcon>
+                  <path d={this.state.mappingDrawerOpen === false
+                    ? svgIcons.chevron_down
+                    : svgIcons.chevron_up} />
+                </SvgIcon>
+              </Button>
+            </div>
             {
               //TODO: put the button back in
               /* <div style={{float: 'right', marginBottom: 10}}>
               <Button variant='fab' mini aria-label="Show Graph" color='secondary' onClick={() => this.props.showModal('CHART', chartModalProps)}>
-                {graphIcon}
+                <SvgIcon>
+                  <path d={svgIcons.chart} />
+                </SvgIcon>
               </Button>
             </div> */
 
             //TODO: move this part to generic ResourceWrapper component
             }
-            {Object.entries(this.props.mappings).map((mappingsKeyValue) => {
-              const currentMapping = mappingsKeyValue[1];
-              return (
-                <div key={currentMapping.mappingID + '_div'}>
-                  <HorizontalDividerLine isMappingDivider={true}/>
-                  <CategoryMapping
-                    mapping={currentMapping}
-                    currentValue={this.props.currentValue}
-                    max={max}
-                    min={min}/>
-                </div>
-              );
-            })}
+            <div>
+              <Expand open={this.state.mappingDrawerOpen}>
+                <MappingDrawer expanded={true} mappings={this.props.mappings}/>
+              </Expand>
+            </div>
         </div>
       );
     } else {
