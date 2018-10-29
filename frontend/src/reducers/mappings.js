@@ -28,8 +28,25 @@ export function mappings (state = {}, action) {
 
     case Constants.Actions.SET_MAPPING_ACTIVE: {
       if (state[action.mappingID] === undefined) return state;
+      const owningResource = {
+        objectID: state[action.mappingID].objectID,
+        instanceID: state[action.mappingID].instanceID,
+        resourceID: state[action.mappingID].resourceID
+      };
+
+      const relatedMappings = {};
+      for (const mappingID in state) {
+        if (state[mappingID].objectID === owningResource.objectID
+        && state[mappingID].instanceID === owningResource.instanceID
+        && state[mappingID].resourceID === owningResource.resourceID
+        && mappingID !== action.mappingID) {
+          relatedMappings[mappingID] = {...clonedeep(state[mappingID]), active: false};
+        }
+      }
+
       const mappingClone = {...clonedeep(state[action.mappingID]), active: true};
-      return {...state, [action.mappingID]: mappingClone};
+      relatedMappings[action.mappingID] = mappingClone;
+      return {...state, ...relatedMappings};
     }
 
     case Constants.Actions.SET_MAPPING_INACTIVE: {

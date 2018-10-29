@@ -7,7 +7,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { Avatar, Card, CardContent, CardHeader } from '@material-ui/core';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import ResourceWrapper from './sensor/ResourceWrapper';
-import { HorizontalDividerLine } from '../../../components/HorizontalDividerLine';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import * as action from '../../../action/';
 import svgIcons from '../../../images/svgIcons';

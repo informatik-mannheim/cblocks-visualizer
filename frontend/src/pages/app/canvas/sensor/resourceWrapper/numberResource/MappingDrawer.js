@@ -19,7 +19,9 @@ class MappingDrawer extends React.Component {
               key={currentMapping.mappingID + '_div'}
               style={{paddingBottom: 16}}
               >
-              <CategoryMapping mapping={currentMapping}/>
+              <CategoryMapping
+                mapping={currentMapping}
+                setMappingActivity={this.props.setMappingActivity}/>
             </div>
           );
         })}
@@ -29,8 +31,8 @@ class MappingDrawer extends React.Component {
 }
 
 MappingDrawer.propTypes = {
-  expanded: PropTypes.bool,
-  mappings: PropTypes.array
+  mappings: PropTypes.array,
+  setMappingActivity: PropTypes.func
 };
 
 export default MappingDrawer;

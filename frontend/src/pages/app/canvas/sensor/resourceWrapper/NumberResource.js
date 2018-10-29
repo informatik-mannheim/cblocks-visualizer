@@ -10,6 +10,7 @@ import MappingDrawer from './numberResource/MappingDrawer';
 import { connect } from 'react-redux';
 import Constants from '../../../../../Constants';
 import Expand from 'react-expand-animated';
+import * as action from '../../../../../action/';
 
 class NumberResource extends React.Component {
   state = { mappingDrawerOpen: false };
@@ -58,7 +59,7 @@ class NumberResource extends React.Component {
                 label: mapping.label,
                 mappingType: mapping.mappingType,
                 ranges: normalizedRanges,
-                active: true
+                active: mapping.active
               });
               break;
             }
@@ -73,7 +74,7 @@ class NumberResource extends React.Component {
                 label: mapping.label,
                 mappingType: mapping.mappingType,
                 ranges: ranges,
-                active: false
+                active: mapping.active
               });
               break;
             }
@@ -157,7 +158,10 @@ class NumberResource extends React.Component {
             }
             <div>
               <Expand open={this.state.mappingDrawerOpen}>
-                <MappingDrawer expanded={true} mappings={this.props.mappings}/>
+                <MappingDrawer
+                  expanded={true}
+                  mappings={this.props.mappings}
+                  setMappingActivity={this.props.setMappingActivity}/>
               </Expand>
             </div>
         </div>
@@ -201,6 +205,7 @@ NumberResource.propTypes = {
   objectID: PropTypes.number,
   requestChangeToSubresource: PropTypes.func,
   resource: PropTypes.object,
+  setMappingActivity: PropTypes.func,
   showModal: PropTypes.func,
   smallForm: PropTypes.bool
 };
@@ -219,6 +224,8 @@ const mapStateToProps = (state, ownProps) => {
   }
   return {mappings: mappings};
 };
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  setMappingActivity: (mappingID, bool) => {dispatch(action.setMappingActivity(mappingID, bool));}
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(NumberResource);
