@@ -8,7 +8,7 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import svgIcons from '../../../../../images/svgIcons';
 import MappingDrawer from './numberResource/MappingDrawer';
 import { connect } from 'react-redux';
-import Constants from '../../../../../Constants';
+import Constants from '../../../../../constants';
 import Expand from 'react-expand-animated';
 import * as action from '../../../../../action/';
 
