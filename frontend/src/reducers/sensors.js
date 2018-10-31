@@ -123,7 +123,9 @@ function sensor (state = {}, action) {
       return sensorToUpdate;
     case Constants.Actions.ADD_MAPPING: {
       const updatedSensor = clonedeep(state);
-      updatedSensor.resources[action.mapping.resourceID].mappings.push(action.mapping.mappingID);
+      if (!state.resources[action.mapping.resourceID].mappings.includes(action.mapping.mappingID)) {
+        updatedSensor.resources[action.mapping.resourceID].mappings.push(action.mapping.mappingID);
+      }
       return updatedSensor;
     }
     default:

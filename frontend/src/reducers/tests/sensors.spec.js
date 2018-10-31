@@ -633,6 +633,108 @@ describe('sensors reducer', () => {
       }
     );
   });
+  it('should add a not add duplicate mappingIDs', () => {
+    const addMappingAction = {
+      type: Constants.Actions.ADD_MAPPING,
+      mapping: {
+        mappingID: 'asdfasdf19280u34981uf',
+        label: 'ExampleMapping',
+        default: 'Unmatched',
+        objectID: 3303,
+        instanceID: 0,
+        resourceID: 0,
+        ranges: [{
+          label: 'firstRange',
+          greaterEqualsThan: 15,
+          lessThan: 30
+        }, {
+          label: 'secondRange',
+          greaterEqualsThan: 45,
+          lessThan: 80
+        }],
+        mappingType: 'category',
+        value: 'firstRange',
+        valueHistory: ['firstRange']
+      }
+    };
+    expect(sensors({
+      count: 1,
+      all_sensors: [
+        {
+          objectID: 3303,
+          instanceID: 0,
+          resources: {
+            '0': {
+              resourceID: 0,
+              name: 'Temperature',
+              is_writeable: false,
+              schema: {
+                type: 'number',
+                additionalProperties: false
+              },
+              mappings: ['asdfasdf19280u34981uf']
+            },
+            '1': {
+              resourceID: 1,
+              name: 'Humidity',
+              is_writeable: false,
+              schema: {
+                type: 'number',
+                minimum: 0,
+                maximum: 100,
+                additionalProperties: false
+              },
+              mappings: []
+            }
+          },
+          name: 'Room Sensor',
+          values: {},
+          valueHistory: [],
+          xPos: 10,
+          yPos: 10
+        }
+      ]
+    }, addMappingAction)).toEqual(
+      {
+        count: 1,
+        all_sensors: [
+          {
+            objectID: 3303,
+            instanceID: 0,
+            resources: {
+              '0': {
+                resourceID: 0,
+                name: 'Temperature',
+                is_writeable: false,
+                schema: {
+                  type: 'number',
+                  additionalProperties: false
+                },
+                mappings: ['asdfasdf19280u34981uf']
+              },
+              '1': {
+                resourceID: 1,
+                name: 'Humidity',
+                is_writeable: false,
+                schema: {
+                  type: 'number',
+                  minimum: 0,
+                  maximum: 100,
+                  additionalProperties: false
+                },
+                mappings: []
+              }
+            },
+            name: 'Room Sensor',
+            values: {},
+            valueHistory: [],
+            xPos: 10,
+            yPos: 10
+          }
+        ]
+      }
+    );
+  });
   it('should remove a mappingID from the relevant sensor\'s resource', () => {
     const removeMappingAction = {
       type: Constants.Actions.REMOVE_MAPPING,
