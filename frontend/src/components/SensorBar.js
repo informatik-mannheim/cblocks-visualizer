@@ -58,7 +58,6 @@ class SensorBar extends Component {
     const component = (
       <div>
         <div
-          className='sensorBar-main'
           style={{
             background: '#8d2d55',
             width: '100%',
@@ -94,10 +93,14 @@ class SensorBar extends Component {
                         currentRange.low
                       ) + '%',
                     height: 5,
+                    top:
+                      this.state.rangeLabel === currentRange.label
+                        ? -1
+                        : 0,
                     position: 'absolute',
                     border:
                       this.state.rangeLabel === currentRange.label
-                        ? 'double'
+                        ? '1px solid black'
                         : ''
                   }}
                 />
