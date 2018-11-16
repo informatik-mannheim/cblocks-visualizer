@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import ChartModal from './modalRoot/ChartModal';
+import AddMappingModal from './modalRoot/AddMappingModal';
 import Typography from '@material-ui/core/Typography';
 import * as action from '../../action/';
 
 const MODAL_COMPONENTS = {
-  'CHART': ChartModal
+  CHART: ChartModal,
+  ADD_MAPPING: AddMappingModal
 };
 
 const styles = theme => ({

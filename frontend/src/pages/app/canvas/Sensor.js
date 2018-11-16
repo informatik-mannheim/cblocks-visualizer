@@ -100,6 +100,9 @@ class Sensor extends Component {
       case 3305:
         path = svgIcons.rfid;
         break;
+      case 3306:
+        path = svgIcons.scale;
+        break;
       default:
         path = svgIcons.default;
     }

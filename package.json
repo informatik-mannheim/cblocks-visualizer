@@ -43,6 +43,7 @@
     "react-tooltip": "^3.9.0",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.2",
+    "redux-form": "^7.4.2",
     "redux-subscriber": "^1.1.0",
     "redux-thunk": "^2.2.0",
     "typeface-roboto": "0.0.54"

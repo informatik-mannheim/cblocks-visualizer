@@ -19,7 +19,13 @@ class SensorBar extends Component {
 
   getPercentage = (min, max, val) => {
     const range = max - min;
-    return (val / range) * 100;
+    if (min >= 0) {
+      return (val / range) * 100;
+    }
+
+    //min negative
+    const minToZero = (min * -1);
+    return ((minToZero + val) / range) * 100;
   };
 
   getWidthPercentage = (min, max, greaterEqualsThan, lessThan) => {

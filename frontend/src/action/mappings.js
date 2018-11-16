@@ -7,6 +7,21 @@ const getURLForMappingType = type => {
   if (type === 'label') return Constants.URLs.LABEL_MAPPING_URL;
 };
 
+// const getColorCodeForMapping = (getState, resource) => {
+//   const sensorsArray = getState().sensors.all_sensors;
+//   const mappings = getState().mappings;
+//   for (const sens of sensorsArray) {
+//     console.log(sens);
+//     if (sens.objectID === resource.objectID
+//       && sens.instanceID === resource.instanceID) {
+//       const relevantMappings = sens.resources[resource.resourceID].mappings;
+//       for (const mappingID of relevantMappings) {
+//         mappings[mappingID];
+//       }
+//     }
+//   }
+// };
+
 export const setMappingActivity = (mappingID, bool) => {
   return bool === true
     ? {type: Constants.Actions.SET_MAPPING_ACTIVE, mappingID: mappingID}
@@ -23,8 +38,7 @@ export const removeMapping = mappingID =>
   ({type: Constants.Actions.REMOVE_MAPPING, mappingID});
 
 export const fetchMapping = (mappingType, mappingID, value) => {
-  console.log(`fetching ${mappingType} mappings...`);
-  return (dispatch) => {
+  return (dispatch, getState) => {
      axios.get(`${getURLForMappingType(mappingType)}/${mappingID}`)
       .then((response) => {
         if (response.status !== 200) {
@@ -33,6 +47,13 @@ export const fetchMapping = (mappingType, mappingID, value) => {
         return response.data;
       })
       .then((mapping) => {
+        // const colorCode = getColorCodeForMapping(getState, {
+        //   objectID: mapping.objectID,
+        //   instanceID: mapping.instanceID,
+        //   resourceID: mapping.resourceID
+        // });
+        // console.log(colorCode);
+        // mapping.colorCode = colorCode;
         mapping.mappingType = mappingType;
         mapping.valueHistory = [];
         mapping.value = value;

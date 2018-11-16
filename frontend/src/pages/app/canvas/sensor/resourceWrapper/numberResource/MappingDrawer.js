@@ -1,17 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { HorizontalDividerLine } from '../../../../../../components/HorizontalDividerLine';
 import CategoryMapping from './CategoryMapping';
+import Button from '@material-ui/core/Button';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import AddIcon from '@material-ui/icons/Add';
 
 class MappingDrawer extends React.Component {
   render = () => {
+    const {objectID, instanceID, resourceID} = this.props;
+    const mappingModalProps = {
+      open: true,
+      objectID: objectID,
+      instanceID: instanceID,
+      resourceID: resourceID
+    };
+
     return (
       <div style={{
         background: '#F5F5F6',
         boxShadow: 'inset 0 -7px 9px -7px rgba(0,0,0,0.2)'
         }}
         className='mapping-drawer'>
-      <div style={{height: 20}}/>
+        <div style={{height: 20}}/>
         {Object.entries(this.props.mappings).map((mappingsKeyValue) => {
           const currentMapping = mappingsKeyValue[1];
           return (
@@ -25,14 +35,45 @@ class MappingDrawer extends React.Component {
             </div>
           );
         })}
+      <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <Button
+        // variant='outlined'
+        onClick={() => this.props.showModal('ADD_MAPPING', mappingModalProps)}
+        style={{marginBottom: 4}}
+        color='secondary' >
+          <AddIcon/>
+          Add New Mapping
+        </Button>
       </div>
+    </div>
     );
   }
 }
 
+/*
+<Button
+style={{position: 'absolute', right: '16px'}}
+variant='fab' mini
+aria-label="Show Graph"
+color='secondary'
+onClick={() => this.props.showModal('CHART', 'chartModalProps')}>
+  <AddIcon />
+</Button>
+<div style={{height: 56}}/>
+*/
+
 MappingDrawer.propTypes = {
+  instanceID: PropTypes.number,
   mappings: PropTypes.array,
-  setMappingActivity: PropTypes.func
+  objectID: PropTypes.number,
+  resourceID: PropTypes.number,
+  setMappingActivity: PropTypes.func,
+  showModal: PropTypes.func
 };
 
 export default MappingDrawer;

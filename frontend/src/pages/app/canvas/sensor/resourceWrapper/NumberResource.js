@@ -88,12 +88,26 @@ class NumberResource extends React.Component {
         return newMappings;
       };
 
+      const chartModalProps = {
+        open: true,
+        objectID: this.props.objectID,
+        instanceID: this.props.instanceID,
+        resourceID: this.props.resource.resourceID
+      };
+
       return (
         <div style={{
           marginLeft: -24,
           marginRight: -24
         }}>
             <Typography variant='title' align='center' style={{marginBottom: 20}}>{this.props.resource.name}</Typography>
+            <div style={{position: 'absolute', right: '16px'}}>
+              <Button variant='fab' mini aria-label="Show Graph" color='primary' onClick={() => this.props.showModal('CHART', chartModalProps)}>
+                <SvgIcon>
+                  <path d={svgIcons.chart} />
+                </SvgIcon>
+              </Button>
+            </div>
             <div
               style={{
                 marginBottom: 5,
@@ -113,16 +127,16 @@ class NumberResource extends React.Component {
                   min={min}
                   style={{marginBottom: 0}}/>
                 <div style={{display: 'block', float: 'left'}}>
-                  <Typography variant='body2'>{0}</Typography>
+                  <Typography variant='body2'>{min}</Typography>
                 </div>
                 <div style={{display: 'block', float: 'right', marginTop: 0}}>
-                  <Typography variant='body2'>{100}</Typography>
+                  <Typography variant='body2'>{max}</Typography>
                 </div>
               </div>
             </div>
             <div style={{position: 'relative'}}>
+
               <Button
-                className='expandButton'
                 variant='fab' mini
                 aria-label="Show mappings"
                 onClick={this.toggleMappingDrawer}
@@ -144,24 +158,17 @@ class NumberResource extends React.Component {
                 </SvgIcon>
               </Button>
             </div>
-            {
-              //TODO: put the button back in
-              /* <div style={{float: 'right', marginBottom: 10}}>
-              <Button variant='fab' mini aria-label="Show Graph" color='secondary' onClick={() => this.props.showModal('CHART', chartModalProps)}>
-                <SvgIcon>
-                  <path d={svgIcons.chart} />
-                </SvgIcon>
-              </Button>
-            </div> */
-
-            //TODO: move this part to generic ResourceWrapper component
-            }
+            {/*TODO: move this part to generic ResourceWrapper component*/}
             <div>
               <Expand open={this.state.mappingDrawerOpen}>
                 <MappingDrawer
-                  expanded={true}
-                  mappings={this.props.mappings}
-                  setMappingActivity={this.props.setMappingActivity}/>
+                expanded
+                objectID={this.props.objectID}
+                instanceID={this.props.instanceID}
+                resourceID={this.props.resource.resourceID}
+                mappings={this.props.mappings}
+                setMappingActivity={this.props.setMappingActivity}
+                showModal={this.props.showModal}/>
               </Expand>
             </div>
         </div>
@@ -174,16 +181,17 @@ class NumberResource extends React.Component {
       return (
         <div>
           <MaterialSlider
-            objectID={this.props.objectID}
-            instanceID={this.props.instanceID}
-            resourceID={this.props.resource.resourceID}
-            currentValue={this.props.currentValue}
-            maximum={max}
-            minimum={min}
-            height={20}
-            isWriteable={this.props.isWriteable}
-            requestChangeToSubresource={this.props.requestChangeToSubresource}
-            label={this.props.resource.label}/>
+          objectID={this.props.objectID}
+          instanceID={this.props.instanceID}
+          resourceID={this.props.resource.resourceID}
+          currentValue={this.props.currentValue}
+          maximum={max}
+          minimum={min}
+          height={20}
+          isWriteable={this.props.isWriteable}
+          requestChangeToSubresource={this.props.requestChangeToSubresource}
+          label={this.props.resource.label}/>
+
           <div style={{display: 'block', float: 'left'}}>
             <Typography variant='body2'>{min}</Typography>
           </div>
