@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import svgIcons from '../../../../../../images/svgIcons';
+import svgIcons from '../../../../../../../images/svgIcons';
 
 class CategoryMapping extends React.Component {
   render () {
@@ -15,6 +15,7 @@ class CategoryMapping extends React.Component {
       ? (
         <SvgIcon color='primary'>
           <path d={svgIcons.eye} />
+
         </SvgIcon>
       )
       : (
