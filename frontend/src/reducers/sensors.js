@@ -9,17 +9,20 @@ const initialSensorsState = {
 export function sensors (state = initialSensorsState, action) {
   switch (action.type) {
     case Constants.Actions.ADD_SENSOR:
-
-    //Check if duplicate
-    for (let i = 0; i < state.all_sensors.length; i++) {
-      if (state.all_sensors[i].objectID === action.sensor.objectID && state.all_sensors[i].instanceID === action.instanceID) {
-        return state;
+      //Check if duplicate
+      for (let i = 0; i < state.all_sensors.length; i++) {
+        if (
+          state.all_sensors[i].objectID === action.sensor.objectID
+          && state.all_sensors[i].instanceID === action.instanceID
+        ) {
+          return state;
+        }
       }
-    }
 
       //TODO: this...
       const sensorCount = state.all_sensors.length;
-      let xPos; const yPos = 10;
+      let xPos;
+      const yPos = 10;
       switch (sensorCount) {
         case 0:
           xPos = 10;
@@ -41,44 +44,64 @@ export function sensors (state = initialSensorsState, action) {
       }
 
       //add "mappings: []" to every resource
-      const newResources = {...action.sensor.resources};
+      const newResources = { ...action.sensor.resources };
       for (const key in action.sensor.resources) {
-        newResources[key] = {...newResources[key], mappings: []};
+        newResources[key] = { ...newResources[key], mappings: [] };
       }
 
-      const newSensor = Object.assign({},
-        {objectID: action.sensor.objectID},
-        {instanceID: action.instanceID},
-        {resources: newResources},
-        {name: action.sensor.name},
-        {values: {}},
-        {valueHistory: []},
-        {xPos: xPos},
-        {yPos: yPos});
+      const newSensor = Object.assign(
+        {},
+        { objectID: action.sensor.objectID },
+        { instanceID: action.instanceID },
+        { resources: newResources },
+        { name: action.sensor.name },
+        { values: {} },
+        { valueHistory: [] },
+        { xPos: xPos },
+        { yPos: yPos }
+      );
 
-       const newAllSensors = state.all_sensors.concat(newSensor);
-       return {
-         count: newAllSensors.length,
-         all_sensors: newAllSensors
-       };
+      const newAllSensors = state.all_sensors.concat(newSensor);
+      return {
+        count: newAllSensors.length,
+        all_sensors: newAllSensors
+      };
     case Constants.Actions.MOVE_SENSOR:
-      return {count: state.count, all_sensors: state.all_sensors.map(currentSensor => sensor(currentSensor, action))};
+      return {
+        count: state.count,
+        all_sensors: state.all_sensors.map(currentSensor =>
+          sensor(currentSensor, action)
+        )
+      };
     case Constants.Actions.UPDATE_SENSOR_VALUE:
-      return {count: state.count, all_sensors: state.all_sensors.map(currentSensor => sensor(currentSensor, action))};
+      return {
+        count: state.count,
+        all_sensors: state.all_sensors.map(currentSensor =>
+          sensor(currentSensor, action)
+        )
+      };
     case Constants.Actions.REMOVE_SENSOR:
       if (state.count !== 0) {
-        const updatedSensors = state.all_sensors.filter(item => (item.objectID !== action.objectID || item.instanceID !== action.instanceID));
-        return {count: updatedSensors.length, all_sensors: updatedSensors};
+        const updatedSensors = state.all_sensors.filter(
+          item =>
+            item.objectID !== action.objectID
+            || item.instanceID !== action.instanceID
+        );
+        return { count: updatedSensors.length, all_sensors: updatedSensors };
       }
       return state;
     case Constants.Actions.ADD_MAPPING: {
       const augmentedAction = clonedeep(action);
       augmentedAction.sensorID = action.mapping.objectID;
       augmentedAction.instanceID = action.mapping.instanceID;
-      return {count: state.count, all_sensors: state.all_sensors.map(currentSensor => sensor(currentSensor, augmentedAction))};
+      return {
+        count: state.count,
+        all_sensors: state.all_sensors.map(currentSensor =>
+          sensor(currentSensor, augmentedAction)
+        )
+      };
     }
     case Constants.Actions.REMOVE_MAPPING: {
-
       const stateClone = clonedeep(state);
       for (const sensorIndex in stateClone.all_sensors) {
         const sens = stateClone.all_sensors[sensorIndex];
@@ -97,7 +120,10 @@ export function sensors (state = initialSensorsState, action) {
 }
 
 function sensor (state = {}, action) {
-  if (state.objectID !== action.sensorID || state.instanceID !== action.instanceID) {
+  if (
+    state.objectID !== action.sensorID
+    || state.instanceID !== action.instanceID
+  ) {
     return state;
   }
 
@@ -117,14 +143,22 @@ function sensor (state = {}, action) {
       sensorToUpdate.values = newValues;
 
       //Add new values to valueHistory if max 100 values, else delete oldest
-      if (sensorToUpdate.valueHistory.length >= 100) sensorToUpdate.valueHistory.shift();
-      sensorToUpdate.valueHistory = sensorToUpdate.valueHistory.concat(newValues);
+      if (sensorToUpdate.valueHistory.length >= 100) {sensorToUpdate.valueHistory.shift();}
+      sensorToUpdate.valueHistory = sensorToUpdate.valueHistory.concat(
+        newValues
+      );
 
       return sensorToUpdate;
     case Constants.Actions.ADD_MAPPING: {
       const updatedSensor = clonedeep(state);
-      if (!state.resources[action.mapping.resourceID].mappings.includes(action.mapping.mappingID)) {
-        updatedSensor.resources[action.mapping.resourceID].mappings.push(action.mapping.mappingID);
+      if (
+        !state.resources[action.mapping.resourceID].mappings.includes(
+          action.mapping.mappingID
+        )
+      ) {
+        updatedSensor.resources[action.mapping.resourceID].mappings.push(
+          action.mapping.mappingID
+        );
       }
       return updatedSensor;
     }

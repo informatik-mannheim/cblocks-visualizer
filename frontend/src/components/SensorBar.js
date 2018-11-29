@@ -9,13 +9,13 @@ class SensorBar extends Component {
     rangeLabel: ''
   };
 
-  handleHoverStart = (rangeLabel) => {
-      this.setState(prevState => ({hovering: true, rangeLabel: rangeLabel}));
-  }
+  handleHoverStart = rangeLabel => {
+    this.setState(prevState => ({ hovering: true, rangeLabel: rangeLabel }));
+  };
 
   handleHoverEnd = () => {
-      this.setState(prevState => ({hovering: false, rangeLabel: ''}));
-  }
+    this.setState(prevState => ({ hovering: false, rangeLabel: '' }));
+  };
 
   getPercentage = (min, max, val) => {
     const range = max - min;
@@ -24,7 +24,7 @@ class SensorBar extends Component {
     }
 
     //min negative
-    const minToZero = (min * -1);
+    const minToZero = min * -1;
     return ((minToZero + val) / range) * 100;
   };
 
@@ -38,8 +38,10 @@ class SensorBar extends Component {
     const activeMapping = this.activeMapping();
     if (activeMapping !== undefined) {
       for (const range of activeMapping.ranges) {
-        if (this.props.currentValue >= range.low
-          && this.props.currentValue < range.high) {
+        if (
+          this.props.currentValue >= range.low
+          && this.props.currentValue < range.high
+        ) {
           return range.color;
         }
       }
@@ -51,7 +53,7 @@ class SensorBar extends Component {
     for (const mapping of this.props.mappings) {
       if (mapping.active === true) return mapping;
     }
-  }
+  };
 
   render = () => {
     const percentage = this.getPercentage(
@@ -72,46 +74,49 @@ class SensorBar extends Component {
             position: 'relative'
           }}
         >
-
           {this.activeMapping() === undefined
             ? null
-            : Object.entries(this.activeMapping().ranges).map(rangesKeyValue => {
-              const currentRange = rangesKeyValue[1];
-              return (
-                <div
-                  data-tip={currentRange.label}
-                  key={'range-' + i++}
-                  onMouseEnter={() => {this.handleHoverStart(currentRange.label);}}
-                  onMouseLeave={() => {this.handleHoverEnd();}}
-                  style={{
-                    background: currentRange.color,
-                    width:
-                      this.getWidthPercentage(
-                        this.props.min,
-                        this.props.max,
-                        currentRange.low,
-                        currentRange.high
-                      ) + '%',
-                    marginLeft:
-                      this.getPercentage(
-                        this.props.min,
-                        this.props.max,
-                        currentRange.low
-                      ) + '%',
-                    height: 5,
-                    top:
-                      this.state.rangeLabel === currentRange.label
-                        ? -1
-                        : 0,
-                    position: 'absolute',
-                    border:
-                      this.state.rangeLabel === currentRange.label
-                        ? '1px solid black'
-                        : ''
-                  }}
-                />
-              );
-            })}
+            : Object.entries(this.activeMapping().ranges).map(
+                rangesKeyValue => {
+                  const currentRange = rangesKeyValue[1];
+                  return (
+                    <div
+                      data-tip={currentRange.label}
+                      key={'range-' + i++}
+                      onMouseEnter={() => {
+                        this.handleHoverStart(currentRange.label);
+                      }}
+                      onMouseLeave={() => {
+                        this.handleHoverEnd();
+                      }}
+                      style={{
+                        background: currentRange.color,
+                        width:
+                          this.getWidthPercentage(
+                            this.props.min,
+                            this.props.max,
+                            currentRange.low,
+                            currentRange.high
+                          ) + '%',
+                        marginLeft:
+                          this.getPercentage(
+                            this.props.min,
+                            this.props.max,
+                            currentRange.low
+                          ) + '%',
+                        height: 5,
+                        top:
+                          this.state.rangeLabel === currentRange.label ? -1 : 0,
+                        position: 'absolute',
+                        border:
+                          this.state.rangeLabel === currentRange.label
+                            ? '1px solid black'
+                            : ''
+                      }}
+                    />
+                  );
+                }
+              )}
         </div>
         <div
           style={{
@@ -123,7 +128,7 @@ class SensorBar extends Component {
             transform: 'rotate(-45deg) translate(14px, -26px)'
           }}
         />
-        <ReactTooltip/>
+        <ReactTooltip />
       </div>
     );
 

@@ -24,29 +24,37 @@ const getURLForMappingType = type => {
 
 export const setMappingActivity = (mappingID, bool) => {
   return bool === true
-    ? {type: Constants.Actions.SET_MAPPING_ACTIVE, mappingID: mappingID}
-    : {type: Constants.Actions.SET_MAPPING_INACTIVE, mappingID: mappingID};
+    ? { type: Constants.Actions.SET_MAPPING_ACTIVE, mappingID: mappingID }
+    : { type: Constants.Actions.SET_MAPPING_INACTIVE, mappingID: mappingID };
 };
 
-export const addMapping = mapping =>
-  ({type: Constants.Actions.ADD_MAPPING, mapping});
+export const addMapping = mapping => ({
+  type: Constants.Actions.ADD_MAPPING,
+  mapping
+});
 
-export const updateMappingValue = (mappingID, value) =>
-  ({type: Constants.Actions.UPDATE_MAPPING_VALUE, mappingID, value});
+export const updateMappingValue = (mappingID, value) => ({
+  type: Constants.Actions.UPDATE_MAPPING_VALUE,
+  mappingID,
+  value
+});
 
-export const removeMapping = mappingID =>
-  ({type: Constants.Actions.REMOVE_MAPPING, mappingID});
+export const removeMapping = mappingID => ({
+  type: Constants.Actions.REMOVE_MAPPING,
+  mappingID
+});
 
 export const fetchMapping = (mappingType, mappingID, value) => {
   return (dispatch, getState) => {
-     axios.get(`${getURLForMappingType(mappingType)}/${mappingID}`)
-      .then((response) => {
+    axios
+      .get(`${getURLForMappingType(mappingType)}/${mappingID}`)
+      .then(response => {
         if (response.status !== 200) {
           throw Error(response.statusText);
         }
         return response.data;
       })
-      .then((mapping) => {
+      .then(mapping => {
         // const colorCode = getColorCodeForMapping(getState, {
         //   objectID: mapping.objectID,
         //   instanceID: mapping.instanceID,
@@ -60,16 +68,17 @@ export const fetchMapping = (mappingType, mappingID, value) => {
         mapping.valueHistory[0] = value;
         dispatch(addMapping(mapping));
       })
-      .catch((e) => {
-         console.log(e);
+      .catch(e => {
+        console.log(e);
       });
   };
 };
 
 export const newMappingValue = (mappingType, mappingID, value) => {
   return (dispatch, getState) => {
-    const isKnownMapping = getState().mappings[mappingID] !== undefined ? true : false;
-    if (isKnownMapping === true){
+    const isKnownMapping
+      = getState().mappings[mappingID] !== undefined ? true : false;
+    if (isKnownMapping === true) {
       return dispatch(updateMappingValue(mappingID, value));
     } else {
       return dispatch(fetchMapping(mappingType, mappingID, value));
@@ -77,7 +86,13 @@ export const newMappingValue = (mappingType, mappingID, value) => {
   };
 };
 
-export const createNewMapping = (mappingType, label, defaultValue, resource, ranges) => {
+export const createNewMapping = (
+  mappingType,
+  label,
+  defaultValue,
+  resource,
+  ranges
+) => {
   const data = {
     label: label,
     default: defaultValue,
@@ -85,7 +100,8 @@ export const createNewMapping = (mappingType, label, defaultValue, resource, ran
     ranges: ranges
   };
   return dispatch => {
-    return axios.post(getURLForMappingType(mappingType), data)
+    return axios
+      .post(getURLForMappingType(mappingType), data)
       .then(response => {
         if (response.status !== 200) {
           throw Error(response.statusText);
@@ -98,7 +114,14 @@ export const createNewMapping = (mappingType, label, defaultValue, resource, ran
   };
 };
 
-export const updateMapping = (mappingID, mappingType, label, defaultValue, resource, ranges) => {
+export const updateMapping = (
+  mappingID,
+  mappingType,
+  label,
+  defaultValue,
+  resource,
+  ranges
+) => {
   const data = {
     label: label,
     default: defaultValue,
@@ -106,7 +129,8 @@ export const updateMapping = (mappingID, mappingType, label, defaultValue, resou
     ranges: ranges
   };
   return dispatch => {
-    return axios.post(`${getURLForMappingType(mappingType)}/${mappingID}`, data)
+    return axios
+      .post(`${getURLForMappingType(mappingType)}/${mappingID}`, data)
       .then(response => {
         if (response.status !== 200) {
           throw Error(response.statusText);
@@ -121,7 +145,8 @@ export const updateMapping = (mappingID, mappingType, label, defaultValue, resou
 
 export const deleteMapping = (mappingType, mappingID) => {
   return dispatch => {
-    return axios.delete(`${getURLForMappingType(mappingType)}/${mappingID}`)
+    return axios
+      .delete(`${getURLForMappingType(mappingType)}/${mappingID}`)
       .then(response => {
         if (response.status !== 204) {
           throw Error(response.statusText);

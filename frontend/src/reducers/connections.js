@@ -20,14 +20,13 @@ export function connections (state = initialConnectionsState, action) {
       return [...state, newConnection];
 
     case Constants.Actions.UPDATE_CONNECTION:
-    return state;
+      return state;
 
     case Constants.Actions.REMOVE_CONNECTION:
-    const index = state.findIndex(i => i.sensorId === action.connection.sensorId);
-    return [
-      ...state.slice(0, index),
-      ...state.slice(index + 1)
-    ];
+      const index = state.findIndex(
+        i => i.sensorId === action.connection.sensorId
+      );
+      return [...state.slice(0, index), ...state.slice(index + 1)];
     default:
       return state;
   }

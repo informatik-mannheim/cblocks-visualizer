@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import ChartModal from './modalRoot/ChartModal';
 import AddMappingModal from './modalRoot/AddMappingModal';
-import Typography from '@material-ui/core/Typography';
 import * as action from '../../action/';
 
 const MODAL_COMPONENTS = {
@@ -33,9 +32,7 @@ class ModalRoot extends React.Component {
     } else {
       //TODO: Check if modalType exists to avoid type invalid error
       SpecificModal = MODAL_COMPONENTS[modalType];
-      return (
-        <SpecificModal {...modalProps} hideModal={this.props.hideModal}/>
-      );
+      return <SpecificModal {...modalProps} hideModal={this.props.hideModal} />;
     }
   }
 }
@@ -47,9 +44,9 @@ ModalRoot.propTypes = {
   modalType: PropTypes.string
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    hideModal: (modalType) => dispatch(action.hideModal(modalType))
+    hideModal: modalType => dispatch(action.hideModal(modalType))
   };
 };
 

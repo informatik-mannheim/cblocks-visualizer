@@ -6,7 +6,6 @@ import { mappings } from './mappings';
 import { pinnedCharts } from './pinnedCharts';
 import tests from './tests/';
 
-
 const rootReducer = combineReducers({
   sensors,
   mappings,

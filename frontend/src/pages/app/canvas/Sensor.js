@@ -14,8 +14,8 @@ import svgIcons from '../../../images/svgIcons';
 const sensorSource = {
   beginDrag (props) {
     // Return the data describing the dragged item
-    const {objectID, instanceID, name, xPos, yPos} = props;
-    return {objectID, instanceID, name, xPos, yPos};
+    const { objectID, instanceID, name, xPos, yPos } = props;
+    return { objectID, instanceID, name, xPos, yPos };
   },
 
   endDrag (props, monitor, component) {
@@ -26,10 +26,17 @@ const sensorSource = {
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
 
-    if (dropResult.dropEffect === 'move'
+    if (
+      dropResult.dropEffect === 'move'
       && item.objectID === component.props.objectID
-      && item.instanceID === component.props.instanceID) {
-        component.props.move(component.props.objectID, component.props.instanceID, dropResult.xPos, dropResult.yPos);
+      && item.instanceID === component.props.instanceID
+    ) {
+      component.props.move(
+        component.props.objectID,
+        component.props.instanceID,
+        dropResult.xPos,
+        dropResult.yPos
+      );
     }
   }
 };
@@ -45,7 +52,7 @@ function collect (cnnct, monitor) {
   };
 }
 
-const getBoundingDivStyles = (props) => {
+const getBoundingDivStyles = props => {
   const { xPos, yPos, isDragging } = props;
   const transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
 
@@ -80,7 +87,7 @@ class Sensor extends Component {
   }
 
   componentDidMount () {
-      // Use empty image as a drag preview so browsers don't draw it
+    // Use empty image as a drag preview so browsers don't draw it
     this.props.connectDragPreview(getEmptyImage(), {
       // IE fallback: specify that we'd rather screenshot the node
       // when it already knows it's being dragged so we can hide it with CSS.
@@ -108,7 +115,7 @@ class Sensor extends Component {
     }
 
     const sensorIcon = (
-      <SvgIcon color='primary'>
+      <SvgIcon color="primary">
         <path d={path} />
       </SvgIcon>
     );
@@ -117,45 +124,57 @@ class Sensor extends Component {
     const header = (
       <div>
         <CardHeader
-          style={{cursor: 'move'}}
+          style={{ cursor: 'move' }}
           avatar={
             <Avatar className={this.props.classes.sensorAvatar}>
               {sensorIcon}
             </Avatar>
           }
-          title={this.props.name}/>
+          title={this.props.name}
+        />
       </div>
     );
 
     const sensorComponent = (
       <div style={getBoundingDivStyles(this.props)}>
         <Card className={this.props.classes.card}>
-        {this.props.connectDragSource(header)}
-        <CardContent>
-          {Object.entries(this.props.resources).map((resourceKeyValue) => {
-            const dividerSpace = (i === 0) ? (
-              null
-            ) : (
-              <div style={{height: 20}}/>
-            );
-            i++;
+          {this.props.connectDragSource(header)}
+          <CardContent>
+            {Object.entries(this.props.resources).map(resourceKeyValue => {
+              const dividerSpace
+                = i === 0 ? null : <div style={{ height: 20 }} />;
+              i++;
 
-            const currentResource = resourceKeyValue[1];
-            //TODO: implement better check
-            const isMultiResource = currentResource.schema.properties === undefined ? false : true;
-            if (this.props.values[currentResource.resourceID] !== undefined) {
-              return (
-                <div key={this.props.objectID + '-' + this.props.instanceID + '-' + currentResource.resourceID + '_div'}>
-                  {dividerSpace}
-                  <ResourceWrapper
-                    objectID={this.props.objectID}
-                    instanceID={this.props.instanceID}
-                    resource={currentResource}
-                    currentValue={this.props.values[currentResource.resourceID]}
-                    multiResource={isMultiResource}
-                    isWriteable={currentResource.is_writeable}/>
-                </div>);
-            }
+              const currentResource = resourceKeyValue[1];
+              //TODO: implement better check
+              const isMultiResource
+                = currentResource.schema.properties === undefined ? false : true;
+              if (this.props.values[currentResource.resourceID] !== undefined) {
+                return (
+                  <div
+                    key={
+                      this.props.objectID
+                      + '-'
+                      + this.props.instanceID
+                      + '-'
+                      + currentResource.resourceID
+                      + '_div'
+                    }
+                  >
+                    {dividerSpace}
+                    <ResourceWrapper
+                      objectID={this.props.objectID}
+                      instanceID={this.props.instanceID}
+                      resource={currentResource}
+                      currentValue={
+                        this.props.values[currentResource.resourceID]
+                      }
+                      multiResource={isMultiResource}
+                      isWriteable={currentResource.is_writeable}
+                    />
+                  </div>
+                );
+              }
             })}
           </CardContent>
         </Card>
@@ -193,25 +212,34 @@ Sensor.defaultProps = {
 const mapStateToProps = (state, ownProps) => {
   let thisSensorIndex;
   for (let i = 0; i < state.sensors.count; i++) {
-    if (ownProps.objectID === state.sensors.all_sensors[i].objectID
-      && ownProps.instanceID === state.sensors.all_sensors[i].instanceID) {
-          thisSensorIndex = i;
+    if (
+      ownProps.objectID === state.sensors.all_sensors[i].objectID
+      && ownProps.instanceID === state.sensors.all_sensors[i].instanceID
+    ) {
+      thisSensorIndex = i;
     }
   }
   return {
-          xPos: state.sensors.all_sensors[thisSensorIndex].xPos,
-          yPos: state.sensors.all_sensors[thisSensorIndex].yPos,
-          values: state.sensors.all_sensors[thisSensorIndex].values
-        };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    move: (sensorID, instanceID, xPos, yPos) => dispatch(action.moveSensor(sensorID, instanceID, xPos, yPos))
+    xPos: state.sensors.all_sensors[thisSensorIndex].xPos,
+    yPos: state.sensors.all_sensors[thisSensorIndex].yPos,
+    values: state.sensors.all_sensors[thisSensorIndex].values
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    move: (sensorID, instanceID, xPos, yPos) =>
+      dispatch(action.moveSensor(sensorID, instanceID, xPos, yPos))
+  };
+};
 
-const dragSourceSensor = DragSource(Constants.ItemTypes.SENSOR, sensorSource, collect)(Sensor);
-const connectedSensor = connect(mapStateToProps, mapDispatchToProps)(dragSourceSensor);
+const dragSourceSensor = DragSource(
+  Constants.ItemTypes.SENSOR,
+  sensorSource,
+  collect
+)(Sensor);
+const connectedSensor = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(dragSourceSensor);
 export default withStyles(styles)(connectedSensor);

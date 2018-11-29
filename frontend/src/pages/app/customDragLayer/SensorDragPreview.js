@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Avatar, Card, CardHeader, withStyles, SvgIcon } from '@material-ui/core';
+import {
+  Avatar,
+  Card,
+  CardHeader,
+  withStyles,
+  SvgIcon
+} from '@material-ui/core';
 import svgIcons from '../../../images/svgIcons';
 
 const styles = {
@@ -36,22 +42,23 @@ class SensorDragPreview extends Component {
     }
 
     const sensorIcon = (
-      <SvgIcon color='primary'>
+      <SvgIcon color="primary">
         <path d={path} />
       </SvgIcon>
     );
 
     return (
-        <Card className={this.props.classes.card}>
-          <CardHeader
-            className={this.props.classes.cardHeader}
-            avatar={
-              <Avatar className={this.props.classes.sensorAvatar}>
-                {sensorIcon}
-              </Avatar>
-            }
-            title={this.props.name}/>
-        </Card>
+      <Card className={this.props.classes.card}>
+        <CardHeader
+          className={this.props.classes.cardHeader}
+          avatar={
+            <Avatar className={this.props.classes.sensorAvatar}>
+              {sensorIcon}
+            </Avatar>
+          }
+          title={this.props.name}
+        />
+      </Card>
     );
   }
 }

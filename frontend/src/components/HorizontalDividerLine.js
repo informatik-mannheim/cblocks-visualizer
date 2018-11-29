@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const getGray = (isMappingDivider) => {
+const getGray = isMappingDivider => {
   if (isMappingDivider === false) {
     return '#808080';
   } else {
@@ -10,18 +10,20 @@ const getGray = (isMappingDivider) => {
 };
 
 export class HorizontalDividerLine extends React.Component {
-
   render () {
     const style = {
       border: 0,
       height: '1px',
-      backgroundImage: '-webkit-linear-gradient(left, #f0f0f0, ' + getGray(this.props.isMappingDivider) + ', #f0f0f0)',
+      backgroundImage:
+        '-webkit-linear-gradient(left, #f0f0f0, '
+        + getGray(this.props.isMappingDivider)
+        + ', #f0f0f0)',
       width: '100%'
     };
 
     return (
       <div>
-        <hr style={style}/>
+        <hr style={style} />
       </div>
     );
   }

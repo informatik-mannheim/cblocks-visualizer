@@ -10,10 +10,10 @@ import Constants from './constants/';
 const rootEl = document.getElementById('app');
 
 const render = () => {
-    ReactDOM.render(
+  ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <App/>
+        <App />
       </Provider>
     </AppContainer>,
     rootEl

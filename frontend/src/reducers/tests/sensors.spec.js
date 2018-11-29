@@ -157,8 +157,9 @@ describe('sensors reducer', () => {
       sensor: sensorForAddTesting,
       instanceID: 0
     };
-    expect(sensors(initialSensorsState, addFirstSensorAction))
-      .toEqual(stateWithOneSensor);
+    expect(sensors(initialSensorsState, addFirstSensorAction)).toEqual(
+      stateWithOneSensor
+    );
   });
   it('should add a second sensor to the state', () => {
     const addSecondSensorAction = {
@@ -166,7 +167,9 @@ describe('sensors reducer', () => {
       instanceID: 1,
       sensor: sensorForAddTesting2
     };
-    expect(sensors(stateWithOneSensor, addSecondSensorAction)).toEqual(stateWithTwoSensors);
+    expect(sensors(stateWithOneSensor, addSecondSensorAction)).toEqual(
+      stateWithTwoSensors
+    );
   });
   it('should do nothing if duplicate sensor is being added', () => {
     const addSecondSensorAction = {
@@ -174,331 +177,9 @@ describe('sensors reducer', () => {
       instanceID: 2,
       sensor: sensorForAddTesting2
     };
-    expect(sensors({
-        count: 2,
-        all_sensors: [
-          {
-            objectID: 3303,
-            instanceID: 0,
-            resources: {
-              '0': {
-                resourceID: 0,
-                name: 'Temperature',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  additionalProperties: false
-                }
-              },
-              '1': {
-                resourceID: 1,
-                name: 'Humidity',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  minimum: 0,
-                  maximum: 100,
-                  additionalProperties: false
-                }
-              }
-            },
-            name: 'Room Sensor',
-            values: {},
-            valueHistory: [],
-            mappings: [],
-            xPos: 10,
-            yPos: 10
-          },
-          {
-            objectID: 3304,
-            instanceID: 2,
-            resources: {
-              '0': {
-                resourceID: 0,
-                name: 'Temperature',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  additionalProperties: false
-                }
-              },
-              '1': {
-                resourceID: 1,
-                name: 'Humidity',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  minimum: 0,
-                  maximum: 100,
-                  additionalProperties: false
-                }
-              }
-            },
-            name: 'Room Sensor',
-            values: {},
-            valueHistory: [],
-            mappings: [],
-            xPos: 370,
-            yPos: 10
-          }
-        ]
-      }, addSecondSensorAction)).toEqual({
-        count: 2,
-        all_sensors: [
-          {
-            objectID: 3303,
-            instanceID: 0,
-            resources: {
-              '0': {
-                resourceID: 0,
-                name: 'Temperature',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  additionalProperties: false
-                }
-              },
-              '1': {
-                resourceID: 1,
-                name: 'Humidity',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  minimum: 0,
-                  maximum: 100,
-                  additionalProperties: false
-                }
-              }
-            },
-            name: 'Room Sensor',
-            values: {},
-            valueHistory: [],
-            mappings: [],
-            xPos: 10,
-            yPos: 10
-          },
-          {
-            objectID: 3304,
-            instanceID: 2,
-            resources: {
-              '0': {
-                resourceID: 0,
-                name: 'Temperature',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  additionalProperties: false
-                }
-              },
-              '1': {
-                resourceID: 1,
-                name: 'Humidity',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  minimum: 0,
-                  maximum: 100,
-                  additionalProperties: false
-                }
-              }
-            },
-            name: 'Room Sensor',
-            values: {},
-            valueHistory: [],
-            mappings: [],
-            xPos: 370,
-            yPos: 10
-          }
-        ]
-      });
-  });
-  it('should remove a sensor from the state', () => {
-    const removeSensorAction = {
-      type: Constants.Actions.REMOVE_SENSOR,
-      objectID: 3303,
-      instanceID: 0
-    };
-    expect(sensors({
-        count: 2,
-        all_sensors: [
-          {
-            objectID: 3303,
-            instanceID: 0,
-            resources: {
-              '0': {
-                resourceID: 0,
-                name: 'Temperature',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  additionalProperties: false
-                }
-              },
-              '1': {
-                resourceID: 1,
-                name: 'Humidity',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  minimum: 0,
-                  maximum: 100,
-                  additionalProperties: false
-                }
-              }
-            },
-            name: 'Room Sensor',
-            values: {},
-            valueHistory: [],
-            mappings: [],
-            xPos: 10,
-            yPos: 10
-          },
-          {
-            objectID: 3304,
-            instanceID: 2,
-            resources: {
-              '0': {
-                resourceID: 0,
-                name: 'Temperature',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  additionalProperties: false
-                }
-              },
-              '1': {
-                resourceID: 1,
-                name: 'Humidity',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  minimum: 0,
-                  maximum: 100,
-                  additionalProperties: false
-                }
-              }
-            },
-            name: 'Room Sensor',
-            values: {},
-            valueHistory: [],
-            mappings: [],
-            xPos: 370,
-            yPos: 10
-          }
-        ]
-      }, removeSensorAction)).toEqual({
-          count: 1,
-          all_sensors: [
-            {
-              objectID: 3304,
-              instanceID: 2,
-              resources: {
-                '0': {
-                  resourceID: 0,
-                  name: 'Temperature',
-                  is_writeable: false,
-                  schema: {
-                    type: 'number',
-                    additionalProperties: false
-                  }
-                },
-                '1': {
-                  resourceID: 1,
-                  name: 'Humidity',
-                  is_writeable: false,
-                  schema: {
-                    type: 'number',
-                    minimum: 0,
-                    maximum: 100,
-                    additionalProperties: false
-                  }
-                }
-              },
-              name: 'Room Sensor',
-              values: {},
-              valueHistory: [],
-              mappings: [],
-              xPos: 370,
-              yPos: 10
-            }
-          ]
-        });
-  });
-  it('should do nothing if unknown sensorID is trying to be removed', () => {
-    const removeSensorAction = {
-      type: Constants.Actions.REMOVE_SENSOR,
-      objectID: 3305,
-      instanceID: 0
-    };
-    expect(sensors({
-        count: 2,
-        all_sensors: [
-          {
-            objectID: 3303,
-            instanceID: 0,
-            resources: {
-              '0': {
-                resourceID: 0,
-                name: 'Temperature',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  additionalProperties: false
-                }
-              },
-              '1': {
-                resourceID: 1,
-                name: 'Humidity',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  minimum: 0,
-                  maximum: 100,
-                  additionalProperties: false
-                }
-              }
-            },
-            name: 'Room Sensor',
-            values: {},
-            valueHistory: [],
-            mappings: [],
-            xPos: 10,
-            yPos: 10
-          },
-          {
-            objectID: 3304,
-            instanceID: 2,
-            resources: {
-              '0': {
-                resourceID: 0,
-                name: 'Temperature',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  additionalProperties: false
-                }
-              },
-              '1': {
-                resourceID: 1,
-                name: 'Humidity',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  minimum: 0,
-                  maximum: 100,
-                  additionalProperties: false
-                }
-              }
-            },
-            name: 'Room Sensor',
-            values: {},
-            valueHistory: [],
-            mappings: [],
-            xPos: 370,
-            yPos: 10
-          }
-        ]
-      }, removeSensorAction)).toEqual({
+    expect(
+      sensors(
+        {
           count: 2,
           all_sensors: [
             {
@@ -566,74 +247,346 @@ describe('sensors reducer', () => {
               yPos: 10
             }
           ]
-        });
-  });
-  it('should add a mappingID to the relevant sensor\'s resource', () => {
-    const addMappingAction = {
-      type: Constants.Actions.ADD_MAPPING,
-      mapping: {
-        mappingID: 'asdfasdf19280u34981uf',
-        label: 'ExampleMapping',
-        default: 'Unmatched',
-        objectID: 3303,
-        instanceID: 0,
-        resourceID: 0,
-        ranges: [{
-          label: 'firstRange',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
-        mappingType: 'category',
-        value: 'firstRange',
-        valueHistory: ['firstRange']
-      }
-    };
-    expect(sensors(stateWithOneSensor, addMappingAction)).toEqual(
-      {
-        count: 1,
-        all_sensors: [
-          {
-            objectID: 3303,
-            instanceID: 0,
-            resources: {
-              '0': {
-                resourceID: 0,
-                name: 'Temperature',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  additionalProperties: false
-                },
-                mappings: ['asdfasdf19280u34981uf']
-              },
-              '1': {
-                resourceID: 1,
-                name: 'Humidity',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  minimum: 0,
-                  maximum: 100,
-                  additionalProperties: false
-                },
-                mappings: []
+        },
+        addSecondSensorAction
+      )
+    ).toEqual({
+      count: 2,
+      all_sensors: [
+        {
+          objectID: 3303,
+          instanceID: 0,
+          resources: {
+            '0': {
+              resourceID: 0,
+              name: 'Temperature',
+              is_writeable: false,
+              schema: {
+                type: 'number',
+                additionalProperties: false
               }
             },
-            name: 'Room Sensor',
-            values: {},
-            valueHistory: [],
-            xPos: 10,
-            yPos: 10
-          }
-        ]
-      }
-    );
+            '1': {
+              resourceID: 1,
+              name: 'Humidity',
+              is_writeable: false,
+              schema: {
+                type: 'number',
+                minimum: 0,
+                maximum: 100,
+                additionalProperties: false
+              }
+            }
+          },
+          name: 'Room Sensor',
+          values: {},
+          valueHistory: [],
+          mappings: [],
+          xPos: 10,
+          yPos: 10
+        },
+        {
+          objectID: 3304,
+          instanceID: 2,
+          resources: {
+            '0': {
+              resourceID: 0,
+              name: 'Temperature',
+              is_writeable: false,
+              schema: {
+                type: 'number',
+                additionalProperties: false
+              }
+            },
+            '1': {
+              resourceID: 1,
+              name: 'Humidity',
+              is_writeable: false,
+              schema: {
+                type: 'number',
+                minimum: 0,
+                maximum: 100,
+                additionalProperties: false
+              }
+            }
+          },
+          name: 'Room Sensor',
+          values: {},
+          valueHistory: [],
+          mappings: [],
+          xPos: 370,
+          yPos: 10
+        }
+      ]
+    });
   });
-  it('should add a not add duplicate mappingIDs', () => {
+  it('should remove a sensor from the state', () => {
+    const removeSensorAction = {
+      type: Constants.Actions.REMOVE_SENSOR,
+      objectID: 3303,
+      instanceID: 0
+    };
+    expect(
+      sensors(
+        {
+          count: 2,
+          all_sensors: [
+            {
+              objectID: 3303,
+              instanceID: 0,
+              resources: {
+                '0': {
+                  resourceID: 0,
+                  name: 'Temperature',
+                  is_writeable: false,
+                  schema: {
+                    type: 'number',
+                    additionalProperties: false
+                  }
+                },
+                '1': {
+                  resourceID: 1,
+                  name: 'Humidity',
+                  is_writeable: false,
+                  schema: {
+                    type: 'number',
+                    minimum: 0,
+                    maximum: 100,
+                    additionalProperties: false
+                  }
+                }
+              },
+              name: 'Room Sensor',
+              values: {},
+              valueHistory: [],
+              mappings: [],
+              xPos: 10,
+              yPos: 10
+            },
+            {
+              objectID: 3304,
+              instanceID: 2,
+              resources: {
+                '0': {
+                  resourceID: 0,
+                  name: 'Temperature',
+                  is_writeable: false,
+                  schema: {
+                    type: 'number',
+                    additionalProperties: false
+                  }
+                },
+                '1': {
+                  resourceID: 1,
+                  name: 'Humidity',
+                  is_writeable: false,
+                  schema: {
+                    type: 'number',
+                    minimum: 0,
+                    maximum: 100,
+                    additionalProperties: false
+                  }
+                }
+              },
+              name: 'Room Sensor',
+              values: {},
+              valueHistory: [],
+              mappings: [],
+              xPos: 370,
+              yPos: 10
+            }
+          ]
+        },
+        removeSensorAction
+      )
+    ).toEqual({
+      count: 1,
+      all_sensors: [
+        {
+          objectID: 3304,
+          instanceID: 2,
+          resources: {
+            '0': {
+              resourceID: 0,
+              name: 'Temperature',
+              is_writeable: false,
+              schema: {
+                type: 'number',
+                additionalProperties: false
+              }
+            },
+            '1': {
+              resourceID: 1,
+              name: 'Humidity',
+              is_writeable: false,
+              schema: {
+                type: 'number',
+                minimum: 0,
+                maximum: 100,
+                additionalProperties: false
+              }
+            }
+          },
+          name: 'Room Sensor',
+          values: {},
+          valueHistory: [],
+          mappings: [],
+          xPos: 370,
+          yPos: 10
+        }
+      ]
+    });
+  });
+  it('should do nothing if unknown sensorID is trying to be removed', () => {
+    const removeSensorAction = {
+      type: Constants.Actions.REMOVE_SENSOR,
+      objectID: 3305,
+      instanceID: 0
+    };
+    expect(
+      sensors(
+        {
+          count: 2,
+          all_sensors: [
+            {
+              objectID: 3303,
+              instanceID: 0,
+              resources: {
+                '0': {
+                  resourceID: 0,
+                  name: 'Temperature',
+                  is_writeable: false,
+                  schema: {
+                    type: 'number',
+                    additionalProperties: false
+                  }
+                },
+                '1': {
+                  resourceID: 1,
+                  name: 'Humidity',
+                  is_writeable: false,
+                  schema: {
+                    type: 'number',
+                    minimum: 0,
+                    maximum: 100,
+                    additionalProperties: false
+                  }
+                }
+              },
+              name: 'Room Sensor',
+              values: {},
+              valueHistory: [],
+              mappings: [],
+              xPos: 10,
+              yPos: 10
+            },
+            {
+              objectID: 3304,
+              instanceID: 2,
+              resources: {
+                '0': {
+                  resourceID: 0,
+                  name: 'Temperature',
+                  is_writeable: false,
+                  schema: {
+                    type: 'number',
+                    additionalProperties: false
+                  }
+                },
+                '1': {
+                  resourceID: 1,
+                  name: 'Humidity',
+                  is_writeable: false,
+                  schema: {
+                    type: 'number',
+                    minimum: 0,
+                    maximum: 100,
+                    additionalProperties: false
+                  }
+                }
+              },
+              name: 'Room Sensor',
+              values: {},
+              valueHistory: [],
+              mappings: [],
+              xPos: 370,
+              yPos: 10
+            }
+          ]
+        },
+        removeSensorAction
+      )
+    ).toEqual({
+      count: 2,
+      all_sensors: [
+        {
+          objectID: 3303,
+          instanceID: 0,
+          resources: {
+            '0': {
+              resourceID: 0,
+              name: 'Temperature',
+              is_writeable: false,
+              schema: {
+                type: 'number',
+                additionalProperties: false
+              }
+            },
+            '1': {
+              resourceID: 1,
+              name: 'Humidity',
+              is_writeable: false,
+              schema: {
+                type: 'number',
+                minimum: 0,
+                maximum: 100,
+                additionalProperties: false
+              }
+            }
+          },
+          name: 'Room Sensor',
+          values: {},
+          valueHistory: [],
+          mappings: [],
+          xPos: 10,
+          yPos: 10
+        },
+        {
+          objectID: 3304,
+          instanceID: 2,
+          resources: {
+            '0': {
+              resourceID: 0,
+              name: 'Temperature',
+              is_writeable: false,
+              schema: {
+                type: 'number',
+                additionalProperties: false
+              }
+            },
+            '1': {
+              resourceID: 1,
+              name: 'Humidity',
+              is_writeable: false,
+              schema: {
+                type: 'number',
+                minimum: 0,
+                maximum: 100,
+                additionalProperties: false
+              }
+            }
+          },
+          name: 'Room Sensor',
+          values: {},
+          valueHistory: [],
+          mappings: [],
+          xPos: 370,
+          yPos: 10
+        }
+      ]
+    });
+  });
+  it("should add a mappingID to the relevant sensor's resource", () => {
     const addMappingAction = {
       type: Constants.Actions.ADD_MAPPING,
       mapping: {
@@ -643,21 +596,24 @@ describe('sensors reducer', () => {
         objectID: 3303,
         instanceID: 0,
         resourceID: 0,
-        ranges: [{
-          label: 'firstRange',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
+        ranges: [
+          {
+            label: 'firstRange',
+            greaterEqualsThan: 15,
+            lessThan: 30
+          },
+          {
+            label: 'secondRange',
+            greaterEqualsThan: 45,
+            lessThan: 80
+          }
+        ],
         mappingType: 'category',
         value: 'firstRange',
         valueHistory: ['firstRange']
       }
     };
-    expect(sensors({
+    expect(sensors(stateWithOneSensor, addMappingAction)).toEqual({
       count: 1,
       all_sensors: [
         {
@@ -694,48 +650,117 @@ describe('sensors reducer', () => {
           yPos: 10
         }
       ]
-    }, addMappingAction)).toEqual(
-      {
-        count: 1,
-        all_sensors: [
-          {
-            objectID: 3303,
-            instanceID: 0,
-            resources: {
-              '0': {
-                resourceID: 0,
-                name: 'Temperature',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  additionalProperties: false
-                },
-                mappings: ['asdfasdf19280u34981uf']
-              },
-              '1': {
-                resourceID: 1,
-                name: 'Humidity',
-                is_writeable: false,
-                schema: {
-                  type: 'number',
-                  minimum: 0,
-                  maximum: 100,
-                  additionalProperties: false
-                },
-                mappings: []
-              }
-            },
-            name: 'Room Sensor',
-            values: {},
-            valueHistory: [],
-            xPos: 10,
-            yPos: 10
-          }
-        ]
-      }
-    );
+    });
   });
-  it('should remove a mappingID from the relevant sensor\'s resource', () => {
+  it('should add a not add duplicate mappingIDs', () => {
+    const addMappingAction = {
+      type: Constants.Actions.ADD_MAPPING,
+      mapping: {
+        mappingID: 'asdfasdf19280u34981uf',
+        label: 'ExampleMapping',
+        default: 'Unmatched',
+        objectID: 3303,
+        instanceID: 0,
+        resourceID: 0,
+        ranges: [
+          {
+            label: 'firstRange',
+            greaterEqualsThan: 15,
+            lessThan: 30
+          },
+          {
+            label: 'secondRange',
+            greaterEqualsThan: 45,
+            lessThan: 80
+          }
+        ],
+        mappingType: 'category',
+        value: 'firstRange',
+        valueHistory: ['firstRange']
+      }
+    };
+    expect(
+      sensors(
+        {
+          count: 1,
+          all_sensors: [
+            {
+              objectID: 3303,
+              instanceID: 0,
+              resources: {
+                '0': {
+                  resourceID: 0,
+                  name: 'Temperature',
+                  is_writeable: false,
+                  schema: {
+                    type: 'number',
+                    additionalProperties: false
+                  },
+                  mappings: ['asdfasdf19280u34981uf']
+                },
+                '1': {
+                  resourceID: 1,
+                  name: 'Humidity',
+                  is_writeable: false,
+                  schema: {
+                    type: 'number',
+                    minimum: 0,
+                    maximum: 100,
+                    additionalProperties: false
+                  },
+                  mappings: []
+                }
+              },
+              name: 'Room Sensor',
+              values: {},
+              valueHistory: [],
+              xPos: 10,
+              yPos: 10
+            }
+          ]
+        },
+        addMappingAction
+      )
+    ).toEqual({
+      count: 1,
+      all_sensors: [
+        {
+          objectID: 3303,
+          instanceID: 0,
+          resources: {
+            '0': {
+              resourceID: 0,
+              name: 'Temperature',
+              is_writeable: false,
+              schema: {
+                type: 'number',
+                additionalProperties: false
+              },
+              mappings: ['asdfasdf19280u34981uf']
+            },
+            '1': {
+              resourceID: 1,
+              name: 'Humidity',
+              is_writeable: false,
+              schema: {
+                type: 'number',
+                minimum: 0,
+                maximum: 100,
+                additionalProperties: false
+              },
+              mappings: []
+            }
+          },
+          name: 'Room Sensor',
+          values: {},
+          valueHistory: [],
+          xPos: 10,
+          yPos: 10
+        }
+      ]
+    });
+  });
+  it("should remove a mappingID from the relevant sensor's resource", () => {
     const removeMappingAction = {
       type: Constants.Actions.REMOVE_MAPPING,
       mapping: 'MY_MAPPING_____IDDDDDD'
@@ -743,7 +768,8 @@ describe('sensors reducer', () => {
 
     const myState = clonedeep(stateWithTwoSensors);
     myState.all_sensors[0].resources[1].mappings[0] = 'MY_MAPPING_____IDDDDDD';
-    const newMappingsArray = sensors(myState, removeMappingAction).all_sensors[0].resources[1].mappings;
+    const newMappingsArray = sensors(myState, removeMappingAction)
+      .all_sensors[0].resources[1].mappings;
     expect(newMappingsArray).toEqual([]);
   });
   it('should move the relevant sensor to the given position', () => {
@@ -756,10 +782,13 @@ describe('sensors reducer', () => {
     };
     const myState = clonedeep(stateWithTwoSensors);
     const newState = sensors(myState, moveAction);
-    const pos = {x: newState.all_sensors[1].xPos, y: newState.all_sensors[1].yPos};
-    expect(pos).toEqual({x: 500, y: 500});
+    const pos = {
+      x: newState.all_sensors[1].xPos,
+      y: newState.all_sensors[1].yPos
+    };
+    expect(pos).toEqual({ x: 500, y: 500 });
   });
-  it('should update the relevant sensor\'s current value', () => {
+  it("should update the relevant sensor's current value", () => {
     const updateAction = {
       type: Constants.Actions.UPDATE_SENSOR_VALUE,
       sensorID: 3304,
@@ -768,8 +797,9 @@ describe('sensors reducer', () => {
       value: 6969
     };
     const stateClone = clonedeep(stateWithTwoSensors);
-    stateClone.all_sensors[1].values = {0: 12345678, 1: 420};
-    const newCurrentValue = sensors(stateClone, updateAction).all_sensors[1].values;
-    expect(newCurrentValue).toEqual({0: 6969, 1: 420});
+    stateClone.all_sensors[1].values = { 0: 12345678, 1: 420 };
+    const newCurrentValue = sensors(stateClone, updateAction).all_sensors[1]
+      .values;
+    expect(newCurrentValue).toEqual({ 0: 6969, 1: 420 });
   });
 });

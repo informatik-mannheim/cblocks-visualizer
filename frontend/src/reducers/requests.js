@@ -9,43 +9,43 @@ const initialRequestsState = {
 export function requests (state = initialRequestsState, action) {
   switch (action.type) {
     case Constants.Actions.BUILD_REQUEST:
-
       const newRequest = Object.assign(
         {},
-        {requestID: state.totalRequests + 1},
-        {objectID: action.objectID},
-        {instanceID: action.instanceID},
-        {resourceID: action.resourceID},
-        {sent: false},
-        {value: action.value}
+        { requestID: state.totalRequests + 1 },
+        { objectID: action.objectID },
+        { instanceID: action.instanceID },
+        { resourceID: action.resourceID },
+        { sent: false },
+        { value: action.value }
       );
 
-       const newUnresolvedRequests = state.unresolvedRequests.concat(newRequest);
-       return {
-         totalRequests: state.totalRequests + 1,
-         unresolvedRequests: newUnresolvedRequests,
-         resolvedRequests: state.resolvedRequests
-       };
+      const newUnresolvedRequests = state.unresolvedRequests.concat(newRequest);
+      return {
+        totalRequests: state.totalRequests + 1,
+        unresolvedRequests: newUnresolvedRequests,
+        resolvedRequests: state.resolvedRequests
+      };
     case Constants.Actions.SEND_REQUEST:
-
-    const unresolvedRequestsUpdated = state.unresolvedRequests.map(req => {
-      if (req.requestID === action.requestID) {
-        return Object.assign({}, req, {sent: true});
-      }
-      return req;
-    });
-    return {...state, unresolvedRequests: unresolvedRequestsUpdated};
+      const unresolvedRequestsUpdated = state.unresolvedRequests.map(req => {
+        if (req.requestID === action.requestID) {
+          return Object.assign({}, req, { sent: true });
+        }
+        return req;
+      });
+      return { ...state, unresolvedRequests: unresolvedRequestsUpdated };
 
     case Constants.Actions.HANDLE_REQUEST_RESPONSE:
       //TODO: proper error handling when success false
 
-      const index = state.unresolvedRequests.findIndex(x => x.requestID === action.requestID);
+      const index = state.unresolvedRequests.findIndex(
+        x => x.requestID === action.requestID
+      );
 
       const newlyResolvedRequest = Object.assign(
         {},
         state.unresolvedRequests[index],
-        {success: action.success},
-        {message: action.message}
+        { success: action.success },
+        { message: action.message }
       );
 
       if (newlyResolvedRequest !== undefined) {
@@ -55,9 +55,14 @@ export function requests (state = initialRequestsState, action) {
         ];
 
         const updatedResolvedRequests = [
-          ...state.resolvedRequests, newlyResolvedRequest
+          ...state.resolvedRequests,
+          newlyResolvedRequest
         ];
-        return {totalRequests: state.totalRequests, unresolvedRequests: updatedUnresolvedRequests, resolvedRequests: updatedResolvedRequests};
+        return {
+          totalRequests: state.totalRequests,
+          unresolvedRequests: updatedUnresolvedRequests,
+          resolvedRequests: updatedResolvedRequests
+        };
       }
 
       return state;

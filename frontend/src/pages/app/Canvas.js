@@ -53,7 +53,7 @@ const canvasTarget = {
     // You can also do nothing and return a drop result,
     // which will be available as monitor.getDropResult()
     // in the drag source's endDrag() method
-    return {item: item._id, xPos: left, yPos: top};
+    return { item: item._id, xPos: left, yPos: top };
   }
 };
 
@@ -74,7 +74,6 @@ function collect (cnnct, monitor) {
 }
 
 class Canvas extends Component {
-
   constructor () {
     super();
     enableUniqueIds(this);
@@ -108,17 +107,28 @@ class Canvas extends Component {
     this.canvasId = this.nextUniqueId();
 
     return connectDropTarget(
-      <div id={this.canvasId} style={dropZoneStyle} >
-        {this.props.sensors.all_sensors.map((sensor) => (
+      <div id={this.canvasId} style={dropZoneStyle}>
+        {this.props.sensors.all_sensors.map(sensor => (
           <div key={sensor.objectID + '-' + sensor.instanceID + '_div'}>
-            <Sensor objectID={sensor.objectID} instanceID={sensor.instanceID} xPos={sensor.xPos}
-              yPos={sensor.yPos} name={sensor.name} resources={sensor.resources} ref={sensor.objectID + '-' + sensor.instanceID}/>
+            <Sensor
+              objectID={sensor.objectID}
+              instanceID={sensor.instanceID}
+              xPos={sensor.xPos}
+              yPos={sensor.yPos}
+              name={sensor.name}
+              resources={sensor.resources}
+              ref={sensor.objectID + '-' + sensor.instanceID}
+            />
           </div>
         ))}
-        {this.props.pinnedCharts.all_charts.map((chart) => (
+        {this.props.pinnedCharts.all_charts.map(chart => (
           <div key={chart.chartID + '_div'}>
-            <DraggableChart xPos={chart.xPos} yPos={chart.yPos}
-              chartProps={chart.chartProps} ref={chart.chartID + '_ref'}/>
+            <DraggableChart
+              xPos={chart.xPos}
+              yPos={chart.yPos}
+              chartProps={chart.chartProps}
+              ref={chart.chartID + '_ref'}
+            />
           </div>
         ))}
       </div>
@@ -136,7 +146,7 @@ Canvas.propTypes = {
   sensors: PropTypes.object
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     pinnedCharts: state.pinnedCharts,
     connections: state.connections,
@@ -144,11 +154,17 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-  };
+const mapDispatchToProps = dispatch => {
+  return {};
 };
 
-const dropTargetCanvas = DropTarget([Constants.ItemTypes.SENSOR, Constants.ItemTypes.CHART], canvasTarget, collect)(Canvas);
-const connectedCanvas = connect(mapStateToProps, mapDispatchToProps)(dropTargetCanvas);
+const dropTargetCanvas = DropTarget(
+  [Constants.ItemTypes.SENSOR, Constants.ItemTypes.CHART],
+  canvasTarget,
+  collect
+)(Canvas);
+const connectedCanvas = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(dropTargetCanvas);
 export default connectedCanvas;

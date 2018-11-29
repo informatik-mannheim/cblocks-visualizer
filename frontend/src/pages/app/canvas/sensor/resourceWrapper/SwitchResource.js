@@ -6,21 +6,27 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 
 class SwitchResource extends React.Component {
-
   handleChange = (field, value) => {
     if (this.props.isWriteable === true) {
-      this.props.toggleSwitch(this.props.objectID, this.props.instanceID, this.props.resource.resourceID, this.props.currentValue);
+      this.props.toggleSwitch(
+        this.props.objectID,
+        this.props.instanceID,
+        this.props.resource.resourceID,
+        this.props.currentValue
+      );
     }
   };
 
   render () {
     return (
       <div>
-        <Typography variant='subheading' align='center'>{this.props.resource.name}</Typography>
-          <Switch
-            checked={this.props.currentValue}
-            onChange={this.handleChange.bind(this, 'switch')}
-          />
+        <Typography variant="subheading" align="center">
+          {this.props.resource.name}
+        </Typography>
+        <Switch
+          checked={this.props.currentValue}
+          onChange={this.handleChange.bind(this, 'switch')}
+        />
       </div>
     );
   }
@@ -35,15 +41,18 @@ SwitchResource.propTypes = {
   toggleSwitch: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
+  return {};
+};
+
+const mapDispatchToProps = dispatch => {
   return {
+    toggleSwitch: (objectID, instanceID, resourceID, value) =>
+      dispatch(action.buildRequest(objectID, instanceID, resourceID, !value))
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleSwitch: (objectID, instanceID, resourceID, value) => dispatch(action.buildRequest(objectID, instanceID, resourceID, !value))
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SwitchResource);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SwitchResource);

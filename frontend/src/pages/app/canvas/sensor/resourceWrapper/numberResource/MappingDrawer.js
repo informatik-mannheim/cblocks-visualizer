@@ -7,7 +7,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 class MappingDrawer extends React.Component {
   render = () => {
-    const {objectID, instanceID, resourceID} = this.props;
+    const { objectID, instanceID, resourceID } = this.props;
     const mappingModalProps = {
       open: true,
       objectID: objectID,
@@ -16,43 +16,50 @@ class MappingDrawer extends React.Component {
     };
 
     return (
-      <div style={{
-        background: '#F5F5F6',
-        boxShadow: 'inset 0 -7px 9px -7px rgba(0,0,0,0.2)'
+      <div
+        style={{
+          background: '#F5F5F6',
+          boxShadow: 'inset 0 -7px 9px -7px rgba(0,0,0,0.2)'
         }}
-        className='mapping-drawer'>
-        <div style={{height: 20}}/>
-        {Object.entries(this.props.mappings).map((mappingsKeyValue) => {
+        className="mapping-drawer"
+      >
+        <div style={{ height: 20 }} />
+        {Object.entries(this.props.mappings).map(mappingsKeyValue => {
           const currentMapping = mappingsKeyValue[1];
           return (
             <div
               key={currentMapping.mappingID + '_div'}
-              style={{paddingBottom: 16}}
-              >
+              style={{ paddingBottom: 16 }}
+            >
               <CategoryMapping
                 mapping={currentMapping}
-                setMappingActivity={this.props.setMappingActivity}/>
+                setMappingActivity={this.props.setMappingActivity}
+              />
             </div>
           );
         })}
-      <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <Button
-        // variant='outlined'
-        onClick={() => this.props.showModal('ADD_MAPPING', mappingModalProps)}
-        style={{marginBottom: 4}}
-        color='secondary' >
-          <AddIcon/>
-          Add New Mapping
-        </Button>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <Button
+            // variant='outlined'
+            onClick={() =>
+              this.props.showModal('ADD_MAPPING', mappingModalProps)
+            }
+            style={{ marginBottom: 4 }}
+            color="secondary"
+          >
+            <AddIcon />
+            Add New Mapping
+          </Button>
+        </div>
       </div>
-    </div>
     );
-  }
+  };
 }
 
 /*

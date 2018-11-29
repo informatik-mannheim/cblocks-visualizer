@@ -44,20 +44,19 @@ const theme = createMuiTheme({
       root: {}
     },
     Slider: {
-      root: {
-      }
+      root: {}
     }
   }
 });
 
 class App extends React.Component {
-  render (){
+  render () {
     return (
       <MuiThemeProvider theme={theme}>
         <CBlocksAppBar />
-        <Canvas/>
-        <CustomDragLayer/>
-        <ModalRoot/>
+        <Canvas />
+        <CustomDragLayer />
+        <ModalRoot />
       </MuiThemeProvider>
     );
   }

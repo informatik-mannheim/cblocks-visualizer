@@ -29,7 +29,6 @@ const getModalStyle = () => {
 };
 
 class AddMappingModal extends Component {
-
   handleClose = () => {
     this.props.hideModal('ADD_MAPPING');
   };
@@ -38,10 +37,10 @@ class AddMappingModal extends Component {
     return (
       <Modal open={this.props.open} onClose={this.handleClose}>
         <div style={getModalStyle()} className={this.props.classes.paper}>
-          <Typography variant='headline' style={{marginTop: -10}}>
+          <Typography variant="headline" style={{ marginTop: -10 }}>
             Create New Mapping
           </Typography>
-          <NewMappingForm {...this.props}/>
+          <NewMappingForm {...this.props} />
         </div>
       </Modal>
     );
@@ -57,8 +56,11 @@ AddMappingModal.propTypes = {
   resourceID: PropTypes.number
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  pinChart: (chartProps) => dispatch(action.pinChart(chartProps))
+const mapDispatchToProps = dispatch => ({
+  pinChart: chartProps => dispatch(action.pinChart(chartProps))
 });
 
-export default connect(state => ({sensors: state.sensors.all_sensors}), mapDispatchToProps)(withStyles(styles)(AddMappingModal));
+export default connect(
+  state => ({ sensors: state.sensors.all_sensors }),
+  mapDispatchToProps
+)(withStyles(styles)(AddMappingModal));

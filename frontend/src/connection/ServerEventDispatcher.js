@@ -1,6 +1,6 @@
 import { WebSocket } from 'mock-socket';
 
-export const ServerEventDispatcher = (url) => {
+export const ServerEventDispatcher = url => {
   console.log('ServerEventDispatcher');
   const conn = new WebSocket(url);
 
@@ -9,7 +9,7 @@ export const ServerEventDispatcher = (url) => {
   const dispatch = (event_name, message) => {
     const chain = callbacks[event_name];
     if (chain === undefined) return; // no callbacks for this event
-    for (let i = 0; i < chain.length; i++){
+    for (let i = 0; i < chain.length; i++) {
       chain[i](message);
     }
   };
@@ -17,22 +17,26 @@ export const ServerEventDispatcher = (url) => {
   this.bind = (event_name, callback) => {
     callbacks[event_name] = callbacks[event_name] || [];
     callbacks[event_name].push(callback);
-    return this;// chainable
+    return this; // chainable
   };
 
   this.send = (event_name, event_data) => {
-    const payload = JSON.stringify({event: event_name, data: event_data});
+    const payload = JSON.stringify({ event: event_name, data: event_data });
     conn.send(payload); // <= send JSON data to socket server
     return this;
   };
 
   // dispatch to the right handlers
-  conn.onmessage = (evt) => {
+  conn.onmessage = evt => {
     dispatch(evt.data.event, evt.data.data);
   };
 
-  conn.onclose = () => {dispatch('close', null);};
-  conn.onopen = () => {dispatch('open', null);};
+  conn.onclose = () => {
+    dispatch('close', null);
+  };
+  conn.onopen = () => {
+    dispatch('open', null);
+  };
 
   return this;
 };

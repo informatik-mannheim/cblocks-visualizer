@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/lab/Slider';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -14,8 +13,6 @@ const styles = {
 };
 
 class MaterialSlider extends React.Component {
-
-
   constructor () {
     super();
     this.isBeingDragged = false;
@@ -23,7 +20,7 @@ class MaterialSlider extends React.Component {
 
   state = {
     value: 50
-  }
+  };
 
   componentDidMount () {
     this.value = this.props.currentValue;
@@ -33,24 +30,33 @@ class MaterialSlider extends React.Component {
     this.isBeingDragged = true;
   };
 
-  handleDragEnd = (event) => {
-    this.props.requestChangeToSubresource(this.props.label, Number.parseInt(this.state.value));
+  handleDragEnd = event => {
+    this.props.requestChangeToSubresource(
+      this.props.label,
+      Number.parseInt(this.state.value)
+    );
     setTimeout(() => {
       this.isBeingDragged = false;
     }, 1000);
   };
 
   handleOnChange = (event, value) => {
-      if (this.isBeingDragged === true) {
-          this.setState({value: value});
-      } else {
-        this.props.requestChangeToSubresource(this.props.label, Number.parseInt(value));
-      }
-  }
+    if (this.isBeingDragged === true) {
+      this.setState({ value: value });
+    } else {
+      this.props.requestChangeToSubresource(
+        this.props.label,
+        Number.parseInt(value)
+      );
+    }
+  };
 
   render () {
     const { classes } = this.props;
-    const sliderValue = (this.isBeingDragged === false) ? this.props.currentValue : this.state.value;
+    const sliderValue
+      = this.isBeingDragged === false
+        ? this.props.currentValue
+        : this.state.value;
 
     const slider = (
       <div className={classes.root}>
@@ -64,12 +70,7 @@ class MaterialSlider extends React.Component {
         />
       </div>
     );
-//<Typography id="label">{this.props.label !== undefined ? this.props.label.charAt(0).toUpperCase() + this.props.label.slice(1) : ''}</Typography>
-    return (
-      <div>
-        {slider}
-      </div>
-    );
+    return <div>{slider}</div>;
   }
 }
 

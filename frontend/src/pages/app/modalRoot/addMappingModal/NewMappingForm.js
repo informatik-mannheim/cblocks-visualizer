@@ -4,14 +4,11 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormRangeComponent from './newMappingForm/FormRangeComponent';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import AddIcon from '@material-ui/icons/Add';
-import { HorizontalDividerLine } from '../../../../components/HorizontalDividerLine';
 import Typography from '@material-ui/core/Typography';
 
-const handleSubmit = (event) => {
+const handleSubmit = event => {
   //Make a network call somewhere
   console.log(event);
   event.preventDefault();
@@ -35,33 +32,43 @@ class NewMappingForm extends Component {
     rangeCount: 1,
     mappingName: '',
     defaultValue: '',
-    ranges: [{id:1},{id:2}]
-  }
+    ranges: [{ id: 1 }, { id: 2 }]
+  };
 
   handleClick = () => {
     console.log('test');
-  }
+  };
 
-  handleChange = (e) => {
+  handleChange = e => {
     if (e.target.name === 'mappingTypeSelect') {
-      this.setState({mappingType: e.target.value});
-      if (e.target.value === mappingTypes.RANGE) this.setState({rangeCount: 1});
+      this.setState({ mappingType: e.target.value });
+      if (e.target.value === mappingTypes.RANGE) {
+        this.setState({ rangeCount: 1 });
+      }
     }
-    if (e.target.name === 'mappingNameField') this.setState({mappingName: e.target.value});
-    if (e.target.name === 'defaultValueField') this.setState({defaultValue: e.target.value});
-  }
+    if (e.target.name === 'mappingNameField') {
+      this.setState({ mappingName: e.target.value });
+    }
+    if (e.target.name === 'defaultValueField') {
+      this.setState({ defaultValue: e.target.value });
+    }
+  };
 
-  handleRangeChange = (e) => {
+  handleRangeChange = e => {
     console.log(e);
-  }
+  };
 
   render () {
     return (
       <div>
         <div>
-          <Typography variant='body1' align='center' style={{
-            marginTop: 15
-          }}>
+          <Typography
+            variant="body1"
+            align="center"
+            style={{
+              marginTop: 15
+            }}
+          >
             TYPE
           </Typography>
           <Select
@@ -76,57 +83,62 @@ class NewMappingForm extends Component {
             <MenuItem value={mappingTypes.LABEL}>Label Mapping</MenuItem>
           </Select>
           <br />
-          <Typography variant='body1' align='center' style={{marginTop: 20, marginBottom: -14}}>
+          <Typography
+            variant="body1"
+            align="center"
+            style={{ marginTop: 20, marginBottom: -14 }}
+          >
             INFO
           </Typography>
           <TextField
-          label="Mapping Name"
-          onChange={this.handleChange}
-          inputProps={{
-            name: 'mappingNameField'
-          }}/>
+            label="Mapping Name"
+            onChange={this.handleChange}
+            inputProps={{
+              name: 'mappingNameField'
+            }}
+          />
           <TextField
-          style={{float: 'right'}}
-          label="Default Value"
-          onChange={this.handleChange}
-          inputProps={{
-            name: 'defaultValueField'
-          }}/>
+            style={{ float: 'right' }}
+            label="Default Value"
+            onChange={this.handleChange}
+            inputProps={{
+              name: 'defaultValueField'
+            }}
+          />
         </div>
-        {this.state.mappingType === mappingTypes.RANGE
-          && <FormRangeComponent id={1} onChange={this.handleRangeChange}/>
-        }
+        {this.state.mappingType === mappingTypes.RANGE && (
+          <FormRangeComponent id={1} onChange={this.handleRangeChange} />
+        )}
 
+        {this.state.mappingType === mappingTypes.CATEGORY && (
+          <div style={{ marginTop: 20, marginBottom: -18 }}>
+            <Typography variant="body1" align="center">
+              RANGES
+            </Typography>
+          </div>
+        )}
         {this.state.mappingType === mappingTypes.CATEGORY
-          && (
-            <div style={{marginTop: 20, marginBottom: -18}}>
-              <Typography variant='body1' align='center' >
-                RANGES
-              </Typography>
-            </div>
-          )
-        }
-        {this.state.mappingType === mappingTypes.CATEGORY
-          && (
-            this.state.ranges.map((r) => {
-              return <FormRangeComponent key={r.id} id={r.id} onChange={this.handleRangeChange}/>;
-            })
-          )
-        }
-        {this.state.mappingType === mappingTypes.CATEGORY
-          && (
-            <Button
-            variant='fab'
+          && this.state.ranges.map(r => {
+            return (
+              <FormRangeComponent
+                key={r.id}
+                id={r.id}
+                onChange={this.handleRangeChange}
+              />
+            );
+          })}
+        {this.state.mappingType === mappingTypes.CATEGORY && (
+          <Button
+            variant="fab"
             mini
-            color='primary'
+            color="primary"
             style={{
               float: 'center'
             }}
-            >
-              <AddIcon/>
-            </Button>
-          )
-        }
+          >
+            <AddIcon />
+          </Button>
+        )}
 
         {/*<Button
         variant='fab'
@@ -140,9 +152,10 @@ class NewMappingForm extends Component {
         </Button>*/}
 
         <Button
-        style={{float: 'right', marginTop: 50}}
-        onClick={this.handleClick}
-        color='secondary'>
+          style={{ float: 'right', marginTop: 50 }}
+          onClick={this.handleClick}
+          color="secondary"
+        >
           CREATE MAPPING
         </Button>
       </div>

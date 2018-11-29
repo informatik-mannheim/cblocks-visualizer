@@ -4,18 +4,17 @@ import PropTypes from 'prop-types';
 import Constants from '../../../constants/';
 import { DragSource } from 'react-dnd';
 import { withStyles } from '@material-ui/core/styles';
-import { Avatar, Card, CardContent, CardHeader, Typography } from '@material-ui/core';
+import { Avatar, Card, CardContent, CardHeader } from '@material-ui/core';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import * as action from '../../../action/';
 import svgIcons from '../../../images/svgIcons';
 import LineChart from '../../../components/LineChart';
 
-
 const chartSource = {
   beginDrag (props) {
-    const {chartProps, xPos, yPos} = props;
-    return {chartProps, xPos, yPos};
+    const { chartProps, xPos, yPos } = props;
+    return { chartProps, xPos, yPos };
   },
   endDrag (props, monitor, component) {
     if (!monitor.didDrop()) {
@@ -25,11 +24,17 @@ const chartSource = {
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
 
-    if (dropResult.dropEffect === 'move'
-        && item.chartProps.objectID === component.props.chartProps.objectID
-        && item.chartProps.instanceID === component.props.chartProps.instanceID
-        && item.chartProps.resourceID === component.props.chartProps.resourceID) {
-      component.props.move(component.props.chartProps, dropResult.xPos, dropResult.yPos);
+    if (
+      dropResult.dropEffect === 'move'
+      && item.chartProps.objectID === component.props.chartProps.objectID
+      && item.chartProps.instanceID === component.props.chartProps.instanceID
+      && item.chartProps.resourceID === component.props.chartProps.resourceID
+    ) {
+      component.props.move(
+        component.props.chartProps,
+        dropResult.xPos,
+        dropResult.yPos
+      );
     }
   }
 };
@@ -45,7 +50,7 @@ function collect (cnnct, monitor) {
   };
 }
 
-const getBoundingDivStyles = (props) => {
+const getBoundingDivStyles = props => {
   const { xPos, yPos, isDragging } = props;
   const transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
 
@@ -78,7 +83,7 @@ const styles = () => ({
 
 class DraggableChart extends Component {
   componentDidMount () {
-      // Use empty image as a drag preview so browsers don't draw it
+    // Use empty image as a drag preview so browsers don't draw it
     this.props.connectDragPreview(getEmptyImage(), {
       // IE fallback: specify that we'd rather screenshot the node
       // when it already knows it's being dragged so we can hide it with CSS.
@@ -88,19 +93,21 @@ class DraggableChart extends Component {
   }
 
   render () {
-
     const chartIcon = (
-      <SvgIcon color='primary'>
+      <SvgIcon color="primary">
         <path d={svgIcons.chart} />
       </SvgIcon>
     );
 
-    const {objectID, instanceID, resourceID} = this.props.chartProps;
+    const { objectID, instanceID, resourceID } = this.props.chartProps;
 
     let sensorLabel, resourceLabel;
     for (let i = 0; i < this.props.sensors.length; i++) {
       const currentSensor = this.props.sensors[i];
-      if (objectID === currentSensor.objectID && instanceID === currentSensor.instanceID) {
+      if (
+        objectID === currentSensor.objectID
+        && instanceID === currentSensor.instanceID
+      ) {
         sensorLabel = currentSensor.name;
         resourceLabel = currentSensor.resources[resourceID].name;
       }
@@ -110,26 +117,33 @@ class DraggableChart extends Component {
       <div>
         <CardHeader
           className={this.props.classes.cardHeader}
-          style={{cursor: 'move'}}
+          style={{ cursor: 'move' }}
           avatar={
             <Avatar className={this.props.classes.chartAvatar}>
               {chartIcon}
             </Avatar>
           }
-          title={resourceLabel}/>
+          title={resourceLabel}
+        />
       </div>
     );
 
     const chartComponent = (
-        <div style={getBoundingDivStyles(this.props)}>
-          <Card className={this.props.classes.card}>
-            {this.props.connectDragSource(header)}
-            <CardContent>
-              <LineChart displayLegend={false} chartProps={{objectID: this.props.chartProps.objectID,
-                instanceID: this.props.chartProps.instanceID, resourceID: this.props.chartProps.resourceID}}/>
-            </CardContent>
-          </Card>
-        </div>
+      <div style={getBoundingDivStyles(this.props)}>
+        <Card className={this.props.classes.card}>
+          {this.props.connectDragSource(header)}
+          <CardContent>
+            <LineChart
+              displayLegend={false}
+              chartProps={{
+                objectID: this.props.chartProps.objectID,
+                instanceID: this.props.chartProps.instanceID,
+                resourceID: this.props.chartProps.resourceID
+              }}
+            />
+          </CardContent>
+        </Card>
+      </div>
     );
 
     return chartComponent;
@@ -150,27 +164,40 @@ DraggableChart.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   let chartIndex;
-  for (let i = 0; i < state.pinnedCharts.count; i++){
-    if (ownProps.chartProps.objectID === state.pinnedCharts.all_charts[i].chartProps.objectID
-      && ownProps.chartProps.instanceID === state.pinnedCharts.all_charts[i].chartProps.instanceID
-      && ownProps.chartProps.resourceID === state.pinnedCharts.all_charts[i].chartProps.resourceID) {
-          chartIndex = i;
+  for (let i = 0; i < state.pinnedCharts.count; i++) {
+    if (
+      ownProps.chartProps.objectID
+        === state.pinnedCharts.all_charts[i].chartProps.objectID
+      && ownProps.chartProps.instanceID
+        === state.pinnedCharts.all_charts[i].chartProps.instanceID
+      && ownProps.chartProps.resourceID
+        === state.pinnedCharts.all_charts[i].chartProps.resourceID
+    ) {
+      chartIndex = i;
     }
   }
   return {
-          chartProps: state.pinnedCharts.all_charts[chartIndex].chartProps,
-          sensors: state.sensors.all_sensors,
-          xPos: state.pinnedCharts.all_charts[chartIndex].xPos,
-          yPos: state.pinnedCharts.all_charts[chartIndex].yPos
-        };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    move: (chartID, xPos, yPos) => dispatch(action.moveChart(chartID, xPos, yPos))
+    chartProps: state.pinnedCharts.all_charts[chartIndex].chartProps,
+    sensors: state.sensors.all_sensors,
+    xPos: state.pinnedCharts.all_charts[chartIndex].xPos,
+    yPos: state.pinnedCharts.all_charts[chartIndex].yPos
   };
 };
 
-const dragSourceChart = DragSource(Constants.ItemTypes.CHART, chartSource, collect)(DraggableChart);
-const connectedChart = connect(mapStateToProps, mapDispatchToProps)(dragSourceChart);
+const mapDispatchToProps = dispatch => {
+  return {
+    move: (chartID, xPos, yPos) =>
+      dispatch(action.moveChart(chartID, xPos, yPos))
+  };
+};
+
+const dragSourceChart = DragSource(
+  Constants.ItemTypes.CHART,
+  chartSource,
+  collect
+)(DraggableChart);
+const connectedChart = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(dragSourceChart);
 export default withStyles(styles)(connectedChart);

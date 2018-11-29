@@ -33,13 +33,12 @@ function getItemStyles (props) {
 }
 
 class CustomDragLayer extends Component {
-
   renderItem (type, item) {
     switch (type) {
       case Constants.ItemTypes.SENSOR:
-        return (<SensorDragPreview name={item.name} objectID={item.objectID}/>);
+        return <SensorDragPreview name={item.name} objectID={item.objectID} />;
       case Constants.ItemTypes.CHART:
-        return (<ChartDragPreview/>);
+        return <ChartDragPreview />;
       default:
         return null;
     }

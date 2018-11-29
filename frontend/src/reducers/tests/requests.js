@@ -259,7 +259,6 @@ const testHandleResponseFrom3WithSomeDone = () => {
   expect(requests(stateBefore, action)).toEqual(stateAfter);
 };
 
-
 const requestsTests = () => {
   testBuildRequest();
   testHandleResponseFrom1();

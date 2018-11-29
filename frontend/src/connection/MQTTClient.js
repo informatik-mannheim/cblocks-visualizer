@@ -2,24 +2,26 @@ import { connect } from 'mqtt';
 import Constants from '../constants/';
 import { subscribe } from 'redux-subscriber';
 
-const isParsableJSON = (jsonString) => {
-    try {
-        const o = JSON.parse(jsonString);
-        return true;
-    } catch (e) {
-      //ignore
-    }
-    return false;
+const isParsableJSON = jsonString => {
+  try {
+    // eslint-disable-next-line
+    const o = JSON.parse(jsonString);
+    return true;
+  } catch (e) {
+    //ignore
+  }
+  return false;
 };
 
 const mqttEvents = Constants.MQTTEvents;
-const MQTTClient = (url) => {
+const MQTTClient = url => {
   const client = connect(url);
 
   const callbacks = {};
 
   this.requestResourceChange = (objectID, instanceID, resourceID, data) => {
-    const topic = 'cblocks-ui/' + objectID + '/' + instanceID + '/' + resourceID + '/input';
+    const topic
+      = 'cblocks-ui/' + objectID + '/' + instanceID + '/' + resourceID + '/input';
     console.log(topic);
     const message = {
       requestID: 1234,
@@ -31,7 +33,7 @@ const MQTTClient = (url) => {
   const dispatch = (event_name, message) => {
     const chain = callbacks[event_name];
     if (chain === undefined) return;
-    for (let i = 0; i < chain.length; i++){
+    for (let i = 0; i < chain.length; i++) {
       chain[i](message);
     }
   };
@@ -69,31 +71,44 @@ const MQTTClient = (url) => {
           const msg = JSON.parse(message).message;
 
           if (success === true) {
-            dispatch(mqttEvents.REQUEST_RESPONSE_RECEIVED, requestID, success, msg);
+            dispatch(
+              mqttEvents.REQUEST_RESPONSE_RECEIVED,
+              requestID,
+              success,
+              msg
+            );
           }
           break;
         /*
         sensor status change
         */
         case (/^\d+\/\d\/status/).test(topic):
-          sensorID = Number((/^(\d+)\/(\d)\/status/).exec(topic)[1]);
-          instanceID = Number((/^(\d)+\/(\d)\/status/).exec(topic)[2]);
+          sensorID = Number(/^(\d+)\/(\d)\/status/.exec(topic)[1]);
+          instanceID = Number(/^(\d)+\/(\d)\/status/.exec(topic)[2]);
 
           if (message.toString() === 'online') {
             console.log(sensorID + '-' + instanceID + ': online');
-            dispatch(mqttEvents.SENSOR_ADDED, {sensorID: sensorID, instanceID: instanceID});
+            dispatch(mqttEvents.SENSOR_ADDED, {
+              sensorID: sensorID,
+              instanceID: instanceID
+            });
           } else if (message.toString() === 'offline') {
             console.log(sensorID + '-' + instanceID + ': offline');
-            dispatch(mqttEvents.SENSOR_REMOVED, {sensorID: sensorID, instanceID: instanceID});
+            dispatch(mqttEvents.SENSOR_REMOVED, {
+              sensorID: sensorID,
+              instanceID: instanceID
+            });
           }
           break;
         /*
         sensor value updated
         */
         case (/^\d+\/\d\/\d\/output/).test(topic):
-          sensorID = Number((/^(\d+)\/(\d)\/(\d)\/output/).exec(topic)[1]);
-          instanceID = Number((/^(\d+)\/(\d)\/(\d)\/output/).exec(topic)[2]);
-          const resourceID = Number((/^(\d+)\/(\d)\/(\d)\/output/).exec(topic)[3]);
+          sensorID = Number(/^(\d+)\/(\d)\/(\d)\/output/.exec(topic)[1]);
+          instanceID = Number(/^(\d+)\/(\d)\/(\d)\/output/.exec(topic)[2]);
+          const resourceID = Number(
+            /^(\d+)\/(\d)\/(\d)\/output/.exec(topic)[3]
+          );
 
           let value;
           if (isParsableJSON(message.toString())) {
@@ -102,10 +117,15 @@ const MQTTClient = (url) => {
             value = message.toString();
           }
 
-          dispatch(mqttEvents.SENSOR_UPDATED, {sensorID: sensorID, instanceID: instanceID, resourceID: resourceID, value: value});
+          dispatch(mqttEvents.SENSOR_UPDATED, {
+            sensorID: sensorID,
+            instanceID: instanceID,
+            resourceID: resourceID,
+            value: value
+          });
           break;
 
-          /*
+        /*
           mapping value updated
           */
         case (/mappings\/(.+)\/(.+)\/output/).test(topic):
@@ -118,20 +138,34 @@ const MQTTClient = (url) => {
             value = message.toString();
           }
 
-          dispatch(mqttEvents.NEW_MAPPING_VALUE, {mappingType: mappingType, mappingID: mappingID, value: value});
+          dispatch(mqttEvents.NEW_MAPPING_VALUE, {
+            mappingType: mappingType,
+            mappingID: mappingID,
+            value: value
+          });
           break;
         default:
       }
     }
   });
 
-// subscribes to request substate and publishes them to MQTT
+  // subscribes to request substate and publishes them to MQTT
   const unsubscribeFromRequests = subscribe('requests.totalRequests', state => {
     for (const req of state.requests.unresolvedRequests) {
       if (req.sent === false) {
         dispatch(mqttEvents.REQUEST_SENT, req.requestID);
-        const topic = 'cblocks-ui/' + req.objectID + '/' + req.instanceID + '/' + req.resourceID + '/input';
-        const data = Object.assign({}, {requestID: req.requestID, data: req.value});
+        const topic
+          = 'cblocks-ui/'
+          + req.objectID
+          + '/'
+          + req.instanceID
+          + '/'
+          + req.resourceID
+          + '/input';
+        const data = Object.assign(
+          {},
+          { requestID: req.requestID, data: req.value }
+        );
         client.publish(topic, JSON.stringify(data));
       }
     }

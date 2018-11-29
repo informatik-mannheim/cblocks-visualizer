@@ -5,18 +5,26 @@ import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 
 class StringResource extends React.Component {
-
   handleChange = (field, value) => {
     if (this.props.isWriteable === true) {
-      this.props.toggleSwitch(this.props.objectID, this.props.instanceID, this.props.resource.resourceID, value);
+      this.props.toggleSwitch(
+        this.props.objectID,
+        this.props.instanceID,
+        this.props.resource.resourceID,
+        value
+      );
     }
   };
 
   render () {
     return (
       <div>
-        <Typography variant='subheading' align='center'>{this.props.resource.name}</Typography>
-        <Typography variant='display1' align='center'>{this.props.currentValue}</Typography>
+        <Typography variant="subheading" align="center">
+          {this.props.resource.name}
+        </Typography>
+        <Typography variant="display1" align="center">
+          {this.props.currentValue}
+        </Typography>
       </div>
     );
   }
@@ -33,8 +41,12 @@ StringResource.propTypes = {
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = (dispatch) => ({
-  toggleSwitch: (objectID, instanceID, resourceID, value) => dispatch(action.buildRequest(objectID, instanceID, resourceID, value))
+const mapDispatchToProps = dispatch => ({
+  toggleSwitch: (objectID, instanceID, resourceID, value) =>
+    dispatch(action.buildRequest(objectID, instanceID, resourceID, value))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(StringResource);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StringResource);

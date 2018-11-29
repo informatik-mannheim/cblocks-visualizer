@@ -16,7 +16,10 @@ class ResourceWrapper extends React.Component {
 
     if (this.props.multiResource === false) {
       //Single value resource
-      const type = this.props.resource.schema === undefined ? this.props.resource.type : this.props.resource.schema.type;
+      const type
+        = this.props.resource.schema === undefined
+          ? this.props.resource.type
+          : this.props.resource.schema.type;
 
       switch (type) {
         case 'boolean':
@@ -36,7 +39,7 @@ class ResourceWrapper extends React.Component {
 
     return (
       <div style={style}>
-        <Component {...this.props}/>
+        <Component {...this.props} />
       </div>
     );
   }
@@ -62,11 +65,16 @@ const mapStateToProps = (state, ownProps) => {
   return {};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    buildRequest: (objectID, instanceID, resourceID, value) => dispatch(action.buildRequest(objectID, instanceID, resourceID, value)),
-    showModal: (modalType, modalProps) => dispatch(action.showModal(modalType, modalProps))
+    buildRequest: (objectID, instanceID, resourceID, value) =>
+      dispatch(action.buildRequest(objectID, instanceID, resourceID, value)),
+    showModal: (modalType, modalProps) =>
+      dispatch(action.showModal(modalType, modalProps))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ResourceWrapper);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ResourceWrapper);

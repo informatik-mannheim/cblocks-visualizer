@@ -32,24 +32,26 @@ const getModalStyle = () => {
 };
 
 class ChartModal extends Component {
-
   handleClose = () => {
     this.props.hideModal('CHART');
   };
 
   handlePin = () => {
-    const {objectID, instanceID, resourceID} = this.props;
+    const { objectID, instanceID, resourceID } = this.props;
     this.handleClose();
-    this.props.pinChart({objectID, instanceID, resourceID});
-  }
+    this.props.pinChart({ objectID, instanceID, resourceID });
+  };
 
   render () {
-    const {objectID, instanceID, sensors} = this.props;
+    const { objectID, instanceID, sensors } = this.props;
 
     let sensorLabel;
     for (let i = 0; i < sensors.length; i++) {
       const currentSensor = sensors[i];
-      if (objectID === currentSensor.objectID && instanceID === currentSensor.instanceID) {
+      if (
+        objectID === currentSensor.objectID
+        && instanceID === currentSensor.instanceID
+      ) {
         sensorLabel = currentSensor.name;
       }
     }
@@ -66,9 +68,22 @@ class ChartModal extends Component {
           <Typography variant="title" gutterBottom>
             {sensorLabel}
           </Typography>
-          <LineChart displayLegend={true} chartProps={{objectID: this.props.objectID, instanceID: this.props.instanceID, resourceID: this.props.resourceID}}/>
-          <div style={{float: 'right'}}>
-            <Button variant='fab' mini aria-label="Pin" color='secondary' onClick={this.handlePin}>
+          <LineChart
+            displayLegend
+            chartProps={{
+              objectID: this.props.objectID,
+              instanceID: this.props.instanceID,
+              resourceID: this.props.resourceID
+            }}
+          />
+          <div style={{ float: 'right' }}>
+            <Button
+              variant="fab"
+              mini
+              aria-label="Pin"
+              color="secondary"
+              onClick={this.handlePin}
+            >
               {graphIcon}
             </Button>
           </div>
@@ -89,8 +104,11 @@ ChartModal.propTypes = {
   sensors: PropTypes.array
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  pinChart: (chartProps) => dispatch(action.pinChart(chartProps))
+const mapDispatchToProps = dispatch => ({
+  pinChart: chartProps => dispatch(action.pinChart(chartProps))
 });
 
-export default connect(state => ({sensors: state.sensors.all_sensors}), mapDispatchToProps)(withStyles(styles)(ChartModal));
+export default connect(
+  state => ({ sensors: state.sensors.all_sensors }),
+  mapDispatchToProps
+)(withStyles(styles)(ChartModal));

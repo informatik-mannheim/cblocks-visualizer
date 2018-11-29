@@ -3,7 +3,7 @@ import expect from 'expect';
 import { pinnedCharts } from '../pinnedCharts';
 import * as actions from '../../action';
 
-const initialState = {count: 0, all_charts: []};
+const initialState = { count: 0, all_charts: [] };
 
 const testPinChart = () => {
   const stateBefore = initialState;
@@ -232,11 +232,15 @@ const testMoveChart = () => {
       }
     ]
   };
-  const action = actions.moveChart({
-    objectID: 3303,
-    instanceID: 0,
-    resourceID: 0
-  }, 1000, 5000);
+  const action = actions.moveChart(
+    {
+      objectID: 3303,
+      instanceID: 0,
+      resourceID: 0
+    },
+    1000,
+    5000
+  );
   const stateAfter = {
     count: 2,
     all_charts: [

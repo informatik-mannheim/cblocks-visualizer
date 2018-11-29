@@ -10,15 +10,18 @@ const exampleMapping = {
   objectID: 3303,
   instanceID: 0,
   resourceID: 0,
-  ranges: [{
-    label: 'firstRange',
-    greaterEqualsThan: 15,
-    lessThan: 30
-  }, {
-    label: 'secondRange',
-    greaterEqualsThan: 45,
-    lessThan: 80
-  }],
+  ranges: [
+    {
+      label: 'firstRange',
+      greaterEqualsThan: 15,
+      lessThan: 30
+    },
+    {
+      label: 'secondRange',
+      greaterEqualsThan: 45,
+      lessThan: 80
+    }
+  ],
   mappingType: 'category',
   value: 'firstRange',
   valueHistory: ['firstRange']
@@ -31,15 +34,18 @@ const exampleMapping2 = {
   objectID: 3303,
   instanceID: 0,
   resourceID: 1,
-  ranges: [{
-    label: 'firstRange2',
-    greaterEqualsThan: 15,
-    lessThan: 30
-  }, {
-    label: 'secondRange2',
-    greaterEqualsThan: 45,
-    lessThan: 80
-  }],
+  ranges: [
+    {
+      label: 'firstRange2',
+      greaterEqualsThan: 15,
+      lessThan: 30
+    },
+    {
+      label: 'secondRange2',
+      greaterEqualsThan: 45,
+      lessThan: 80
+    }
+  ],
   mappingType: 'category',
   value: 'firstRange',
   valueHistory: ['firstRange']
@@ -54,103 +60,118 @@ describe('mappings reducer', () => {
       type: Constants.Actions.ADD_MAPPING,
       mapping: exampleMapping
     };
-    expect(mappings({}, addMappingAction))
-      .toEqual({
-        asdfasdf19280u34981uf: {
-          mappingID: 'asdfasdf19280u34981uf',
-          label: 'ExampleMapping',
-          active: false,
-          default: 'Unmatched',
-          objectID: 3303,
-          instanceID: 0,
-          resourceID: 0,
-          ranges: [{
+    expect(mappings({}, addMappingAction)).toEqual({
+      asdfasdf19280u34981uf: {
+        mappingID: 'asdfasdf19280u34981uf',
+        label: 'ExampleMapping',
+        active: false,
+        default: 'Unmatched',
+        objectID: 3303,
+        instanceID: 0,
+        resourceID: 0,
+        ranges: [
+          {
             label: 'firstRange',
             greaterEqualsThan: 15,
             lessThan: 30
-          }, {
+          },
+          {
             label: 'secondRange',
             greaterEqualsThan: 45,
             lessThan: 80
-          }],
-          mappingType: 'category',
-          value: 'firstRange',
-          valueHistory: ['firstRange']
-        }
-      });
+          }
+        ],
+        mappingType: 'category',
+        value: 'firstRange',
+        valueHistory: ['firstRange']
+      }
+    });
   });
   it('should add another mapping to the state', () => {
     const addMappingAction = {
       type: Constants.Actions.ADD_MAPPING,
       mapping: clonedeep(exampleMapping2)
     };
-    expect(mappings({
+    expect(
+      mappings(
+        {
+          asdfasdf19280u34981uf: {
+            mappingID: 'asdfasdf19280u34981uf',
+            label: 'ExampleMapping',
+            default: 'Unmatched',
+            objectID: 3303,
+            instanceID: 0,
+            active: false,
+            resourceID: 0,
+            ranges: [
+              {
+                label: 'firstRange',
+                greaterEqualsThan: 15,
+                lessThan: 30
+              },
+              {
+                label: 'secondRange',
+                greaterEqualsThan: 45,
+                lessThan: 80
+              }
+            ],
+            mappingType: 'category',
+            value: 'firstRange',
+            valueHistory: ['firstRange']
+          }
+        },
+        addMappingAction
+      )
+    ).toEqual({
       asdfasdf19280u34981uf: {
         mappingID: 'asdfasdf19280u34981uf',
         label: 'ExampleMapping',
         default: 'Unmatched',
         objectID: 3303,
-        instanceID: 0,
         active: false,
+        instanceID: 0,
         resourceID: 0,
-        ranges: [{
-          label: 'firstRange',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
+        ranges: [
+          {
+            label: 'firstRange',
+            greaterEqualsThan: 15,
+            lessThan: 30
+          },
+          {
+            label: 'secondRange',
+            greaterEqualsThan: 45,
+            lessThan: 80
+          }
+        ],
+        mappingType: 'category',
+        value: 'firstRange',
+        valueHistory: ['firstRange']
+      },
+      asdfasdfasdfasdfasdfasdf: {
+        mappingID: 'asdfasdfasdfasdfasdfasdf',
+        label: 'ExampleMapping2',
+        default: 'Unmatched',
+        active: false,
+        objectID: 3303,
+        instanceID: 0,
+        resourceID: 1,
+        ranges: [
+          {
+            label: 'firstRange2',
+            greaterEqualsThan: 15,
+            lessThan: 30
+          },
+          {
+            label: 'secondRange2',
+            greaterEqualsThan: 45,
+            lessThan: 80
+          }
+        ],
         mappingType: 'category',
         value: 'firstRange',
         valueHistory: ['firstRange']
       }
-    }, addMappingAction))
-      .toEqual({
-        asdfasdf19280u34981uf: {
-          mappingID: 'asdfasdf19280u34981uf',
-          label: 'ExampleMapping',
-          default: 'Unmatched',
-          objectID: 3303,
-          active: false,
-          instanceID: 0,
-          resourceID: 0,
-          ranges: [{
-            label: 'firstRange',
-            greaterEqualsThan: 15,
-            lessThan: 30
-          }, {
-            label: 'secondRange',
-            greaterEqualsThan: 45,
-            lessThan: 80
-          }],
-          mappingType: 'category',
-          value: 'firstRange',
-          valueHistory: ['firstRange']
-        },
-        asdfasdfasdfasdfasdfasdf: {
-          mappingID: 'asdfasdfasdfasdfasdfasdf',
-          label: 'ExampleMapping2',
-          default: 'Unmatched',
-          active: false,
-          objectID: 3303,
-          instanceID: 0,
-          resourceID: 1,
-          ranges: [{
-            label: 'firstRange2',
-            greaterEqualsThan: 15,
-            lessThan: 30
-          }, {
-            label: 'secondRange2',
-            greaterEqualsThan: 45,
-            lessThan: 80
-          }],
-          mappingType: 'category',
-          value: 'firstRange',
-          valueHistory: ['firstRange']
-        }
-      });
+    });
   });
   it('should remove a mapping', () => {
     const removeAction = {
@@ -158,27 +179,59 @@ describe('mappings reducer', () => {
       mappingID: 'asdfasdf19280u34981uf'
     };
 
-    expect(mappings({
-      asdfasdf19280u34981uf: {
-        mappingID: 'asdfasdf19280u34981uf',
-        label: 'ExampleMapping',
-        default: 'Unmatched',
-        objectID: 3303,
-        instanceID: 0,
-        resourceID: 0,
-        ranges: [{
-          label: 'firstRange',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
-        mappingType: 'category',
-        value: 'firstRange',
-        valueHistory: ['firstRange']
-      },
+    expect(
+      mappings(
+        {
+          asdfasdf19280u34981uf: {
+            mappingID: 'asdfasdf19280u34981uf',
+            label: 'ExampleMapping',
+            default: 'Unmatched',
+            objectID: 3303,
+            instanceID: 0,
+            resourceID: 0,
+            ranges: [
+              {
+                label: 'firstRange',
+                greaterEqualsThan: 15,
+                lessThan: 30
+              },
+              {
+                label: 'secondRange',
+                greaterEqualsThan: 45,
+                lessThan: 80
+              }
+            ],
+            mappingType: 'category',
+            value: 'firstRange',
+            valueHistory: ['firstRange']
+          },
+          asdfasdfasdfasdfasdfasdf: {
+            mappingID: 'asdfasdfasdfasdfasdfasdf',
+            label: 'ExampleMapping2',
+            default: 'Unmatched',
+            objectID: 3303,
+            instanceID: 0,
+            resourceID: 1,
+            ranges: [
+              {
+                label: 'firstRange2',
+                greaterEqualsThan: 15,
+                lessThan: 30
+              },
+              {
+                label: 'secondRange2',
+                greaterEqualsThan: 45,
+                lessThan: 80
+              }
+            ],
+            mappingType: 'category',
+            value: 'firstRange',
+            valueHistory: ['firstRange']
+          }
+        },
+        removeAction
+      )
+    ).toEqual({
       asdfasdfasdfasdfasdfasdf: {
         mappingID: 'asdfasdfasdfasdfasdfasdf',
         label: 'ExampleMapping2',
@@ -186,40 +239,23 @@ describe('mappings reducer', () => {
         objectID: 3303,
         instanceID: 0,
         resourceID: 1,
-        ranges: [{
-          label: 'firstRange2',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange2',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
+        ranges: [
+          {
+            label: 'firstRange2',
+            greaterEqualsThan: 15,
+            lessThan: 30
+          },
+          {
+            label: 'secondRange2',
+            greaterEqualsThan: 45,
+            lessThan: 80
+          }
+        ],
         mappingType: 'category',
         value: 'firstRange',
         valueHistory: ['firstRange']
       }
-    }, removeAction)).toEqual({
-      asdfasdfasdfasdfasdfasdf: {
-        mappingID: 'asdfasdfasdfasdfasdfasdf',
-        label: 'ExampleMapping2',
-        default: 'Unmatched',
-        objectID: 3303,
-        instanceID: 0,
-        resourceID: 1,
-        ranges: [{
-          label: 'firstRange2',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange2',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
-        mappingType: 'category',
-        value: 'firstRange',
-        valueHistory: ['firstRange']
-      }});
+    });
   });
   it('should do nothing if trying to remove unknown mapping', () => {
     const removeAction = {
@@ -227,7 +263,59 @@ describe('mappings reducer', () => {
       mappingID: 'UNKNOWN'
     };
 
-    expect(mappings({
+    expect(
+      mappings(
+        {
+          asdfasdf19280u34981uf: {
+            mappingID: 'asdfasdf19280u34981uf',
+            label: 'ExampleMapping',
+            default: 'Unmatched',
+            objectID: 3303,
+            instanceID: 0,
+            resourceID: 0,
+            ranges: [
+              {
+                label: 'firstRange',
+                greaterEqualsThan: 15,
+                lessThan: 30
+              },
+              {
+                label: 'secondRange',
+                greaterEqualsThan: 45,
+                lessThan: 80
+              }
+            ],
+            mappingType: 'category',
+            value: 'firstRange',
+            valueHistory: ['firstRange']
+          },
+          asdfasdfasdfasdfasdfasdf: {
+            mappingID: 'asdfasdfasdfasdfasdfasdf',
+            label: 'ExampleMapping2',
+            default: 'Unmatched',
+            objectID: 3303,
+            instanceID: 0,
+            resourceID: 1,
+            ranges: [
+              {
+                label: 'firstRange2',
+                greaterEqualsThan: 15,
+                lessThan: 30
+              },
+              {
+                label: 'secondRange2',
+                greaterEqualsThan: 45,
+                lessThan: 80
+              }
+            ],
+            mappingType: 'category',
+            value: 'firstRange',
+            valueHistory: ['firstRange']
+          }
+        },
+        removeAction
+      )
+    ).toEqual({
       asdfasdf19280u34981uf: {
         mappingID: 'asdfasdf19280u34981uf',
         label: 'ExampleMapping',
@@ -235,15 +323,18 @@ describe('mappings reducer', () => {
         objectID: 3303,
         instanceID: 0,
         resourceID: 0,
-        ranges: [{
-          label: 'firstRange',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
+        ranges: [
+          {
+            label: 'firstRange',
+            greaterEqualsThan: 15,
+            lessThan: 30
+          },
+          {
+            label: 'secondRange',
+            greaterEqualsThan: 45,
+            lessThan: 80
+          }
+        ],
         mappingType: 'category',
         value: 'firstRange',
         valueHistory: ['firstRange']
@@ -255,69 +346,60 @@ describe('mappings reducer', () => {
         objectID: 3303,
         instanceID: 0,
         resourceID: 1,
-        ranges: [{
-          label: 'firstRange2',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange2',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
-        mappingType: 'category',
-        value: 'firstRange',
-        valueHistory: ['firstRange']
-      }
-    }, removeAction)).toEqual({
-      asdfasdf19280u34981uf: {
-        mappingID: 'asdfasdf19280u34981uf',
-        label: 'ExampleMapping',
-        default: 'Unmatched',
-        objectID: 3303,
-        instanceID: 0,
-        resourceID: 0,
-        ranges: [{
-          label: 'firstRange',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
-        mappingType: 'category',
-        value: 'firstRange',
-        valueHistory: ['firstRange']
-      },
-      asdfasdfasdfasdfasdfasdf: {
-        mappingID: 'asdfasdfasdfasdfasdfasdf',
-        label: 'ExampleMapping2',
-        default: 'Unmatched',
-        objectID: 3303,
-        instanceID: 0,
-        resourceID: 1,
-        ranges: [{
-          label: 'firstRange2',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange2',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
+        ranges: [
+          {
+            label: 'firstRange2',
+            greaterEqualsThan: 15,
+            lessThan: 30
+          },
+          {
+            label: 'secondRange2',
+            greaterEqualsThan: 45,
+            lessThan: 80
+          }
+        ],
         mappingType: 'category',
         value: 'firstRange',
         valueHistory: ['firstRange']
       }
     });
   });
-  it('should update a mapping\'s value and add the previous one to valueHistory', () => {
+  it("should update a mapping's value and add the previous one to valueHistory", () => {
     const updateAction = {
       type: Constants.Actions.UPDATE_MAPPING_VALUE,
       mappingID: 'asdfasdfasdfasdfasdfasdf',
       value: 'secondRange2'
     };
-    expect(mappings({
+    expect(
+      mappings(
+        {
+          asdfasdfasdfasdfasdfasdf: {
+            mappingID: 'asdfasdfasdfasdfasdfasdf',
+            label: 'ExampleMapping2',
+            default: 'Unmatched',
+            objectID: 3303,
+            instanceID: 0,
+            resourceID: 1,
+            ranges: [
+              {
+                label: 'firstRange2',
+                greaterEqualsThan: 15,
+                lessThan: 30
+              },
+              {
+                label: 'secondRange2',
+                greaterEqualsThan: 45,
+                lessThan: 80
+              }
+            ],
+            mappingType: 'category',
+            value: 'firstRange2',
+            valueHistory: ['firstRange2']
+          }
+        },
+        updateAction
+      )
+    ).toEqual({
       asdfasdfasdfasdfasdfasdf: {
         mappingID: 'asdfasdfasdfasdfasdfasdf',
         label: 'ExampleMapping2',
@@ -325,41 +407,23 @@ describe('mappings reducer', () => {
         objectID: 3303,
         instanceID: 0,
         resourceID: 1,
-        ranges: [{
-          label: 'firstRange2',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange2',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
-        mappingType: 'category',
-        value: 'firstRange2',
-        valueHistory: ['firstRange2']
-      }}, updateAction)
-    ).toEqual({
-        asdfasdfasdfasdfasdfasdf: {
-          mappingID: 'asdfasdfasdfasdfasdfasdf',
-          label: 'ExampleMapping2',
-          default: 'Unmatched',
-          objectID: 3303,
-          instanceID: 0,
-          resourceID: 1,
-          ranges: [{
+        ranges: [
+          {
             label: 'firstRange2',
             greaterEqualsThan: 15,
             lessThan: 30
-          }, {
+          },
+          {
             label: 'secondRange2',
             greaterEqualsThan: 45,
             lessThan: 80
-          }],
-          mappingType: 'category',
-          value: 'secondRange2',
-          valueHistory: ['firstRange2', 'secondRange2']
-        }
-      });
+          }
+        ],
+        mappingType: 'category',
+        value: 'secondRange2',
+        valueHistory: ['firstRange2', 'secondRange2']
+      }
+    });
   });
   it('should throw out oldest entry in valueHistory if the vH-size limit is reached', () => {
     const addAction = {
@@ -377,7 +441,36 @@ describe('mappings reducer', () => {
     }
     correctValueHistory[99] = 'firstRange';
 
-    expect(mappings({
+    expect(
+      mappings(
+        {
+          VH_LIMIT_TESTARRAY: {
+            mappingID: 'VH_LIMIT_TESTARRAY',
+            label: 'ExampleMapping',
+            default: 'Unmatched',
+            objectID: 3303,
+            instanceID: 0,
+            resourceID: 0,
+            ranges: [
+              {
+                label: 'firstRange',
+                greaterEqualsThan: 15,
+                lessThan: 30
+              },
+              {
+                label: 'secondRange',
+                greaterEqualsThan: 45,
+                lessThan: 80
+              }
+            ],
+            mappingType: 'category',
+            value: 'firstRange',
+            valueHistory: fullValueHistory
+          }
+        },
+        addAction
+      )
+    ).toEqual({
       VH_LIMIT_TESTARRAY: {
         mappingID: 'VH_LIMIT_TESTARRAY',
         label: 'ExampleMapping',
@@ -385,36 +478,18 @@ describe('mappings reducer', () => {
         objectID: 3303,
         instanceID: 0,
         resourceID: 0,
-        ranges: [{
-          label: 'firstRange',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
-        mappingType: 'category',
-        value: 'firstRange',
-        valueHistory: fullValueHistory
-      }
-    }, addAction)).toEqual({
-      VH_LIMIT_TESTARRAY: {
-        mappingID: 'VH_LIMIT_TESTARRAY',
-        label: 'ExampleMapping',
-        default: 'Unmatched',
-        objectID: 3303,
-        instanceID: 0,
-        resourceID: 0,
-        ranges: [{
-          label: 'firstRange',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
+        ranges: [
+          {
+            label: 'firstRange',
+            greaterEqualsThan: 15,
+            lessThan: 30
+          },
+          {
+            label: 'secondRange',
+            greaterEqualsThan: 45,
+            lessThan: 80
+          }
+        ],
         mappingType: 'category',
         value: 'firstRange',
         valueHistory: correctValueHistory
@@ -427,7 +502,61 @@ describe('mappings reducer', () => {
       mappingID: 'asdfasdfasdfasdfasdfasdf'
     };
 
-    expect(mappings({
+    expect(
+      mappings(
+        {
+          asdfasdf19280u34981uf: {
+            active: false,
+            mappingID: 'asdfasdf19280u34981uf',
+            label: 'ExampleMapping',
+            default: 'Unmatched',
+            objectID: 3303,
+            instanceID: 0,
+            resourceID: 0,
+            ranges: [
+              {
+                label: 'firstRange',
+                greaterEqualsThan: 15,
+                lessThan: 30
+              },
+              {
+                label: 'secondRange',
+                greaterEqualsThan: 45,
+                lessThan: 80
+              }
+            ],
+            mappingType: 'category',
+            value: 'firstRange',
+            valueHistory: ['firstRange']
+          },
+          asdfasdfasdfasdfasdfasdf: {
+            active: false,
+            mappingID: 'asdfasdfasdfasdfasdfasdf',
+            label: 'ExampleMapping2',
+            default: 'Unmatched',
+            objectID: 3303,
+            instanceID: 0,
+            resourceID: 1,
+            ranges: [
+              {
+                label: 'firstRange2',
+                greaterEqualsThan: 15,
+                lessThan: 30
+              },
+              {
+                label: 'secondRange2',
+                greaterEqualsThan: 45,
+                lessThan: 80
+              }
+            ],
+            mappingType: 'category',
+            value: 'firstRange',
+            valueHistory: ['firstRange']
+          }
+        },
+        setActiveAction
+      )
+    ).toEqual({
       asdfasdf19280u34981uf: {
         active: false,
         mappingID: 'asdfasdf19280u34981uf',
@@ -436,58 +565,18 @@ describe('mappings reducer', () => {
         objectID: 3303,
         instanceID: 0,
         resourceID: 0,
-        ranges: [{
-          label: 'firstRange',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
-        mappingType: 'category',
-        value: 'firstRange',
-        valueHistory: ['firstRange']
-      },
-      asdfasdfasdfasdfasdfasdf: {
-        active: false,
-        mappingID: 'asdfasdfasdfasdfasdfasdf',
-        label: 'ExampleMapping2',
-        default: 'Unmatched',
-        objectID: 3303,
-        instanceID: 0,
-        resourceID: 1,
-        ranges: [{
-          label: 'firstRange2',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange2',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
-        mappingType: 'category',
-        value: 'firstRange',
-        valueHistory: ['firstRange']
-      }
-    }, setActiveAction)).toEqual({
-      asdfasdf19280u34981uf: {
-        active: false,
-        mappingID: 'asdfasdf19280u34981uf',
-        label: 'ExampleMapping',
-        default: 'Unmatched',
-        objectID: 3303,
-        instanceID: 0,
-        resourceID: 0,
-        ranges: [{
-          label: 'firstRange',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
+        ranges: [
+          {
+            label: 'firstRange',
+            greaterEqualsThan: 15,
+            lessThan: 30
+          },
+          {
+            label: 'secondRange',
+            greaterEqualsThan: 45,
+            lessThan: 80
+          }
+        ],
         mappingType: 'category',
         value: 'firstRange',
         valueHistory: ['firstRange']
@@ -500,15 +589,18 @@ describe('mappings reducer', () => {
         objectID: 3303,
         instanceID: 0,
         resourceID: 1,
-        ranges: [{
-          label: 'firstRange2',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange2',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
+        ranges: [
+          {
+            label: 'firstRange2',
+            greaterEqualsThan: 15,
+            lessThan: 30
+          },
+          {
+            label: 'secondRange2',
+            greaterEqualsThan: 45,
+            lessThan: 80
+          }
+        ],
         mappingType: 'category',
         value: 'firstRange',
         valueHistory: ['firstRange']
@@ -521,7 +613,61 @@ describe('mappings reducer', () => {
       mappingID: 'asdfasdfasdfasdfasdfasdf'
     };
 
-    expect(mappings({
+    expect(
+      mappings(
+        {
+          asdfasdf19280u34981uf: {
+            active: false,
+            mappingID: 'asdfasdf19280u34981uf',
+            label: 'ExampleMapping',
+            default: 'Unmatched',
+            objectID: 3303,
+            instanceID: 0,
+            resourceID: 0,
+            ranges: [
+              {
+                label: 'firstRange',
+                greaterEqualsThan: 15,
+                lessThan: 30
+              },
+              {
+                label: 'secondRange',
+                greaterEqualsThan: 45,
+                lessThan: 80
+              }
+            ],
+            mappingType: 'category',
+            value: 'firstRange',
+            valueHistory: ['firstRange']
+          },
+          asdfasdfasdfasdfasdfasdf: {
+            active: true,
+            mappingID: 'asdfasdfasdfasdfasdfasdf',
+            label: 'ExampleMapping2',
+            default: 'Unmatched',
+            objectID: 3303,
+            instanceID: 0,
+            resourceID: 1,
+            ranges: [
+              {
+                label: 'firstRange2',
+                greaterEqualsThan: 15,
+                lessThan: 30
+              },
+              {
+                label: 'secondRange2',
+                greaterEqualsThan: 45,
+                lessThan: 80
+              }
+            ],
+            mappingType: 'category',
+            value: 'firstRange',
+            valueHistory: ['firstRange']
+          }
+        },
+        setInactiveAction
+      )
+    ).toEqual({
       asdfasdf19280u34981uf: {
         active: false,
         mappingID: 'asdfasdf19280u34981uf',
@@ -530,58 +676,18 @@ describe('mappings reducer', () => {
         objectID: 3303,
         instanceID: 0,
         resourceID: 0,
-        ranges: [{
-          label: 'firstRange',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
-        mappingType: 'category',
-        value: 'firstRange',
-        valueHistory: ['firstRange']
-      },
-      asdfasdfasdfasdfasdfasdf: {
-        active: true,
-        mappingID: 'asdfasdfasdfasdfasdfasdf',
-        label: 'ExampleMapping2',
-        default: 'Unmatched',
-        objectID: 3303,
-        instanceID: 0,
-        resourceID: 1,
-        ranges: [{
-          label: 'firstRange2',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange2',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
-        mappingType: 'category',
-        value: 'firstRange',
-        valueHistory: ['firstRange']
-      }
-    }, setInactiveAction)).toEqual({
-      asdfasdf19280u34981uf: {
-        active: false,
-        mappingID: 'asdfasdf19280u34981uf',
-        label: 'ExampleMapping',
-        default: 'Unmatched',
-        objectID: 3303,
-        instanceID: 0,
-        resourceID: 0,
-        ranges: [{
-          label: 'firstRange',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
+        ranges: [
+          {
+            label: 'firstRange',
+            greaterEqualsThan: 15,
+            lessThan: 30
+          },
+          {
+            label: 'secondRange',
+            greaterEqualsThan: 45,
+            lessThan: 80
+          }
+        ],
         mappingType: 'category',
         value: 'firstRange',
         valueHistory: ['firstRange']
@@ -594,15 +700,18 @@ describe('mappings reducer', () => {
         objectID: 3303,
         instanceID: 0,
         resourceID: 1,
-        ranges: [{
-          label: 'firstRange2',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange2',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
+        ranges: [
+          {
+            label: 'firstRange2',
+            greaterEqualsThan: 15,
+            lessThan: 30
+          },
+          {
+            label: 'secondRange2',
+            greaterEqualsThan: 45,
+            lessThan: 80
+          }
+        ],
         mappingType: 'category',
         value: 'firstRange',
         valueHistory: ['firstRange']
@@ -615,7 +724,85 @@ describe('mappings reducer', () => {
       mappingID: 'asdfasdfasdfasdfasdfasdf'
     };
 
-    expect(mappings({
+    expect(
+      mappings(
+        {
+          asdfasdf19280u34981uf: {
+            active: true,
+            mappingID: 'asdfasdf19280u34981uf',
+            label: 'ExampleMapping',
+            default: 'Unmatched',
+            objectID: 3303,
+            instanceID: 0,
+            resourceID: 0,
+            ranges: [
+              {
+                label: 'firstRange',
+                greaterEqualsThan: 15,
+                lessThan: 30
+              },
+              {
+                label: 'secondRange',
+                greaterEqualsThan: 45,
+                lessThan: 80
+              }
+            ],
+            mappingType: 'category',
+            value: 'firstRange',
+            valueHistory: ['firstRange']
+          },
+          asdfasdfasdfasdfasdfasdf: {
+            active: false,
+            mappingID: 'asdfasdfasdfasdfasdfasdf',
+            label: 'ExampleMapping2',
+            default: 'Unmatched',
+            objectID: 3303,
+            instanceID: 0,
+            resourceID: 1,
+            ranges: [
+              {
+                label: 'firstRange2',
+                greaterEqualsThan: 15,
+                lessThan: 30
+              },
+              {
+                label: 'secondRange2',
+                greaterEqualsThan: 45,
+                lessThan: 80
+              }
+            ],
+            mappingType: 'category',
+            value: 'firstRange',
+            valueHistory: ['firstRange']
+          },
+          glugplpasdfhjfj: {
+            active: true,
+            mappingID: 'glugplpasdfhjfj',
+            label: 'ExampleMapping2',
+            default: 'Unmatched',
+            objectID: 3303,
+            instanceID: 0,
+            resourceID: 1,
+            ranges: [
+              {
+                label: 'firstRange2',
+                greaterEqualsThan: 15,
+                lessThan: 30
+              },
+              {
+                label: 'secondRange2',
+                greaterEqualsThan: 45,
+                lessThan: 80
+              }
+            ],
+            mappingType: 'category',
+            value: 'firstRange',
+            valueHistory: ['firstRange']
+          }
+        },
+        setActiveAction
+      )
+    ).toEqual({
       asdfasdf19280u34981uf: {
         active: true,
         mappingID: 'asdfasdf19280u34981uf',
@@ -624,79 +811,18 @@ describe('mappings reducer', () => {
         objectID: 3303,
         instanceID: 0,
         resourceID: 0,
-        ranges: [{
-          label: 'firstRange',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
-        mappingType: 'category',
-        value: 'firstRange',
-        valueHistory: ['firstRange']
-      },
-      asdfasdfasdfasdfasdfasdf: {
-        active: false,
-        mappingID: 'asdfasdfasdfasdfasdfasdf',
-        label: 'ExampleMapping2',
-        default: 'Unmatched',
-        objectID: 3303,
-        instanceID: 0,
-        resourceID: 1,
-        ranges: [{
-          label: 'firstRange2',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange2',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
-        mappingType: 'category',
-        value: 'firstRange',
-        valueHistory: ['firstRange']
-      },
-      glugplpasdfhjfj: {
-        active: true,
-        mappingID: 'glugplpasdfhjfj',
-        label: 'ExampleMapping2',
-        default: 'Unmatched',
-        objectID: 3303,
-        instanceID: 0,
-        resourceID: 1,
-        ranges: [{
-          label: 'firstRange2',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange2',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
-        mappingType: 'category',
-        value: 'firstRange',
-        valueHistory: ['firstRange']
-      }
-    }, setActiveAction)).toEqual({
-      asdfasdf19280u34981uf: {
-        active: true,
-        mappingID: 'asdfasdf19280u34981uf',
-        label: 'ExampleMapping',
-        default: 'Unmatched',
-        objectID: 3303,
-        instanceID: 0,
-        resourceID: 0,
-        ranges: [{
-          label: 'firstRange',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
+        ranges: [
+          {
+            label: 'firstRange',
+            greaterEqualsThan: 15,
+            lessThan: 30
+          },
+          {
+            label: 'secondRange',
+            greaterEqualsThan: 45,
+            lessThan: 80
+          }
+        ],
         mappingType: 'category',
         value: 'firstRange',
         valueHistory: ['firstRange']
@@ -709,15 +835,18 @@ describe('mappings reducer', () => {
         objectID: 3303,
         instanceID: 0,
         resourceID: 1,
-        ranges: [{
-          label: 'firstRange2',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange2',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
+        ranges: [
+          {
+            label: 'firstRange2',
+            greaterEqualsThan: 15,
+            lessThan: 30
+          },
+          {
+            label: 'secondRange2',
+            greaterEqualsThan: 45,
+            lessThan: 80
+          }
+        ],
         mappingType: 'category',
         value: 'firstRange',
         valueHistory: ['firstRange']
@@ -730,15 +859,18 @@ describe('mappings reducer', () => {
         objectID: 3303,
         instanceID: 0,
         resourceID: 1,
-        ranges: [{
-          label: 'firstRange2',
-          greaterEqualsThan: 15,
-          lessThan: 30
-        }, {
-          label: 'secondRange2',
-          greaterEqualsThan: 45,
-          lessThan: 80
-        }],
+        ranges: [
+          {
+            label: 'firstRange2',
+            greaterEqualsThan: 15,
+            lessThan: 30
+          },
+          {
+            label: 'secondRange2',
+            greaterEqualsThan: 45,
+            lessThan: 80
+          }
+        ],
         mappingType: 'category',
         value: 'firstRange',
         valueHistory: ['firstRange']

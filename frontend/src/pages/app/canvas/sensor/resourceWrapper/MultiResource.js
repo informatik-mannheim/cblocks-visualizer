@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import deepEqual from 'deep-equal';
 
 class MultiResource extends React.Component {
-
   shouldComponentUpdate (nextProps, nextState) {
     if (deepEqual(nextProps.currentValue, this.props.currentValue)) {
       return false;
@@ -17,7 +16,7 @@ class MultiResource extends React.Component {
   requestChangeToSubresource (subresourceName, value) {
     const properties = this.props.resource.schema.properties;
     const newValue = {};
-    Object.entries(properties).map((propertyKeyValue) => {
+    Object.entries(properties).map(propertyKeyValue => {
       const resource = propertyKeyValue[1];
       if (subresourceName === resource.label) {
         newValue[resource.label] = value;
@@ -26,7 +25,12 @@ class MultiResource extends React.Component {
       }
     });
 
-    this.props.buildRequest(this.props.objectID, this.props.instanceID, this.props.resource.resourceID, newValue);
+    this.props.buildRequest(
+      this.props.objectID,
+      this.props.instanceID,
+      this.props.resource.resourceID,
+      newValue
+    );
   }
 
   render () {
@@ -35,8 +39,10 @@ class MultiResource extends React.Component {
 
     return (
       <div>
-        <Typography variant='subheading' align='center'>{name}</Typography>
-        {Object.entries(properties).map((propertyKeyValue) => {
+        <Typography variant="subheading" align="center">
+          {name}
+        </Typography>
+        {Object.entries(properties).map(propertyKeyValue => {
           const resource = propertyKeyValue[1];
           resource.label = propertyKeyValue[0];
           return (
@@ -49,14 +55,17 @@ class MultiResource extends React.Component {
                 resource={resource}
                 isWriteable={this.props.isWriteable}
                 multiResource={false}
-                smallForm={true}
-                requestChangeToSubresource={this.requestChangeToSubresource.bind(this)}/>
-              </div>
-            );
-          })}
-        </div>
-      );
-    }
+                smallForm
+                requestChangeToSubresource={this.requestChangeToSubresource.bind(
+                  this
+                )}
+              />
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
 }
 
 MultiResource.propTypes = {
