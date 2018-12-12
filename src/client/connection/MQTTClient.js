@@ -15,17 +15,18 @@ const isParsableJSON = jsonString => {
 
 const mqttEvents = Constants.MQTTEvents;
 const MQTTClient = url => {
+  const self = {};
   const client = connect(url);
 
   const callbacks = {};
 
-  this.requestResourceChange = (objectID, instanceID, resourceID, data) => {
+  self.requestResourceChange = (objectID, instanceID, resourceID, data) => {
     const topic
       = 'cblocks-ui/' + objectID + '/' + instanceID + '/' + resourceID + '/input';
     console.log(topic);
     const message = {
       requestID: 1234,
-      data: data
+      data
     };
     client.publish(topic, message + '');
   };
@@ -38,10 +39,10 @@ const MQTTClient = url => {
     }
   };
 
-  this.bind = (event_name, callback) => {
+  self.bind = (event_name, callback) => {
     callbacks[event_name] = callbacks[event_name] || [];
     callbacks[event_name].push(callback);
-    return this;
+    return self;
   };
 
   client.on('connect', () => {
@@ -83,20 +84,20 @@ const MQTTClient = url => {
         sensor status change
         */
         case (/^\d+\/\d\/status/).test(topic):
-          sensorID = Number(/^(\d+)\/(\d)\/status/.exec(topic)[1]);
-          instanceID = Number(/^(\d)+\/(\d)\/status/.exec(topic)[2]);
+          sensorID = Number((/^(\d+)\/(\d)\/status/).exec(topic)[1]);
+          instanceID = Number((/^(\d)+\/(\d)\/status/).exec(topic)[2]);
 
           if (message.toString() === 'online') {
             console.log(sensorID + '-' + instanceID + ': online');
             dispatch(mqttEvents.SENSOR_ADDED, {
-              sensorID: sensorID,
-              instanceID: instanceID
+              sensorID,
+              instanceID
             });
           } else if (message.toString() === 'offline') {
             console.log(sensorID + '-' + instanceID + ': offline');
             dispatch(mqttEvents.SENSOR_REMOVED, {
-              sensorID: sensorID,
-              instanceID: instanceID
+              sensorID,
+              instanceID
             });
           }
           break;
@@ -104,10 +105,10 @@ const MQTTClient = url => {
         sensor value updated
         */
         case (/^\d+\/\d\/\d\/output/).test(topic):
-          sensorID = Number(/^(\d+)\/(\d)\/(\d)\/output/.exec(topic)[1]);
-          instanceID = Number(/^(\d+)\/(\d)\/(\d)\/output/.exec(topic)[2]);
+          sensorID = Number((/^(\d+)\/(\d)\/(\d)\/output/).exec(topic)[1]);
+          instanceID = Number((/^(\d+)\/(\d)\/(\d)\/output/).exec(topic)[2]);
           const resourceID = Number(
-            /^(\d+)\/(\d)\/(\d)\/output/.exec(topic)[3]
+            (/^(\d+)\/(\d)\/(\d)\/output/).exec(topic)[3]
           );
 
           let value;
@@ -118,10 +119,10 @@ const MQTTClient = url => {
           }
 
           dispatch(mqttEvents.SENSOR_UPDATED, {
-            sensorID: sensorID,
-            instanceID: instanceID,
-            resourceID: resourceID,
-            value: value
+            sensorID,
+            instanceID,
+            resourceID,
+            value
           });
           break;
 
@@ -139,9 +140,9 @@ const MQTTClient = url => {
           }
 
           dispatch(mqttEvents.NEW_MAPPING_VALUE, {
-            mappingType: mappingType,
-            mappingID: mappingID,
-            value: value
+            mappingType,
+            mappingID,
+            value
           });
           break;
         default:
@@ -171,7 +172,7 @@ const MQTTClient = url => {
     }
   });
 
-  return this;
+  return self;
 };
 
 export default MQTTClient;

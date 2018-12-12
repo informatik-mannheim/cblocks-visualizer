@@ -21,8 +21,9 @@ coverage
 .lock-wscript
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
 build
+public/bundle.js
+
 
 # Dependency directories
 node_modules
@@ -84,6 +85,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-# Start-up Script
-start_env.ps1

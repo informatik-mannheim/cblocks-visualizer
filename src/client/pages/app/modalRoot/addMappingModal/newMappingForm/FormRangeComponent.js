@@ -9,11 +9,17 @@ class FormRangeComponent extends Component {
     greaterEqualsThan: '',
     lessThan: ''
   };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState !== this.state) {
+      this.props.onChange(this.props.index, this.state);
+    }
+  };
+
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value
     });
-    this.props.onChange('test');
   };
 
   render = () => {
@@ -76,6 +82,7 @@ class FormRangeComponent extends Component {
 }
 
 FormRangeComponent.propTypes = {
+  index: PropTypes.number,
   onChange: PropTypes.func
 };
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import App from './pages/App';
 import store from './store';
@@ -11,11 +10,9 @@ const rootEl = document.getElementById('app');
 
 const render = () => {
   ReactDOM.render(
-    <AppContainer>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </AppContainer>,
+    <Provider store={store}>
+      <App />
+    </Provider>,
     rootEl
   );
 };

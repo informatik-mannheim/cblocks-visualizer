@@ -21,30 +21,22 @@ const styles = theme => ({
 });
 
 const mappingTypes = {
-  CATEGORY: 'CATEGORY',
-  LABEL: 'LABEL',
-  RANGE: 'RANGE'
+  CATEGORY: 'category',
+  LABEL: 'label',
+  RANGE: 'range'
 };
 
 class NewMappingForm extends Component {
   state = {
     mappingType: mappingTypes.RANGE,
-    rangeCount: 1,
     mappingName: '',
     defaultValue: '',
-    ranges: [{ id: 1 }, { id: 2 }]
-  };
-
-  handleClick = () => {
-    console.log('test');
+    ranges: [{ index: 0, label: '', greaterEqualsThan: '', lessThan: '' }]
   };
 
   handleChange = e => {
     if (e.target.name === 'mappingTypeSelect') {
       this.setState({ mappingType: e.target.value });
-      if (e.target.value === mappingTypes.RANGE) {
-        this.setState({ rangeCount: 1 });
-      }
     }
     if (e.target.name === 'mappingNameField') {
       this.setState({ mappingName: e.target.value });
@@ -54,8 +46,80 @@ class NewMappingForm extends Component {
     }
   };
 
-  handleRangeChange = e => {
-    console.log(e);
+  handleRangeChange = (index, rangeState) => {
+    const newRanges = this.state.ranges;
+    newRanges[index] = { ...rangeState, index: index };
+    this.setState({ ranges: newRanges });
+  };
+
+  componentDidMount = () => {
+    this.setState({
+      objectID: this.props.objectID,
+      instanceID: this.props.instanceID,
+      resourceID: this.props.resourceID
+    });
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState !== this.state) {
+      console.log(this.state);
+    }
+  };
+
+  handleClick = () => {
+    const ranges = this.state.ranges.map(r => ({
+      label: r.label,
+      greaterEqualsThan: r.greaterEqualsThan,
+      lessThan: r.lessThan
+    }));
+
+    const stateObjectForMappingAction = {
+      mappingType: this.state.mappingType,
+      label: this.state.mappingName,
+      defaultValue: this.state.defaultValue,
+      resource: {
+        objectID: this.props.objectID,
+        instanceID: this.props.instanceID,
+        resourceID: this.props.resourceID
+      },
+      ranges: ranges
+    };
+
+    this.props.createNewMapping(stateObjectForMappingAction);
+
+    // this.props.createNewMapping({
+    //   mappingType: 'category',
+    //   label: 'TESTTEST',
+    //   defaultValue: 'TEST_DEFAULT',
+    //   resource: {
+    //     objectID: 3303,
+    //     instanceID: 0,
+    //     resourceID: 0
+    //   },
+    //   ranges: [
+    //     {
+    //       label: 'RANGE_1',
+    //       greaterEqualsThan: 70,
+    //       lessThan: 80
+    //     },
+    //     {
+    //       label: 'RANGE_2',
+    //       greaterEqualsThan: 90,
+    //       lessThan: 100
+    //     }
+    //   ]
+    // });
+  };
+
+  addRange = () => {
+    const newRanges = this.state.ranges;
+    newRanges[newRanges.length] = {
+      index: newRanges.length,
+      label: '',
+      greaterEqualsThan: '',
+      lessThan: ''
+    };
+    this.setState({ ranges: newRanges });
   };
 
   render () {
@@ -73,7 +137,7 @@ class NewMappingForm extends Component {
           </Typography>
           <Select
             value={this.state.mappingType}
-            onChange={this.handleChange}
+            onChange={this.handleChange.bind(this)}
             inputProps={{
               name: 'mappingTypeSelect'
             }}
@@ -107,7 +171,7 @@ class NewMappingForm extends Component {
           />
         </div>
         {this.state.mappingType === mappingTypes.RANGE && (
-          <FormRangeComponent id={1} onChange={this.handleRangeChange} />
+          <FormRangeComponent index={1} onChange={this.handleRangeChange} />
         )}
 
         {this.state.mappingType === mappingTypes.CATEGORY && (
@@ -121,8 +185,8 @@ class NewMappingForm extends Component {
           && this.state.ranges.map(r => {
             return (
               <FormRangeComponent
-                key={r.id}
-                id={r.id}
+                key={r.index}
+                index={r.index}
                 onChange={this.handleRangeChange}
               />
             );
@@ -131,10 +195,11 @@ class NewMappingForm extends Component {
           <Button
             variant="fab"
             mini
-            color="primary"
+            color="secondary"
             style={{
               float: 'center'
             }}
+            onClick={this.addRange.bind(this)}
           >
             <AddIcon />
           </Button>
@@ -165,6 +230,7 @@ class NewMappingForm extends Component {
 
 NewMappingForm.propTypes = {
   classes: PropTypes.object,
+  createNewMapping: PropTypes.func,
   hideModal: PropTypes.func,
   instanceID: PropTypes.number,
   objectID: PropTypes.number,

@@ -1,5 +1,6 @@
 import Constants from '../constants';
 import axios from 'axios';
+// import qs from 'qs';
 
 const getURLForMappingType = type => {
   if (type === 'category') return Constants.URLs.CATEGORY_MAPPING_URL;
@@ -7,25 +8,10 @@ const getURLForMappingType = type => {
   if (type === 'label') return Constants.URLs.LABEL_MAPPING_URL;
 };
 
-// const getColorCodeForMapping = (getState, resource) => {
-//   const sensorsArray = getState().sensors.all_sensors;
-//   const mappings = getState().mappings;
-//   for (const sens of sensorsArray) {
-//     console.log(sens);
-//     if (sens.objectID === resource.objectID
-//       && sens.instanceID === resource.instanceID) {
-//       const relevantMappings = sens.resources[resource.resourceID].mappings;
-//       for (const mappingID of relevantMappings) {
-//         mappings[mappingID];
-//       }
-//     }
-//   }
-// };
-
 export const setMappingActivity = (mappingID, bool) => {
   return bool === true
-    ? { type: Constants.Actions.SET_MAPPING_ACTIVE, mappingID: mappingID }
-    : { type: Constants.Actions.SET_MAPPING_INACTIVE, mappingID: mappingID };
+    ? { type: Constants.Actions.SET_MAPPING_ACTIVE, mappingID }
+    : { type: Constants.Actions.SET_MAPPING_INACTIVE, mappingID };
 };
 
 export const addMapping = mapping => ({
@@ -45,7 +31,7 @@ export const removeMapping = mappingID => ({
 });
 
 export const fetchMapping = (mappingType, mappingID, value) => {
-  return (dispatch, getState) => {
+  return dispatch => {
     axios
       .get(`${getURLForMappingType(mappingType)}/${mappingID}`)
       .then(response => {
@@ -55,13 +41,6 @@ export const fetchMapping = (mappingType, mappingID, value) => {
         return response.data;
       })
       .then(mapping => {
-        // const colorCode = getColorCodeForMapping(getState, {
-        //   objectID: mapping.objectID,
-        //   instanceID: mapping.instanceID,
-        //   resourceID: mapping.resourceID
-        // });
-        // console.log(colorCode);
-        // mapping.colorCode = colorCode;
         mapping.mappingType = mappingType;
         mapping.valueHistory = [];
         mapping.value = value;
@@ -86,30 +65,46 @@ export const newMappingValue = (mappingType, mappingID, value) => {
   };
 };
 
-export const createNewMapping = (
-  mappingType,
-  label,
-  defaultValue,
-  resource,
-  ranges
-) => {
+export const createNewMapping = mappingInfo => {
   const data = {
-    label: label,
-    default: defaultValue,
-    ...resource,
-    ranges: ranges
+    label: mappingInfo.label,
+    default: mappingInfo.defaultValue,
+    objectID: mappingInfo.resource.objectID,
+    instanceID: mappingInfo.resource.instanceID,
+    resourceID: mappingInfo.resource.resourceID,
+    ranges: mappingInfo.ranges
   };
+
+  const params = new URLSearchParams();
+  params.append('label', mappingInfo.label);
+  params.append('default', mappingInfo.defaultValue);
+  params.append('objectID', mappingInfo.resource.objectID);
+  params.append('instanceID', mappingInfo.resource.instanceID);
+  params.append('resourceID', mappingInfo.resource.resourceID);
+  params.append('ranges', mappingInfo.ranges);
+  // console.log(qs.stringify(data, { encode: false }));
+  console.log(JSON.stringify(data));
   return dispatch => {
     return axios
-      .post(getURLForMappingType(mappingType), data)
+      .post(
+        getURLForMappingType(mappingInfo.mappingType),
+        // qs.stringify(data, { encode: false })
+        JSON.stringify(data),
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      )
       .then(response => {
+        console.log(response);
         if (response.status !== 200) {
-          throw Error(response.statusText);
+          throw Error(response);
         }
       })
       .catch(error => {
         //TODO: proper error handling
-        console.log(error);
+        throw Error(error);
       });
   };
 };
@@ -123,10 +118,10 @@ export const updateMapping = (
   ranges
 ) => {
   const data = {
-    label: label,
+    label,
     default: defaultValue,
     ...resource,
-    ranges: ranges
+    ranges
   };
   return dispatch => {
     return axios
