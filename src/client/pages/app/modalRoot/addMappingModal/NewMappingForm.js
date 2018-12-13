@@ -34,6 +34,20 @@ class NewMappingForm extends Component {
     ranges: [{ index: 0, label: '', greaterEqualsThan: '', lessThan: '' }]
   };
 
+  componentDidMount = () => {
+    this.setState({
+      objectID: this.props.objectID,
+      instanceID: this.props.instanceID,
+      resourceID: this.props.resourceID
+    });
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState !== this.state) {
+      console.log(this.state);
+    }
+  };
+
   handleChange = e => {
     if (e.target.name === 'mappingTypeSelect') {
       this.setState({ mappingType: e.target.value });
@@ -48,22 +62,8 @@ class NewMappingForm extends Component {
 
   handleRangeChange = (index, rangeState) => {
     const newRanges = this.state.ranges;
-    newRanges[index] = { ...rangeState, index: index };
+    newRanges[index] = { ...rangeState, index };
     this.setState({ ranges: newRanges });
-  };
-
-  componentDidMount = () => {
-    this.setState({
-      objectID: this.props.objectID,
-      instanceID: this.props.instanceID,
-      resourceID: this.props.resourceID
-    });
-  };
-
-  componentDidUpdate = (prevProps, prevState) => {
-    if (prevState !== this.state) {
-      console.log(this.state);
-    }
   };
 
   handleClick = () => {
@@ -82,7 +82,7 @@ class NewMappingForm extends Component {
         instanceID: this.props.instanceID,
         resourceID: this.props.resourceID
       },
-      ranges: ranges
+      ranges
     };
 
     this.props.createNewMapping(stateObjectForMappingAction);

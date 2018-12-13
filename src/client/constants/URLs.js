@@ -3,6 +3,5 @@ export default {
   CATEGORY_MAPPING_URL: 'http://37.61.204.167:8081/mappings/category',
   RANGE_MAPPING_URL: 'http://37.61.204.167:8081/mappings/range',
   LABEL_MAPPING_URL: 'http://37.61.204.167:8081/mappings/label',
-  SERVER_SOCKET: 'ws://localhost:8888',
   MQTT_URL: 'mqtt://172.16.1.1:1884'
 };

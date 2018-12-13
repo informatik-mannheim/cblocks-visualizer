@@ -10,9 +10,9 @@ class MappingDrawer extends React.Component {
     const { objectID, instanceID, resourceID } = this.props;
     const mappingModalProps = {
       open: true,
-      objectID: objectID,
-      instanceID: instanceID,
-      resourceID: resourceID
+      objectID,
+      instanceID,
+      resourceID
     };
 
     return (

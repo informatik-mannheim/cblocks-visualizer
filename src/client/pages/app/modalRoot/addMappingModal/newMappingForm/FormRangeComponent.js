@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 class FormRangeComponent extends Component {
   state = {
     label: '',
-    greaterEqualsThan: '',
-    lessThan: ''
+    greaterEqualsThan: 0,
+    lessThan: 0
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -17,8 +17,12 @@ class FormRangeComponent extends Component {
   };
 
   handleChange = name => event => {
+    const value
+      = event.target.type === 'number'
+        ? parseInt(event.target.value)
+        : event.target.value;
     this.setState({
-      [name]: event.target.value
+      [name]: value
     });
   };
 
