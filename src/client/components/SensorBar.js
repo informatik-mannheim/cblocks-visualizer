@@ -10,11 +10,11 @@ class SensorBar extends Component {
   };
 
   handleHoverStart = rangeLabel => {
-    this.setState(prevState => ({ hovering: true, rangeLabel: rangeLabel }));
+    this.setState(() => ({ hovering: true, rangeLabel }));
   };
 
   handleHoverEnd = () => {
-    this.setState(prevState => ({ hovering: false, rangeLabel: '' }));
+    this.setState(() => ({ hovering: false, rangeLabel: '' }));
   };
 
   getPercentage = (min, max, val) => {

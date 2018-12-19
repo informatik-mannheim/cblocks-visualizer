@@ -31,7 +31,9 @@ class NewMappingForm extends Component {
     mappingType: mappingTypes.RANGE,
     mappingName: '',
     defaultValue: '',
-    ranges: [{ index: 0, label: '', greaterEqualsThan: '', lessThan: '' }]
+    ranges: [{ index: 0, label: '', greaterEqualsThan: '', lessThan: '' }],
+    greaterEqualsThan: '',
+    lessThan: ''
   };
 
   componentDidMount = () => {
@@ -61,9 +63,16 @@ class NewMappingForm extends Component {
   };
 
   handleRangeChange = (index, rangeState) => {
-    const newRanges = this.state.ranges;
-    newRanges[index] = { ...rangeState, index };
-    this.setState({ ranges: newRanges });
+    if (this.state.mappingType === mappingTypes.CATEGORY) {
+      const newRanges = this.state.ranges;
+      newRanges[index] = { ...rangeState, index };
+      this.setState({ ranges: newRanges });
+    } else {
+      this.setState({
+        greaterEqualsThan: rangeState.greaterEqualsThan,
+        lessThan: rangeState.lessThan
+      });
+    }
   };
 
   handleClick = () => {
@@ -82,33 +91,12 @@ class NewMappingForm extends Component {
         instanceID: this.props.instanceID,
         resourceID: this.props.resourceID
       },
+      greaterEqualsThan: this.state.greaterEqualsThan,
+      lessEqualsThan: this.state.lessThan,
       ranges
     };
 
     this.props.createNewMapping(stateObjectForMappingAction);
-
-    // this.props.createNewMapping({
-    //   mappingType: 'category',
-    //   label: 'TESTTEST',
-    //   defaultValue: 'TEST_DEFAULT',
-    //   resource: {
-    //     objectID: 3303,
-    //     instanceID: 0,
-    //     resourceID: 0
-    //   },
-    //   ranges: [
-    //     {
-    //       label: 'RANGE_1',
-    //       greaterEqualsThan: 70,
-    //       lessThan: 80
-    //     },
-    //     {
-    //       label: 'RANGE_2',
-    //       greaterEqualsThan: 90,
-    //       lessThan: 100
-    //     }
-    //   ]
-    // });
   };
 
   addRange = () => {
@@ -171,7 +159,11 @@ class NewMappingForm extends Component {
           />
         </div>
         {this.state.mappingType === mappingTypes.RANGE && (
-          <FormRangeComponent index={1} onChange={this.handleRangeChange} />
+          <FormRangeComponent
+            isRange
+            index={1}
+            onChange={this.handleRangeChange}
+          />
         )}
 
         {this.state.mappingType === mappingTypes.CATEGORY && (

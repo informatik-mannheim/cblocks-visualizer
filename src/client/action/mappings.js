@@ -66,29 +66,34 @@ export const newMappingValue = (mappingType, mappingID, value) => {
 };
 
 export const createNewMapping = mappingInfo => {
-  const data = {
-    label: mappingInfo.label,
-    default: mappingInfo.defaultValue,
-    objectID: mappingInfo.resource.objectID,
-    instanceID: mappingInfo.resource.instanceID,
-    resourceID: mappingInfo.resource.resourceID,
-    ranges: mappingInfo.ranges
-  };
+  let data;
+  if (mappingInfo.mappingType === 'category') {
+    data = {
+      label: mappingInfo.label,
+      default: mappingInfo.defaultValue,
+      objectID: mappingInfo.resource.objectID,
+      instanceID: mappingInfo.resource.instanceID,
+      resourceID: mappingInfo.resource.resourceID,
+      ranges: mappingInfo.ranges
+    };
+  }
+  if (mappingInfo.mappingType === 'range') {
+    data = {
+      label: mappingInfo.label,
+      objectID: mappingInfo.resource.objectID,
+      instanceID: mappingInfo.resource.instanceID,
+      resourceID: mappingInfo.resource.resourceID,
+      greaterEqualsThan: mappingInfo.greaterEqualsThan,
+      lessEqualsThan: mappingInfo.lessEqualsThan
+    };
+  }
 
-  const params = new URLSearchParams();
-  params.append('label', mappingInfo.label);
-  params.append('default', mappingInfo.defaultValue);
-  params.append('objectID', mappingInfo.resource.objectID);
-  params.append('instanceID', mappingInfo.resource.instanceID);
-  params.append('resourceID', mappingInfo.resource.resourceID);
-  params.append('ranges', mappingInfo.ranges);
-  // console.log(qs.stringify(data, { encode: false }));
-  console.log(JSON.stringify(data));
+  console.log(data);
+
   return dispatch => {
     return axios
       .post(
         getURLForMappingType(mappingInfo.mappingType),
-        // qs.stringify(data, { encode: false })
         JSON.stringify(data),
         {
           headers: {

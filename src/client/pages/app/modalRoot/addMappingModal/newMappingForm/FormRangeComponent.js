@@ -50,13 +50,26 @@ class FormRangeComponent extends Component {
           {'≤'}
         </Typography>
 
-        <TextField
-          id="label"
-          label="Range Label"
-          value={this.state.label}
-          onChange={this.handleChange('label')}
-          type="text"
-        />
+        {this.props.isRange === true ? (
+          <Typography
+            variant="body1"
+            style={{
+              display: 'inline-block',
+              marginLeft: 15,
+              marginRight: 15
+            }}
+          >
+            RANGE
+          </Typography>
+        ) : (
+          <TextField
+            id="label"
+            label="Range Label"
+            value={this.state.label}
+            onChange={this.handleChange('label')}
+            type="text"
+          />
+        )}
 
         <Typography
           variant="body1"
@@ -87,6 +100,7 @@ class FormRangeComponent extends Component {
 
 FormRangeComponent.propTypes = {
   index: PropTypes.number,
+  isRange: PropTypes.bool,
   onChange: PropTypes.func
 };
 
