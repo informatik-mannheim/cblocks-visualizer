@@ -12,6 +12,11 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import * as action from '../../action';
 
 class MenuDrawer extends React.Component {
+  onURLSettingsClick = () => {
+    this.props.closeDrawer();
+    this.props.openURLSettings();
+  };
+
   render () {
     const menuList = (
       <List style={{ width: 250 }}>
@@ -28,7 +33,7 @@ class MenuDrawer extends React.Component {
         <div
           tabIndex={0}
           role="button"
-          onClick={this.props.closeDrawer}
+          onClick={this.onURLSettingsClick.bind(this)}
           onKeyDown={this.props.closeDrawer}
         >
           {menuList}
@@ -40,7 +45,8 @@ class MenuDrawer extends React.Component {
 
 MenuDrawer.propTypes = {
   closeDrawer: PropTypes.func,
-  drawerOpen: PropTypes.bool
+  drawerOpen: PropTypes.bool,
+  openURLSettings: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -51,9 +57,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     closeDrawer: () => dispatch(action.closeMenuDrawer()),
-    openURLSettings: () => dispatch(action.showModal())
+    openURLSettings: () =>
+      dispatch(action.showModal('URL_SETTINGS', { open: true }))
   };
 };
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

@@ -4,11 +4,13 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import ChartModal from './modalRoot/ChartModal';
 import AddMappingModal from './modalRoot/AddMappingModal';
+import URLSettingsModal from './modalRoot/URLSettingsModal';
 import * as action from '../../action/';
 
 const MODAL_COMPONENTS = {
   CHART: ChartModal,
-  ADD_MAPPING: AddMappingModal
+  ADD_MAPPING: AddMappingModal,
+  URL_SETTINGS: URLSettingsModal
 };
 
 const styles = theme => ({
