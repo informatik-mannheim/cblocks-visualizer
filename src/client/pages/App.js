@@ -6,6 +6,7 @@ import { DragDropContext } from 'react-dnd';
 import CustomDragLayer from './app/CustomDragLayer';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 import ModalRoot from './app/ModalRoot';
+import MenuDrawer from './app/MenuDrawer';
 
 const theme = createMuiTheme({
   palette: {
@@ -57,6 +58,7 @@ class App extends React.Component {
         <Canvas />
         <CustomDragLayer />
         <ModalRoot />
+        <MenuDrawer />
       </MuiThemeProvider>
     );
   }

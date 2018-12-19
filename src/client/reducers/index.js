@@ -4,6 +4,8 @@ import { requests } from './requests';
 import { modals } from './modals';
 import { mappings } from './mappings';
 import { pinnedCharts } from './pinnedCharts';
+import { menuDrawer } from './menuDrawer';
+
 import tests from './tests/';
 
 const rootReducer = combineReducers({
@@ -11,7 +13,8 @@ const rootReducer = combineReducers({
   mappings,
   modals,
   requests,
-  pinnedCharts
+  pinnedCharts,
+  menuDrawer
 });
 
 tests();
