@@ -71,16 +71,29 @@ class FormRangeComponent extends Component {
           />
         )}
 
-        <Typography
-          variant="body1"
-          style={{
-            display: 'inline-block',
-            marginLeft: 15,
-            marginRight: 15
-          }}
-        >
-          {'<'}
-        </Typography>
+        {this.props.isRange === true ? (
+          <Typography
+            variant="body2"
+            style={{
+              display: 'inline-block',
+              marginLeft: 15,
+              marginRight: 15
+            }}
+          >
+            {'≤'}
+          </Typography>
+        ) : (
+          <Typography
+            variant="body1"
+            style={{
+              display: 'inline-block',
+              marginLeft: 15,
+              marginRight: 15
+            }}
+          >
+            {'<'}
+          </Typography>
+        )}
 
         <TextField
           style={{

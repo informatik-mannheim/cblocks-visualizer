@@ -149,14 +149,17 @@ class NewMappingForm extends Component {
               name: 'mappingNameField'
             }}
           />
-          <TextField
-            style={{ float: 'right' }}
-            label="Default Value"
-            onChange={this.handleChange}
-            inputProps={{
-              name: 'defaultValueField'
-            }}
-          />
+
+          {this.state.mappingType === mappingTypes.CATEGORY && (
+            <TextField
+              style={{ float: 'right' }}
+              label="Default Value"
+              onChange={this.handleChange}
+              inputProps={{
+                name: 'defaultValueField'
+              }}
+            />
+          )}
         </div>
         {this.state.mappingType === mappingTypes.RANGE && (
           <FormRangeComponent
@@ -189,7 +192,8 @@ class NewMappingForm extends Component {
             mini
             color="secondary"
             style={{
-              float: 'center'
+              marginLeft: '45%',
+              marginTop: 20
             }}
             onClick={this.addRange.bind(this)}
           >
@@ -197,19 +201,8 @@ class NewMappingForm extends Component {
           </Button>
         )}
 
-        {/*<Button
-        variant='fab'
-        mini
-        color='primary'
-        style={{
-          alignSelf: 'flex-end'
-        }}
-        >
-          <AddIcon/>
-        </Button>*/}
-
         <Button
-          style={{ float: 'right', marginTop: 50 }}
+          style={{ float: 'right', marginTop: 70 }}
           onClick={this.handleClick}
           color="secondary"
         >
