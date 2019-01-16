@@ -19,7 +19,6 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "concurrently \"npm run build\" \"node src/server/index.js\"",
-    "old_start": "node_modules/.bin/cross-env NODE_ENV=development node_modules/.bin/webpack-dev-server --colors --config webpack.config.js",
     "server": "nodemon src/server/index.js",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
@@ -56,6 +55,7 @@
     "redux-form": "^7.4.2",
     "redux-subscriber": "^1.1.0",
     "redux-thunk": "^2.2.0",
+    "reselect": "^4.0.0",
     "typeface-roboto": "0.0.54"
   },
   "devDependencies": {

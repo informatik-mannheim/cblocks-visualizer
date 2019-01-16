@@ -57,8 +57,8 @@ export function sensors (state = initialSensorsState, action) {
         { name: action.sensor.name },
         { values: {} },
         { valueHistory: [] },
-        { xPos: xPos },
-        { yPos: yPos }
+        { xPos },
+        { yPos }
       );
 
       const newAllSensors = state.all_sensors.concat(newSensor);
@@ -143,7 +143,9 @@ function sensor (state = {}, action) {
       sensorToUpdate.values = newValues;
 
       //Add new values to valueHistory if max 100 values, else delete oldest
-      if (sensorToUpdate.valueHistory.length >= 100) {sensorToUpdate.valueHistory.shift();}
+      if (sensorToUpdate.valueHistory.length >= 100) {
+        sensorToUpdate.valueHistory.shift();
+      }
       sensorToUpdate.valueHistory = sensorToUpdate.valueHistory.concat(
         newValues
       );

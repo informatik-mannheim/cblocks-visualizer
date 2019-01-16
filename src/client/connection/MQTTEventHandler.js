@@ -2,6 +2,7 @@ import MQTTClient from './MQTTClient';
 import Constants from '../constants/';
 import store from '../store';
 import * as action from '../action/';
+import { getUrlFor } from '../reducers';
 
 const mqttEvents = Constants.MQTTEvents;
 
@@ -14,7 +15,7 @@ export const bindMQTTEvents = url => {
   client.bind(mqttEvents.SENSOR_ADDED, params => {
     store.dispatch(
       action.fetchSensor(
-        Constants.URLs.FETCH_SENSOR_URL,
+        getUrlFor(store.getState(), 'sensors'),
         params.sensorID,
         params.instanceID
       )

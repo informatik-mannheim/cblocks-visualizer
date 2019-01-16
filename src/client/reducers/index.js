@@ -5,6 +5,7 @@ import { modals } from './modals';
 import { mappings } from './mappings';
 import { pinnedCharts } from './pinnedCharts';
 import { menuDrawer } from './menuDrawer';
+import settings, * as fromSettings from './settings';
 
 import tests from './tests/';
 
@@ -14,8 +15,17 @@ const rootReducer = combineReducers({
   modals,
   requests,
   pinnedCharts,
-  menuDrawer
+  menuDrawer,
+  settings
 });
 
-tests();
+// tests();
 export default rootReducer;
+
+export const getUrlFor = (state, urlFor) => {
+  return fromSettings.getUrlFor(state.settings, urlFor);
+};
+
+export const getBaseValues = state => {
+  return fromSettings.getBaseValues(state);
+};

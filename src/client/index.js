@@ -5,6 +5,7 @@ import App from './pages/App';
 import store from './store';
 import { bindMQTTEvents } from './connection/MQTTEventHandler';
 import Constants from './constants/';
+import { getUrlFor } from './reducers';
 
 const rootEl = document.getElementById('app');
 
@@ -22,5 +23,5 @@ if (process.env.NODE_ENV !== 'production') {
     module.hot.accept('./pages/App', render);
   }
 }
-bindMQTTEvents(Constants.URLs.MQTT_URL);
+bindMQTTEvents(getUrlFor(store.getState(), 'mqtt'));
 render();

@@ -1,11 +1,10 @@
 import Constants from '../constants';
 import axios from 'axios';
-// import qs from 'qs';
+import store from '../store';
+import { getUrlFor } from '../reducers';
 
 const getURLForMappingType = type => {
-  if (type === 'category') return Constants.URLs.CATEGORY_MAPPING_URL;
-  if (type === 'range') return Constants.URLs.RANGE_MAPPING_URL;
-  if (type === 'label') return Constants.URLs.LABEL_MAPPING_URL;
+  return getUrlFor(store.getState(), type);
 };
 
 export const setMappingActivity = (mappingID, bool) => {
