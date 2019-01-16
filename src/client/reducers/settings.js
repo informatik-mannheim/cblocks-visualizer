@@ -14,15 +14,11 @@ const settings = (state = initialState, action) => {
   switch (action.type) {
     case Constants.Actions.CHANGE_URL:
       const { urlType, value } = action;
-      let newSettings;
       if (urlType === 'base') {
-        newSettings = { ...state, URLs: { ...state.URLs, base: value } };
-        state.URLs.base = value;
+        return { ...state, URLs: { ...state.URLs, base: value } };
       } else {
-        newSettings = { ...state, URLs: { ...state.URLs, MQTT: value } };
+        return { ...state, URLs: { ...state.URLs, MQTT: value } };
       }
-
-      return newSettings;
     default:
       return state;
   }

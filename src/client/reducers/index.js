@@ -7,7 +7,7 @@ import { pinnedCharts } from './pinnedCharts';
 import { menuDrawer } from './menuDrawer';
 import settings, * as fromSettings from './settings';
 
-import tests from './tests/';
+// import tests from './tests/';
 
 const rootReducer = combineReducers({
   sensors,

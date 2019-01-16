@@ -1,6 +1,7 @@
 import expect from 'expect';
 import settings from '../settings';
 import Constants from '../../constants/';
+import deepFreeze from 'deep-freeze';
 
 const initialState = {
   URLs: {
@@ -12,6 +13,7 @@ const initialState = {
     labelMappingRoute: 'label'
   }
 };
+deepFreeze(initialState);
 
 describe('settings reducer', () => {
   it('should return the initial state', () => {
@@ -28,11 +30,11 @@ describe('settings reducer', () => {
     ).toEqual({
       URLs: {
         base: 'test.test',
-        MQTT: 'mqtt://172.16.1.1:1884',
-        fetchSensor: 'cblocks/',
-        categoryMapping: 'category',
-        rangeMapping: 'range',
-        labelMapping: 'label'
+        MQTT: '172.16.1.1:1884',
+        fetchSensorRoute: 'cblocks',
+        categoryMappingRoute: 'category',
+        rangeMappingRoute: 'range',
+        labelMappingRoute: 'label'
       }
     });
   });
@@ -48,10 +50,10 @@ describe('settings reducer', () => {
       URLs: {
         base: '37.61.204.167:8081',
         MQTT: 'test.test',
-        fetchSensor: 'cblocks/',
-        categoryMapping: 'category',
-        rangeMapping: 'range',
-        labelMapping: 'label'
+        fetchSensorRoute: 'cblocks',
+        categoryMappingRoute: 'category',
+        rangeMappingRoute: 'range',
+        labelMappingRoute: 'label'
       }
     });
   });

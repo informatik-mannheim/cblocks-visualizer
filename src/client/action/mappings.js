@@ -89,7 +89,7 @@ export const createNewMapping = mappingInfo => {
 
   console.log(data);
 
-  return dispatch => {
+  return () => {
     return axios
       .post(
         getURLForMappingType(mappingInfo.mappingType),
@@ -127,7 +127,7 @@ export const updateMapping = (
     ...resource,
     ranges
   };
-  return dispatch => {
+  return () => {
     return axios
       .post(`${getURLForMappingType(mappingType)}/${mappingID}`, data)
       .then(response => {
