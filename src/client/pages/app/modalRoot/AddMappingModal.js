@@ -59,7 +59,6 @@ AddMappingModal.propTypes = {
 const mapDispatchToProps = dispatch => ({
   pinChart: chartProps => dispatch(action.pinChart(chartProps)),
   createNewMapping: mappingDetails => {
-    console.log(mappingDetails);
     dispatch(action.createNewMapping(mappingDetails));
   }
 });

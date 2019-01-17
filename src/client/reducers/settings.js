@@ -25,8 +25,8 @@ const settings = (state = initialState, action) => {
 };
 export default settings;
 
-export const getBaseValues = state => {
-  return { base: state.Urls.base, mqtt: state.URLs.MQTT };
+export const getBaseUrls = state => {
+  return { base: state.URLs.base, mqtt: state.URLs.MQTT };
 };
 
 export const getUrlFor = (state, urlFor) => {

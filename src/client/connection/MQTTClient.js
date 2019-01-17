@@ -172,6 +172,10 @@ const MQTTClient = url => {
     }
   });
 
+  self.disconnect = () => {
+    client.end();
+  };
+
   return self;
 };
 

@@ -3,11 +3,12 @@ import Constants from '../constants/';
 import store from '../store';
 import * as action from '../action/';
 import { getUrlFor } from '../reducers';
+import { subscribe } from 'redux-subscriber';
 
 const mqttEvents = Constants.MQTTEvents;
 
 export const bindMQTTEvents = url => {
-  const client = MQTTClient(url);
+  let client = MQTTClient(url);
 
   client.bind(mqttEvents.CONNECTION_ESTABLISHED, message => {
     console.log(message.toString());
@@ -47,5 +48,11 @@ export const bindMQTTEvents = url => {
     store.dispatch(
       action.newMappingValue(params.mappingType, params.mappingID, params.value)
     );
+  });
+
+  const unsubscribeFromMQTTUrl = subscribe('settings.URLs.MQTT', state => {
+    console.log('MQTT URL changed');
+    client.disconnect();
+    client = MQTTClient(getUrlFor(store.getState(), 'mqtt'));
   });
 };

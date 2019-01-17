@@ -26,6 +26,6 @@ export const getUrlFor = (state, urlFor) => {
   return fromSettings.getUrlFor(state.settings, urlFor);
 };
 
-export const getBaseValues = state => {
-  return fromSettings.getBaseValues(state);
+export const getBaseUrls = state => {
+  return fromSettings.getBaseUrls(state.settings);
 };

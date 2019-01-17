@@ -3,8 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Modal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
+import Input from '@material-ui/core/Input';
 import { withStyles } from '@material-ui/core/styles';
-import * as action from '../../../action/';
+import Button from '@material-ui/core/Button';
+import * as action from '../../../action';
+import { getBaseUrls } from '../../../reducers';
 
 const styles = theme => ({
   paper: {
@@ -28,14 +31,91 @@ const getModalStyle = () => {
 };
 
 class URLSettingsModal extends React.Component {
+  state = {
+    base: '',
+    mqtt: ''
+  };
+  componentDidMount = () => {
+    this.setState({
+      base: this.props.base,
+      mqtt: this.props.mqtt
+    });
+  };
+  handleBaseChange = e => {
+    this.setState({ base: e.target.value });
+  };
+  handleMQTTChange = e => {
+    this.setState({ mqtt: e.target.value });
+  };
+  handleClick = () => {
+    this.props.changeBaseUrl(this.state.base);
+    this.props.changeMQTTUrl(this.state.mqtt);
+  };
   handleClose = () => {
     this.props.hideModal('URL_SETTINGS');
   };
   render () {
+    const { open, classes, mqtt, base } = this.props;
     return (
-      <Modal open={this.props.open} onClose={this.handleClose}>
-        <div style={getModalStyle()} className={this.props.classes.paper}>
-          HELLO
+      <Modal open={open} onClose={this.handleClose}>
+        <div style={getModalStyle()} className={classes.paper}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '2fr 1fr 2fr 2fr 1fr',
+              gridTemplateRows: '2fr 1fr 2fr 2fr 1fr 2fr'
+            }}
+          >
+            <Typography
+              variant="headline"
+              style={{ gridColumn: '1/-1', gridRow: '1/1' }}
+            >
+              URL Settings
+            </Typography>
+            <Typography
+              variant="body2"
+              style={{
+                gridColumn: '1',
+                gridRow: '3',
+                alignSelf: 'center'
+              }}
+            >
+              Backend Url
+            </Typography>
+            <Input
+              style={{ gridColumn: '3/5', gridRow: '3' }}
+              defaultValue={base}
+              placeholder="URL:Port"
+              className={classes.input}
+              inputProps={{
+                'aria-label': 'Backend URL'
+              }}
+              onChange={this.handleBaseChange}
+            />
+            <Typography
+              variant="body2"
+              style={{ gridColumn: '1', gridRow: '4', alignSelf: 'center' }}
+            >
+              MQTT Url
+            </Typography>
+            <Input
+              style={{ gridColumn: '3/5', gridRow: '4' }}
+              defaultValue={mqtt}
+              placeholder="URL:Port"
+              className={classes.input}
+              inputProps={{
+                'aria-label': 'MQTT URL'
+              }}
+              onChange={this.handleMQTTChange}
+            />
+            <Button
+              style={{ gridColumn: '4/6', gridRow: '6' }}
+              onClick={this.handleClick}
+              color="secondary"
+            >
+              SET URLs
+            </Button>
+          </div>
         </div>
       </Modal>
     );
@@ -43,17 +123,28 @@ class URLSettingsModal extends React.Component {
 }
 
 URLSettingsModal.propTypes = {
+  base: PropTypes.string,
+  changeBaseUrl: PropTypes.func,
+  changeMQTTUrl: PropTypes.func,
   classes: PropTypes.object,
   hideModal: PropTypes.func,
+  mqtt: PropTypes.string,
   open: PropTypes.bool
 };
 
 const mapStateToProps = state => {
-  return {}; //TODO: Create URLs reducer... Grab URL state in here
+  return getBaseUrls(state);
 };
 
 const mapDispatchToProps = dispatch => {
-  return {}; // TODO: Change URLs here
+  return {
+    changeBaseUrl: url => {
+      dispatch(action.changeURL('base', url));
+    },
+    changeMQTTUrl: url => {
+      dispatch(action.changeURL('mqtt', url));
+    }
+  };
 };
 
 export default connect(
