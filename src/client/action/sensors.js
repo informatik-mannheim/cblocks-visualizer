@@ -13,10 +13,10 @@ export const updateSensorValue = (sensorID, instanceID, resourceID, value) => {
 export const move = (sensorID, instanceID, xPos, yPos) => {
   return {
     type: Constants.Actions.MOVE_SENSOR,
-    sensorID: sensorID,
-    instanceID: instanceID,
-    xPos: xPos,
-    yPos: yPos
+    sensorID,
+    instanceID,
+    xPos,
+    yPos
   };
 };
 

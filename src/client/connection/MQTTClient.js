@@ -151,6 +151,7 @@ const MQTTClient = url => {
   });
 
   // subscribes to request substate and publishes them to MQTT
+  // eslint-disable-next-line no-unused-vars
   const unsubscribeFromRequests = subscribe('requests.totalRequests', state => {
     for (const req of state.requests.unresolvedRequests) {
       if (req.sent === false) {

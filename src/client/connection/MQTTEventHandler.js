@@ -50,7 +50,8 @@ export const bindMQTTEvents = url => {
     );
   });
 
-  const unsubscribeFromMQTTUrl = subscribe('settings.URLs.MQTT', state => {
+  // eslint-disable-next-line no-unused-vars
+  const unsubscribeFromMQTTUrl = subscribe('settings.URLs.MQTT', () => {
     console.log('MQTT URL changed');
     client.disconnect();
     client = MQTTClient(getUrlFor(store.getState(), 'mqtt'));

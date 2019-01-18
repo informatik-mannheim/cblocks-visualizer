@@ -8,6 +8,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import * as action from '../../../action';
 import { getBaseUrls } from '../../../reducers';
+import Check from '@material-ui/icons/Check';
+import Close from '@material-ui/icons/Close';
 
 const styles = theme => ({
   paper: {
@@ -82,6 +84,17 @@ class URLSettingsModal extends React.Component {
             >
               Backend Url
             </Typography>
+            <div
+              style={{
+                gridColumn: '5',
+                gridRow: '3',
+                alignSelf: 'center',
+                justifySelf: 'center'
+              }}
+            >
+              {this.props.base === this.state.base ? <Check /> : <Close />}
+            </div>
+
             <Input
               style={{ gridColumn: '3/5', gridRow: '3' }}
               defaultValue={base}
@@ -108,6 +121,16 @@ class URLSettingsModal extends React.Component {
               }}
               onChange={this.handleMQTTChange}
             />
+            <div
+              style={{
+                gridColumn: '5',
+                gridRow: '4',
+                alignSelf: 'center',
+                justifySelf: 'center'
+              }}
+            >
+              {this.props.mqtt === this.state.mqtt ? <Check /> : <Close />}
+            </div>
             <Button
               style={{ gridColumn: '4/6', gridRow: '6' }}
               onClick={this.handleClick}
