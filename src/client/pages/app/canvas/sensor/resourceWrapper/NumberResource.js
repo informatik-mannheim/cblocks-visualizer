@@ -6,10 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import svgIcons from '../../../../../images/svgIcons';
-import MappingDrawer from './numberResource/MappingDrawer';
+import MappingDrawer from './MappingDrawer';
+import Expand from 'react-expand-animated';
 import { connect } from 'react-redux';
 import Constants from '../../../../../constants';
-import Expand from 'react-expand-animated';
 import * as action from '../../../../../action/';
 
 class NumberResource extends React.Component {
@@ -81,7 +81,7 @@ class NumberResource extends React.Component {
               newMappings.push({
                 label: mapping.label,
                 mappingType: mapping.mappingType,
-                ranges: ranges,
+                ranges,
                 active: mapping.active
               });
               break;
@@ -134,7 +134,6 @@ class NumberResource extends React.Component {
             style={{
               marginBottom: 5,
               paddingBottom: 50,
-              // boxShadow: `1px 3px 1px #9E9E9E`,
               boxShadow:
                 this.state.mappingDrawerOpen === true
                   ? '0px 4px 4px 0px rgba(0, 0, 0, 0.2)'
@@ -192,20 +191,18 @@ class NumberResource extends React.Component {
               </SvgIcon>
             </Button>
           </div>
-          {/*TODO: move this part to generic ResourceWrapper component*/}
-          <div>
-            <Expand open={this.state.mappingDrawerOpen}>
-              <MappingDrawer
-                expanded
-                objectID={this.props.objectID}
-                instanceID={this.props.instanceID}
-                resourceID={this.props.resource.resourceID}
-                mappings={this.props.mappings}
-                setMappingActivity={this.props.setMappingActivity}
-                showModal={this.props.showModal}
-              />
-            </Expand>
-          </div>
+          <Expand open={this.state.mappingDrawerOpen}>
+            <MappingDrawer
+              expanded
+              showVisibilityButton
+              objectID={this.props.objectID}
+              instanceID={this.props.instanceID}
+              resourceID={this.props.resource.resourceID}
+              mappings={this.props.mappings}
+              setMappingActivity={this.props.setMappingActivity}
+              showModal={this.props.showModal}
+            />
+          </Expand>
         </div>
       );
     } else {
@@ -266,7 +263,7 @@ const mapStateToProps = (state, ownProps) => {
       mappings.push(state.mappings[mappingID]);
     }
   }
-  return { mappings: mappings };
+  return { mappings };
 };
 const mapDispatchToProps = dispatch => ({
   setMappingActivity: (mappingID, bool) => {

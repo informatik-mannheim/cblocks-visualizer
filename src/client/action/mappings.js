@@ -44,6 +44,7 @@ export const fetchMapping = (mappingType, mappingID, value) => {
         mapping.valueHistory = [];
         mapping.value = value;
         mapping.valueHistory[0] = value;
+        console.log(mapping);
         dispatch(addMapping(mapping));
       })
       .catch(e => {
@@ -66,25 +67,33 @@ export const newMappingValue = (mappingType, mappingID, value) => {
 
 export const createNewMapping = mappingInfo => {
   let data;
-  if (mappingInfo.mappingType === 'category') {
-    data = {
-      label: mappingInfo.label,
-      default: mappingInfo.defaultValue,
-      objectID: mappingInfo.resource.objectID,
-      instanceID: mappingInfo.resource.instanceID,
-      resourceID: mappingInfo.resource.resourceID,
-      ranges: mappingInfo.ranges
-    };
-  }
-  if (mappingInfo.mappingType === 'range') {
-    data = {
-      label: mappingInfo.label,
-      objectID: mappingInfo.resource.objectID,
-      instanceID: mappingInfo.resource.instanceID,
-      resourceID: mappingInfo.resource.resourceID,
-      greaterEqualsThan: mappingInfo.greaterEqualsThan,
-      lessEqualsThan: mappingInfo.lessEqualsThan
-    };
+  switch (mappingInfo.mappingType) {
+    case 'category':
+      data = {
+        label: mappingInfo.label,
+        default: mappingInfo.defaultValue,
+        objectID: mappingInfo.resource.objectID,
+        instanceID: mappingInfo.resource.instanceID,
+        resourceID: mappingInfo.resource.resourceID,
+        ranges: mappingInfo.ranges
+      };
+      break;
+    case 'range':
+      data = {
+        label: mappingInfo.label,
+        objectID: mappingInfo.resource.objectID,
+        instanceID: mappingInfo.resource.instanceID,
+        resourceID: mappingInfo.resource.resourceID,
+        greaterEqualsThan: mappingInfo.greaterEqualsThan,
+        lessEqualsThan: mappingInfo.lessEqualsThan
+      };
+      break;
+    case 'label':
+      //TODO: implement
+      data = null;
+      break;
+    default:
+      data = null;
   }
 
   console.log(data);

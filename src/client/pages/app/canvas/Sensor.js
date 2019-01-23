@@ -98,6 +98,9 @@ class Sensor extends Component {
   render () {
     let path;
     switch (this.props.objectID) {
+      case 3302:
+        path = svgIcons.button;
+        break;
       case 3303:
         path = svgIcons.room;
         break;

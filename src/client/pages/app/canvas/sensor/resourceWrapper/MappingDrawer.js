@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CategoryMapping from './mappingDrawer/CategoryMapping';
+import Mapping from './mappingDrawer/Mapping';
 import Button from '@material-ui/core/Button';
-import SvgIcon from '@material-ui/core/SvgIcon';
 import AddIcon from '@material-ui/icons/Add';
 
 class MappingDrawer extends React.Component {
@@ -31,7 +30,8 @@ class MappingDrawer extends React.Component {
               key={currentMapping.mappingID + '_div'}
               style={{ paddingBottom: 16 }}
             >
-              <CategoryMapping
+              <Mapping
+                showVisibilityButton={this.props.showVisibilityButton}
                 mapping={currentMapping}
                 setMappingActivity={this.props.setMappingActivity}
               />
@@ -46,7 +46,6 @@ class MappingDrawer extends React.Component {
           }}
         >
           <Button
-            // variant='outlined'
             onClick={() =>
               this.props.showModal('ADD_MAPPING', mappingModalProps)
             }
@@ -80,7 +79,8 @@ MappingDrawer.propTypes = {
   objectID: PropTypes.number,
   resourceID: PropTypes.number,
   setMappingActivity: PropTypes.func,
-  showModal: PropTypes.func
+  showModal: PropTypes.func,
+  showVisibilityButton: PropTypes.bool
 };
 
 export default MappingDrawer;

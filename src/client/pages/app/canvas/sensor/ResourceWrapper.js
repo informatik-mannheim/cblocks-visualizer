@@ -61,10 +61,6 @@ ResourceWrapper.defaultProps = {
   smallForm: false
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return {};
-};
-
 const mapDispatchToProps = dispatch => {
   return {
     buildRequest: (objectID, instanceID, resourceID, value) =>
@@ -75,6 +71,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(ResourceWrapper);

@@ -21,7 +21,9 @@ export function mappings (state = {}, action) {
       if (state[action.mappingID] === undefined) return state;
       const mappingClone = clonedeep(state[action.mappingID]);
       mappingClone.value = action.value;
-      if (mappingClone.valueHistory.length >= 100) {mappingClone.valueHistory.shift();}
+      if (mappingClone.valueHistory.length >= 100) {
+        mappingClone.valueHistory.shift();
+      }
       mappingClone.valueHistory = mappingClone.valueHistory.concat(
         action.value
       );

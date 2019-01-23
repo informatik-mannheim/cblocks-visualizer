@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import svgIcons from '../../../../../../../images/svgIcons';
+import svgIcons from '../../../../../../images/svgIcons';
 
-class CategoryMapping extends React.Component {
+class Mapping extends React.Component {
   render () {
     const { label, value, mappingID, active } = this.props.mapping;
     const shownValue
@@ -48,14 +48,18 @@ class CategoryMapping extends React.Component {
           <div
             style={{ float: 'right', position: 'absolute', right: 7, top: 5 }}
           >
-            <IconButton
-              variant="fab"
-              aria-label="Toggle Visibility"
-              color="primary"
-              onClick={() => this.props.setMappingActivity(mappingID, !active)}
-            >
-              {svgIcon}
-            </IconButton>
+            {this.props.showVisibilityButton === true ? (
+              <IconButton
+                variant="fab"
+                aria-label="Toggle Visibility"
+                color="primary"
+                onClick={() =>
+                  this.props.setMappingActivity(mappingID, !active)
+                }
+              >
+                {svgIcon}
+              </IconButton>
+            ) : null}
           </div>
         </div>
       </div>
@@ -63,9 +67,10 @@ class CategoryMapping extends React.Component {
   }
 }
 
-CategoryMapping.propTypes = {
+Mapping.propTypes = {
   mapping: PropTypes.object,
-  setMappingActivity: PropTypes.func
+  setMappingActivity: PropTypes.func,
+  showVisibilityButton: PropTypes.bool
 };
 
-export default CategoryMapping;
+export default Mapping;
