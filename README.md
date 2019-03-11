@@ -1,7 +1,3 @@
-# cBlocks
+# cBlocks Visualizer
 
-An IoT prototyping platform developed for the BMBF project ProFi.
-
-### Install & Run
-
-Run `npm install && npm start`
+The visualization component for [cBlocks](https://github.com/informatik-mannheim/cblocks/). 
