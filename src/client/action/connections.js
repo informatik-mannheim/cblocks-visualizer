@@ -29,7 +29,7 @@ export const removeConnectionFromSensor = sensorId => {
 
     connections.forEach(con => {
       if (con.sensorId === sensorId) {
-        dispatch(removeConnection({ sensorId: sensorId, nodeId: con.nodeId }));
+        dispatch(removeConnection({ sensorId, nodeId: con.nodeId }));
       }
     });
   };

@@ -61,18 +61,6 @@ class MappingDrawer extends React.Component {
   };
 }
 
-/*
-<Button
-style={{position: 'absolute', right: '16px'}}
-variant='fab' mini
-aria-label="Show Graph"
-color='secondary'
-onClick={() => this.props.showModal('CHART', 'chartModalProps')}>
-  <AddIcon />
-</Button>
-<div style={{height: 56}}/>
-*/
-
 MappingDrawer.propTypes = {
   instanceID: PropTypes.number,
   mappings: PropTypes.array,

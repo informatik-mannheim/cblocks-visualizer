@@ -23,7 +23,7 @@ class Mapping extends React.Component {
       );
     return (
       <div style={{ position: 'relative' }}>
-        <div
+        {/* <div
           style={{
             position: 'absolute',
             height: '100%',
@@ -31,7 +31,7 @@ class Mapping extends React.Component {
             background: '#ff00ff',
             left: 1
           }}
-        />
+        /> */}
         <div style={{ position: 'relative', width: '100%' }}>
           <Typography variant="subheading" align="center">
             {label}
