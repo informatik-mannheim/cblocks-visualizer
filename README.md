@@ -23,5 +23,5 @@ Once you have Node.js installed on your machine open the terminal and `cd` into 
 5. Run `node index.js`
 6. Lastly open [localhost:5000](localhost:5000) in your browser.
 
-##Usage
+## Usage
 For information on how to use the Visualizer please refer to the main cBlocks repository's README file.
