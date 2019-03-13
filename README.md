@@ -1,3 +1,6 @@
 # cBlocks Visualizer
 
-The visualization component for [cBlocks](https://github.com/informatik-mannheim/cblocks/). 
+This is the visualization component for [cBlocks](https://github.com/informatik-mannheim/cblocks/). 
+
+## Installation
+
