@@ -11,15 +11,12 @@ class LineChart extends Component {
     let resourceLabel, unit;
     for (let i = 0; i < this.props.sensors.length; i++) {
       const currentSensor = this.props.sensors[i];
-
       if (
         objectID === currentSensor.objectID
         && instanceID === currentSensor.instanceID
       ) {
         const valueHistory = currentSensor.valueHistory;
         for (let j = 0; j < valueHistory.length; j++) {
-          //TODO: Check if  valueHistory[j][resourceID] exists
-          //TODO: Add check for MultiResources' data structure
           if (valueHistory[j][resourceID]) {
             chartData[j] = valueHistory[j][resourceID];
           } else if (valueHistory.length >= j + 1) {
@@ -39,7 +36,7 @@ class LineChart extends Component {
     }
 
     const myData = {
-      labels: labels,
+      labels,
       datasets: [
         {
           data: chartData,

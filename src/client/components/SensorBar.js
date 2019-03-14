@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import ReactTooltip from 'react-tooltip';
 
 class SensorBar extends Component {
@@ -50,8 +49,10 @@ class SensorBar extends Component {
   };
 
   activeMapping = () => {
-    for (const mapping of this.props.mappings) {
-      if (mapping.active === true) return mapping;
+    if (this.props.mappings !== undefined) {
+      for (const mapping of this.props.mappings) {
+        if (mapping.active === true) return mapping;
+      }
     }
   };
 

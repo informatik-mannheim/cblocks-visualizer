@@ -31,10 +31,19 @@ class MaterialSlider extends React.Component {
   };
 
   handleDragEnd = event => {
-    this.props.requestChangeToSubresource(
-      this.props.label,
-      Number.parseInt(this.state.value)
-    );
+    if (this.props.isMultiResource === true) {
+      this.props.requestChangeToSubresource(
+        this.props.label,
+        Number.parseInt(this.state.value)
+      );
+    } else {
+      this.props.requestChangeToResource(
+        this.props.objectID,
+        this.props.instanceID,
+        this.props.resourceID,
+        Number.parseInt(this.state.value)
+      );
+    }
     setTimeout(() => {
       this.isBeingDragged = false;
     }, 1000);
@@ -42,7 +51,7 @@ class MaterialSlider extends React.Component {
 
   handleOnChange = (event, value) => {
     if (this.isBeingDragged === true) {
-      this.setState({ value: value });
+      this.setState({ value });
     } else {
       this.props.requestChangeToSubresource(
         this.props.label,
@@ -79,11 +88,13 @@ MaterialSlider.propTypes = {
   color: PropTypes.string,
   currentValue: PropTypes.number,
   instanceID: PropTypes.number,
+  isMultiResource: PropTypes.bool,
   isWriteable: PropTypes.bool,
   label: PropTypes.string,
   maximum: PropTypes.number,
   minimum: PropTypes.number,
   objectID: PropTypes.number,
+  requestChangeToResource: PropTypes.func,
   requestChangeToSubresource: PropTypes.func,
   resourceID: PropTypes.number
 };

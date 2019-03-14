@@ -87,7 +87,7 @@ class NumberResource extends React.Component {
               break;
             }
             case 'label':
-              console.error('NOT IMPLEMENTED: label mappings');
+              // console.log('NOT IMPLEMENTED: label mappings');
               return;
             default:
               console.error(`No such mapping type: ${mapping.mappingType}`);
@@ -103,6 +103,70 @@ class NumberResource extends React.Component {
         resourceID: this.props.resource.resourceID
       };
 
+      const unit
+        = this.props.resource.unit === undefined ? '' : this.props.resource.unit;
+
+      const chartButton
+        = this.props.objectID !== 3307 ? (
+          <div style={{ position: 'absolute', right: '16px' }}>
+            <Button
+              variant="fab"
+              mini
+              aria-label="Show Graph"
+              color="primary"
+              onClick={() => this.props.showModal('CHART', chartModalProps)}
+            >
+              <SvgIcon>
+                <path d={svgIcons.chart} />
+              </SvgIcon>
+            </Button>
+          </div>
+        ) : (
+          <React.Fragment />
+        );
+
+      const bar
+        = this.props.isWriteable === false ? (
+          <>
+            <SensorBar
+              currentValue={this.props.currentValue}
+              mappings={normalizedMappings(this.props.mappings)}
+              max={max}
+              min={min}
+              style={{ marginBottom: 0 }}
+            />
+            <div style={{ display: 'block', float: 'left' }}>
+              <Typography variant="body2">{min}</Typography>
+            </div>
+            <div style={{ display: 'block', float: 'right', marginTop: 0 }}>
+              <Typography variant="body2">{max}</Typography>
+            </div>
+          </>
+        ) : (
+          <>
+            <MaterialSlider
+              isMultiResource={false}
+              objectID={this.props.objectID}
+              instanceID={this.props.instanceID}
+              resourceID={this.props.resource.resourceID}
+              currentValue={this.props.currentValue}
+              maximum={max}
+              minimum={min}
+              height={20}
+              isWriteable={this.props.isWriteable}
+              requestChangeToResource={this.props.buildRequest}
+              requestChangeToSubresource={this.props.requestChangeToSubresource}
+              label={this.props.resource.label}
+            />
+            <div style={{ display: 'block', float: 'left' }}>
+              <Typography variant="body2">{min}</Typography>
+            </div>
+            <div style={{ display: 'block', float: 'right' }}>
+              <Typography variant="body2">{max}</Typography>
+            </div>
+          </>
+        );
+
       return (
         <div
           style={{
@@ -117,19 +181,7 @@ class NumberResource extends React.Component {
           >
             {this.props.resource.name}
           </Typography>
-          <div style={{ position: 'absolute', right: '16px' }}>
-            <Button
-              variant="fab"
-              mini
-              aria-label="Show Graph"
-              color="primary"
-              onClick={() => this.props.showModal('CHART', chartModalProps)}
-            >
-              <SvgIcon>
-                <path d={svgIcons.chart} />
-              </SvgIcon>
-            </Button>
-          </div>
+          {chartButton}
           <div
             style={{
               marginBottom: 5,
@@ -146,21 +198,9 @@ class NumberResource extends React.Component {
                 align="center"
                 style={{ marginBottom: 40 }}
               >
-                {this.props.currentValue + ' ' + this.props.resource.unit}
+                {this.props.currentValue + ' ' + unit}
               </Typography>
-              <SensorBar
-                currentValue={this.props.currentValue}
-                mappings={normalizedMappings(this.props.mappings)}
-                max={max}
-                min={min}
-                style={{ marginBottom: 0 }}
-              />
-              <div style={{ display: 'block', float: 'left' }}>
-                <Typography variant="body2">{min}</Typography>
-              </div>
-              <div style={{ display: 'block', float: 'right', marginTop: 0 }}>
-                <Typography variant="body2">{max}</Typography>
-              </div>
+              {bar}
             </div>
           </div>
           <div style={{ position: 'relative' }}>
@@ -211,8 +251,9 @@ class NumberResource extends React.Component {
       const min = this.props.resource.minimum;
 
       return (
-        <div>
+        <>
           <MaterialSlider
+            isMultiResource
             objectID={this.props.objectID}
             instanceID={this.props.instanceID}
             resourceID={this.props.resource.resourceID}
@@ -224,14 +265,13 @@ class NumberResource extends React.Component {
             requestChangeToSubresource={this.props.requestChangeToSubresource}
             label={this.props.resource.label}
           />
-
           <div style={{ display: 'block', float: 'left' }}>
             <Typography variant="body2">{min}</Typography>
           </div>
           <div style={{ display: 'block', float: 'right' }}>
             <Typography variant="body2">{max}</Typography>
           </div>
-        </div>
+        </>
       );
     }
   }
