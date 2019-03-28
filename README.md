@@ -25,3 +25,7 @@ Once you have Node.js installed on your machine open the terminal and `cd` into 
 
 ## Usage
 For information on how to use the Visualizer please refer to the main cBlocks repository's README file.
+
+cBlocks was developed as part of the ProFI research project (FKZ: 01IS16015) funded by the German Federal Ministry of Education and Research (BMBF).
+
+<img src="pictures/bmbf_logo.jpg" alt="BMBF Logo" width="300"/>
